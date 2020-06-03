@@ -52,7 +52,7 @@
         <tr>
             <th class="hidden-xs">序号</th>
             <th class="hidden-xs">名称</th>
-            <th class="hidden-xs">台桌登录ip限制</th>
+            <th class="hidden-xs">IP限制</th>
             <th class="hidden-xs">台桌推送</th>
             <td class="hidden-xs">视频状态</td>
             <th class="hidden-xs">最小限红<br/>(平倍最小平倍)</th>
