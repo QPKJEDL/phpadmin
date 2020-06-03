@@ -129,12 +129,10 @@
 @endsection
 @section('js')
     <script>
-        layui.use(['form', 'jquery','laydate', 'layer'], function() {
+        layui.use(['form', 'jquery', 'layer'], function() {
             var form = layui.form(),
                 $ = layui.jquery,
-                laydate = layui.laydate,
                 layer = layui.layer;
-            laydate({istoday: true});
             form.render();
             form.on('submit(formDemo)', function(data) {
             });
