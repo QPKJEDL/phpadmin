@@ -66,7 +66,7 @@
             <th class="hidden-xs">主播台</th>
             <th class="hidden-xs">倒计时</th>
             <th class="hidden-xs">待开牌时间</th>
-            <th class="hidden-xs" style="text-align: center">操作</th>
+            <th>操作</th>
         </tr>
         </thead>
         <tbody>
