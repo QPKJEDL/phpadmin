@@ -1,4 +1,4 @@
-@section('title', '订单管理')
+@section('title', '台桌管理')
 @section('header')
     <div class="layui-inline">
         <button class="layui-btn layui-btn-small layui-btn-normal" id="addDesk" data-desc="添加桌台" data-url="{{url('/admin/desk/0/edit')}}"><i class="layui-icon">&#xe654;</i></button>
@@ -60,7 +60,7 @@
             <th class="hidden-xs">最大限红<br/>(平倍最大限红)</th>
             <th class="hidden-xs">最小和限红<br/>(翻倍最小限红)</th>
             <th class="hidden-xs">最大和限红<br/>(翻倍最大限红)</th>
-            <th class="hidden-xs">最小对限红</th>0
+            <th class="hidden-xs">最小对限红</th>
             <th class="hidden-xs">最大对限红</th>
             <th class="hidden-xs">主播台</th>
             <th class="hidden-xs">倒计时</th>
