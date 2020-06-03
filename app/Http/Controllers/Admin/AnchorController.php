@@ -87,7 +87,6 @@ class AnchorController extends Controller
             return ['msg'=>'主播添加成功！','status'=>1];
 
         }catch (Exception $e){
-            dump($e);
             DB::rollBack();
             return ['msg'=>'操作异常！请稍后重试！'];
         }
