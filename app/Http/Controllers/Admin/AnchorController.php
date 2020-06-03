@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRequest;
 use App\Models\UserAccount;
 use App\Models\UserMoney;
+use Illuminate\Support\Facades\DB;
 use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
@@ -36,21 +37,6 @@ class AnchorController extends Controller
         return view('anchor.list',['list'=>$data,'input'=>$request->all()]);
     }
 
-    /**
-     * 效验账号的唯一性
-     * @param StoreRequest $request
-     * @return array
-     */
-    public function checkUniqueAccount(StoreRequest $request)
-    {
-        $account = $request->input('account');
-        //根据账号查询当前数据是否存在
-        if(UserAccount::where(array("account"=>$account,"shenfen"=>1))->exists()){
-            return ['msg'=>'账号已存在！','status'=>1];
-        }else{
-            return ['msg'=>"账号可以使用",'status'=>0];
-        }
-    }
 
     /**
      * 编辑页
