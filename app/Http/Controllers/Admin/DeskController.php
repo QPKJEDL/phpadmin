@@ -30,7 +30,7 @@ class DeskController extends Controller
         }
         $map['status']=0;
         //获取全部台桌数据
-        $data = Desk::where($map)->paginate(5)->appends($request->all());
+        $data = Desk::where($map)->paginate(10)->appends($request->all());
         foreach ($data as $key=>$value){
             $data[$key]['min_limit'] = json_decode($data[$key]['min_limit'],true);
             $data[$key]['min_tie_limit'] = json_decode($data[$key]['min_tie_limit'],true);

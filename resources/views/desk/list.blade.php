@@ -48,7 +48,7 @@
             <col class="hidden-xs" width="100">
             <col class="hidden-xs" width="100">
             <col class="hidden-xs" width="100">
-            <col class="hidden-xs" width="300">
+            <col class="hidden-xs" width="250">
         </colgroup>
         <thead>
         <tr>
@@ -139,11 +139,9 @@
             form.on('submit(formDemo)', function(data) {
             });
             $('#res').click(function () {
-                $("input[name='business_code']").val('');
-                $("input[name='order_sn']").val('');
-                $("input[name='user_id']").val('');
-                $("input[name='creatime']").val('');
-                $("select[name='status']").val('');
+                $("input[name='game_id']").val('');
+                $("input[name='is_alive']").val('');
+                $("input[name='is_push']").val('');
                 $('form').submit();
             });
             //台桌停用
