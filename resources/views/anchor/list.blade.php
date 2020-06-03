@@ -52,8 +52,8 @@
                 <td class="hidden-xs">{{$info['remark']}}</td>
                 <td style="text-align: center">
                     <div class="layui-inline">
-                        <button class="layui-btn layui-btn-small layui-btn-normal edit-btn" data-id="{{$info['id']}}" data-desc="修改公告" data-url="{{url('/admin/anchor/'. $info['id'] .'/edit')}}">编辑</button>
-                        <button class="layui-btn layui-btn-small layui-btn-danger del-btn" data-id="{{$info['id']}}" data-url="{{url('/admin/anchor/'.$info['id'])}}">删除</button>
+                        <button class="layui-btn layui-btn-small layui-btn-normal edit-btn" data-id="{{$info['user_id']}}" data-desc="修改主播" data-url="{{url('/admin/anchor/'. $info['user_id'] .'/edit')}}">编辑</button>
+                        <button class="layui-btn layui-btn-small layui-btn-danger del-btn" data-id="{{$info['user_id']}}" data-url="{{url('/admin/anchor/'.$info['user_id'])}}">删除</button>
                     </div>
                 </td>
             </tr>
