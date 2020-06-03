@@ -92,7 +92,7 @@
                     headers: {
                         'X-CSRF-TOKEN': $('#token').val()
                     },
-                    url:"{{url('/admin/changeStatus')}}",
+                    url:"{{url('/admin/anchor/changeStatus')}}",
                     data:{
                         id:id,
                         isover:isover

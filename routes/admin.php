@@ -86,7 +86,8 @@ Route::group(['namespace' => "Admin",'middleware' => ['auth', 'permission']], fu
     Route::resource('/stopDesk',        'StopDeskController'); //停用台桌列表
 
     Route::resource('/anchor',          'AnchorController'); //主播账号列表
-    Route::post('/changeStatus',        'AnchorController@changeStatus');//账号停用/启用
+    Route::post('/anchor/changeStatus', 'AnchorController@changeStatus');//账号停用/启用
+    Route::resource('/anchorUpdate',          'AnchorController@update'); //主播账号列表
 
     Route::resource('/deskLog',         'DeskLogController'); //台桌操作日志
     Route::resource('/deskResultLog',   'DeskUpdateResultController');//台桌修改结果日志
