@@ -20,12 +20,12 @@
             <input type="text" value="{{$info['nickname'] or ''}}" name="nickname"  placeholder="名称" autocomplete="off" class="layui-input">
         </div>
     </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">头像：</label>
-        <div class="layui-input-inline">
-            <input type="text" value="{{$info['avatar'] or ''}}" name="avatar"  placeholder="头像" autocomplete="off" class="layui-input">
-        </div>
-    </div>
+    {{--<div class="layui-form-item">--}}
+        {{--<label class="layui-form-label">头像：</label>--}}
+        {{--<div class="layui-input-inline">--}}
+            {{--<input type="text" value="{{$info['avatar'] or ''}}" name="avatar"  placeholder="头像" autocomplete="off" class="layui-input">--}}
+        {{--</div>--}}
+    {{--</div>--}}
     <div class="layui-form-item">
         <label class="layui-form-label">备注：</label>
         <div class="layui-input-inline">
