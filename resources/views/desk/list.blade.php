@@ -30,6 +30,11 @@
         <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo">搜索</button>
         <button id="res" class="layui-btn layui-btn-primary">重置</button>
     </div>
+    <style>
+        .hidden-xs{
+            text-align: center;
+        }
+    </style>
 @endsection
 @section('table')
     <table class="layui-table" lay-even lay-skin="nob">
@@ -66,7 +71,7 @@
             <th class="hidden-xs">主播台</th>
             <th class="hidden-xs">倒计时</th>
             <th class="hidden-xs">待开牌时间</th>
-            <th class="hidden-xs" style="text-align: center">操作</th>
+            <th class="hidden-xs">操作</th>
         </tr>
         </thead>
         <tbody>
