@@ -60,6 +60,7 @@ class AnchorController extends Controller
         }
         $data = $request->all();
         $data['password']=md5($data['password']);
+        unset($data['id']);
         unset($data['_token']);
         //获取当前登录用户
         $user = Auth::user();
