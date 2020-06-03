@@ -4,7 +4,7 @@
         <input type="text"  value="{{ $input['account'] or '' }}" name="account" placeholder="主播账号" autocomplete="off" class="layui-input">
     </div>
     <div class="layui-inline">
-        <button class="layui-btn layui-btn-small layui-btn-normal" lay-submit lay-filter="formDemo">查询</button>
+        <button class="layui-btn layui-btn-small layui-btn-danger" lay-submit lay-filter="formDemo">查询</button>
     </div>
     <div class="layui-inline">
         <button class="layui-btn layui-btn-small layui-btn-normal addBtn" data-desc="添加主播" data-url="{{url('/admin/anchor/0/edit')}}"><i class="layui-icon">&#xe654;</i></button>
