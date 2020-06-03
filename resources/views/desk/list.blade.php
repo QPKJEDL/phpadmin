@@ -28,6 +28,7 @@
     </div>
     <div class="layui-inline">
         <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo">搜索</button>
+        <button id="res" class="layui-btn layui-btn-primary">重置</button>
     </div>
 @endsection
 @section('table')
@@ -46,7 +47,7 @@
             <col class="hidden-xs" width="150">
             <col class="hidden-xs" width="100">
             <col class="hidden-xs" width="100">
-            <col class="hidden-xs" width="100">
+            <col class="hidden-xs" width="200">
             <col class="hidden-xs" width="250">
         </colgroup>
         <thead>
