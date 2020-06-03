@@ -85,7 +85,7 @@
                     @if($info['status']==0)
                         <span class="layui-btn layui-btn-xs layui-btn">正常</span>
                     @else
-                        <span class="layui-btn layui-btn-xs layui-btn-danger">异常</span>
+                        <span class="layui-btn layui-btn-small layui-btn-danger">异常</span>
                     @endif
                 </td>
                 <td class="hidden-xs">{{$info['min_limit']['c']}}/{{$info['min_limit']['cu']}}<br>{{$info['min_limit']['p']}}${{$info['min_limit']['pu']}}</td>
