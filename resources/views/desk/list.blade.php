@@ -5,7 +5,7 @@
         <button class="layui-btn layui-btn-small layui-btn-warm freshBtn"><i class="layui-icon">&#x1002;</i></button>
     </div>
     <div class="layui-inline">
-        <select name="game_id" lay-filter="game_id" lay-verify="game_id">
+        <select name="game_id">
             <option value="">请选择游戏类型</option>
             @foreach($gameType as $game)
                 <option value="{{$game['id']}}" {{isset($input['game_id'])&&$input['game_id']==$game['id']?'selected':''}}>{{$game['game_name']}}</option>
@@ -13,14 +13,14 @@
         </select>
     </div>
     <div class="layui-inline">
-        <select name="is_alive" lay-filter="is_alive" lay-verify="is_alive">
+        <select name="is_alive">
             <option value="">请选择房间类型</option>
             <option value="0" {{isset($input['is_alive'])&&$input['is_alive']==0?'selected':''}}>是</option>
             <option value="1" {{isset($input['is_alive'])&&$input['is_alive']==1?'selected':''}}>否</option>
         </select>
     </div>
     <div class="layui-inline">
-        <select name="is_push" lay-filter="is_push" lay-verify="is_push">
+        <select name="is_push">
             <option value="">是否推送</option>
             <option value="0" {{isset($input['is_push'])&&$input['is_push']==0?'selected':''}}>点击</option>
             <option value="1" {{isset($input['is_push'])&&$input['is_push']==1?'selected':''}}>电话</option>
@@ -137,9 +137,9 @@
             form.on('submit(formDemo)', function(data) {
             });
             $('#res').click(function () {
-                $("input[name='game_id']").val('');
-                $("input[name='is_alive']").val('');
-                $("input[name='is_push']").val('');
+                $("select[name='game_id']").val('');
+                $("select[name='is_alive']").val('');
+                $("select[name='is_push']").val('');
                 $('form').submit();
             });
             //台桌停用
