@@ -97,16 +97,16 @@ class AnchorController extends Controller
     {
         $id = $request->input('id');
         $isover = $request->input('isover');
-        $sql=UserAccount::where(array("user_id"=>$id,"shenfen"=>1));
+        dump($isover);
         if($isover==0){
-            $on=$sql->update(['is_over'=>$isover]);
+            $on=UserAccount::where(array("user_id"=>$id,"shenfen"=>1))->update(['is_over'=>$isover]);
             if($on){
                 return ['msg'=>'开启成功！','status'=>1];
             }else{
                 return ['msg'=>'开启失败！','status'=>0];
             }
         }else if($isover==1){
-            $off=$sql->update(['is_over'=>$isover]);
+            $off=UserAccount::where(array("user_id"=>$id,"shenfen"=>1))->update(['is_over'=>$isover]);
             if($off){
                 return ['msg'=>'停用成功！','status'=>1];
             }else{
