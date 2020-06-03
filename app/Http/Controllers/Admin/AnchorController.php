@@ -25,7 +25,7 @@ class AnchorController extends Controller
     public function index(Request $request)    {
 
         $sql=UserAccount::query();
-        if(true==$request->has('business_code')){
+        if(true==$request->has('account')){
             $sql->where('user.account','=',$request->input('account'));
         }
         $sql->where('user.shenfen','=',1);
