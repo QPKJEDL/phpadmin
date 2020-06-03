@@ -105,14 +105,14 @@
                 <td class="hidden-xs">{{$info['wait_down']}}</td>
                 <td style="text-align: center">
                     <div class="layui-inline">
-                        <button class="layui-btn layui-btn-small layui-btn-normal update" data-id="{{$info['id']}}" data-desc="修改" data-url="{{url('/admin/desk/'. $info['id'] .'/edit')}}">编辑</button>
-                        <button class="layui-btn layui-btn-small layui-btn-danger changeStatus" data-id="{{$info['id']}}" data-v="1">停用</button>
+                        <a class="layui-btn layui-btn-small layui-btn-normal update" data-id="{{$info['id']}}" data-desc="修改" data-url="{{url('/admin/desk/'. $info['id'] .'/edit')}}">编辑</a>
+                        <a class="layui-btn layui-btn-small layui-btn-danger changeStatus" data-id="{{$info['id']}}" data-v="1">停用</a>
                         @if($info['video_status']==0)
-                            <button class="layui-btn layui-btn-small layui-btn-danger" data-id="{{$info['id']}}" data-v="1">关视频</button>
+                            <a class="layui-btn layui-btn-small layui-btn-danger" data-id="{{$info['id']}}" data-v="1">关视频</a>
                         @else
-                            <button class="layui-btn layui-btn-small layui-btn-danger" data-id="{{$info['id']}}" data-v="0">开视频</button>
+                            <a class="layui-btn layui-btn-small layui-btn-danger" data-id="{{$info['id']}}" data-v="0">开视频</a>
                         @endif
-                        <button class="layui-btn layui-btn-small resetpwd" data-id="{{$info['id']}}">修改密码</button>
+                        <a class="layui-btn layui-btn-small resetpwd" data-id="{{$info['id']}}">修改密码</a>
                     </div>
                 </td>
             </tr>
