@@ -1,6 +1,12 @@
 @section('title', '主播账号')
 @section('header')
     <div class="layui-inline">
+        <input type="text"  value="{{ $input['account'] or '' }}" name="account" placeholder="主播账号" autocomplete="off" class="layui-input">
+    </div>
+    <div class="layui-inline">
+        <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo">查询</button>
+    </div>
+    <div class="layui-inline">
         <button class="layui-btn layui-btn-small layui-btn-normal addBtn" data-desc="添加主播" data-url="{{url('/admin/anchor/0/edit')}}"><i class="layui-icon">&#xe654;</i></button>
         <button class="layui-btn layui-btn-small layui-btn-warm freshBtn"><i class="layui-icon">&#x1002;</i></button>
     </div>
@@ -36,7 +42,7 @@
             <tr>
                 <td class="hidden-xs">{{$info['user_id']}}</td>
                 <td class="hidden-xs">{{$info['account']}}</td>
-                <td class="hidden-xs">{{$info['nick_name']}}</td>
+                <td class="hidden-xs">{{$info['nickname']}}</td>
                 <td class="hidden-xs">{{$info['balance']/100}}</td>
                 <td class="hidden-xs">
                     <input type="checkbox" name="is_over" value="{{$info['user_id']}}" lay-skin="switch" lay-text="正常|停用" lay-filter="is_over" {{ $info['is_over'] == 0 ? 'checked' : '' }}>

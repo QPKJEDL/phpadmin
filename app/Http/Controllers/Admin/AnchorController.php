@@ -21,9 +21,12 @@ class AnchorController extends Controller
      * @param Request $request
      * @return Factory|View
      */
-    public function index(Request $request)
-    {
+    public function index(Request $request)    {
+
         $sql=UserAccount::query();
+        if(true==$request->has('business_code')){
+            $sql->where('user.account','=',$request->input('account'));
+        }
         $data = $sql->leftJoin('user_account','user.user_id','=','user_account.user_id')
                     ->select('user_account.balance','user.user_id','user.nickname','user.account','user.is_over','user.create_by','user.creatime','user.remark')
                     ->where("user.shenfen",1)->paginate(10)->appends($request->all());
