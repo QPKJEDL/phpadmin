@@ -55,7 +55,7 @@
             <th class="hidden-xs">名称</th>
             <th class="hidden-xs">IP限制</th>
             <th class="hidden-xs">台桌推送</th>
-            <td class="hidden-xs">视频状态</td>
+            <td class="hidden-xs">视屏状态</td>
             <th class="hidden-xs">最小限红<br/>(平倍最小限红)</th>
             <th class="hidden-xs">最大限红<br/>(平倍最大限红)</th>
             <th class="hidden-xs">最小和限红<br/>(翻倍最小限红)</th>
@@ -65,7 +65,7 @@
             <th class="hidden-xs">主播台</th>
             <th class="hidden-xs">倒计时</th>
             <th class="hidden-xs">待开牌时间</th>
-            <th>操作</th>
+            <th class="hidden-xs" style="text-align: center">操作</th>
         </tr>
         </thead>
         <tbody>
