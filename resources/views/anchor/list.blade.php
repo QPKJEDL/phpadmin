@@ -74,7 +74,7 @@
             form.on('submit(formDemo)', function(data) {
             });
             //监听开关操作
-            form.on('switch(status)', function(obj){
+            form.on('switch(is_over)', function(obj){
                 var id=this.value,
                     status=obj.elem.checked;
                 if(status==false){
