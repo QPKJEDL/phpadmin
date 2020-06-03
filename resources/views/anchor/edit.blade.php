@@ -10,7 +10,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">密码：</label>
         <div class="layui-input-inline">
-            <input type="password" value="{{$info['password'] or ''}}" name="password"  placeholder="请输入密码" lay-verify="password" lay-reqText="请输入密码" autocomplete="off" class="layui-input">
+            <input type="password" name="password"  placeholder="请输入密码" lay-verify="password" lay-reqText="请输入密码" autocomplete="off" class="layui-input">
             <label>不输入密码 就是不修改密码</label>
         </div>
     </div>
