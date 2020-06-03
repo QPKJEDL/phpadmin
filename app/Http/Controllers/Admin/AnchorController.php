@@ -131,9 +131,13 @@ class AnchorController extends Controller
     {
         $id = $request->input('id');
         $data = $request->all();
+
         unset($data['_token']);
         unset($data['id']);
-        $count = Anchor::where('id',$id)->update($data);
+
+        dump($data);
+
+        $count = UserAccount::where('id',$id)->update($data);
         if ($count!==false){
             return ['msg'=>'操作成功','status'=>1];
         }else{

@@ -76,7 +76,7 @@
             }else{
                 form.on('submit(formDemo)', function(data) {
                     $.ajax({
-                        url:"{{url('/admin/gameUpdate')}}",
+                        url:"{{url('/admin/anchorUpdate')}}",
                         data:$('form').serialize(),
                         type:'post',
                         dataType:'json',

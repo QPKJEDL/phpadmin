@@ -39,7 +39,7 @@ class AgentRoleController extends Controller
         unset($data['id']);
         unset($data['menus']);
         unset($data['_token']);
-        $data['updated_at']=date('Y-m-d H:m:s',time());
+        $data['updated_at']=date('Y-m-d H:i:s',time());
         $count = AgentRole::where('id',$id)->update($data);
         if ($count!==false){
             if ($menuData!=null){
@@ -60,7 +60,7 @@ class AgentRoleController extends Controller
         unset($data['id']);
         unset($data['menus']);
         unset($data['_token']);
-        $data['created_at']=date('Y-m-d H:m:s',time());
+        $data['created_at']=date('Y-m-d H:i:s',time());
         $count = AgentRole::insertGetId($data);
         if ($count){
             $this->insertAgentRole($menusData,$count);
