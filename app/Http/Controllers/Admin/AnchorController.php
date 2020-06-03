@@ -97,7 +97,6 @@ class AnchorController extends Controller
     {
         $id = $request->input('id');
         $isover = $request->input('isover');
-        dump($isover);
         if($isover==0){
             $on=UserAccount::where(array("user_id"=>$id,"shenfen"=>1))->update(['is_over'=>$isover]);
             if($on){
