@@ -56,7 +56,7 @@ class AnchorController extends Controller
     {
         $account = $request->input('account');
         if (UserAccount::where('account','=',$account)->exists()){
-            return ['msg'=>'账号已存在！','status'=>0];
+            return ['msg'=>'账号已存在！'];
         }
         $data = $request->all();
         $data['password']=md5($data['password']);
@@ -67,7 +67,6 @@ class AnchorController extends Controller
         $data['create_by']=$user['username'];
         $data['creatime']=time();
         $data['savetime']=time();
-        dump($data);
         DB::beginTransaction();
         try{
             $insertId = UserAccount::insertGetId($data);
