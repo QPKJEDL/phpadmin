@@ -1,4 +1,4 @@
-@section('title', '公告编辑')
+@section('title', '主播编辑')
 @section('content')
 
     <div class="layui-form-item">
@@ -11,14 +11,14 @@
         <label class="layui-form-label">密码：</label>
         <div class="layui-input-inline">
             <input type="text" value="{{$info['password'] or ''}}" name="password"  placeholder="请输入密码" lay-verify="password" lay-reqText="请输入密码" autocomplete="off" class="layui-input">
+            <label>不输入密码 就是不修改密码</label>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">名称：</label>
         <div class="layui-input-inline">
-            <input type="text" value="{{$info['nick_name'] or ''}}" name="nick_name"  placeholder="名称" autocomplete="off" class="layui-input">
+            <input type="text" value="{{$info['nickname'] or ''}}" name="nickname"  placeholder="名称" autocomplete="off" class="layui-input">
         </div>
-        <span>不输入密码 就是不修改密码</span>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">头像：</label>
@@ -32,7 +32,7 @@
             <input type="text" value="{{$info['remark'] or ''}}" name="remark"  placeholder="备注" autocomplete="off" class="layui-input">
         </div>
     </div>
-    <input type="hidden" id="token" value="<?php echo csrf_token(); ?>">
+    <input type="hidden" id="token" value="{{csrf_token()}}">
 @endsection
 @section('id',$id)
 @section('js')
@@ -92,7 +92,6 @@
                 });
             }else{
                 form.on('submit(formDemo)', function(data) {
-
                     $.ajax({
                         url:"{{url('/admin/gameUpdate')}}",
                         data:$('form').serialize(),
