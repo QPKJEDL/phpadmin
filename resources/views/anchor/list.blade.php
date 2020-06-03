@@ -57,7 +57,7 @@
         @endif
         </tbody>
     </table>
-    <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+    <input type="hidden" id="token" value="{{csrf_token()}}">
     <div class="page-wrap">
         {{$list->render()}}
     </div>
