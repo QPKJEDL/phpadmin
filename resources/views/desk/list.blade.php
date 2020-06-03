@@ -83,9 +83,9 @@
                 </td>
                 <td class="hidden-xs">
                     @if($info['status']==0)
-                        <span class="layui-btn layui-btn-mini layui-btn">正常</span>
+                        <span class="layui-btn layui-btn-mini layui-btn-danger">正常</span>
                     @else
-                        <span class="layui-btn layui-btn-mini layui-btn-danger">异常</span>
+                        <span class="layui-btn layui-btn-mini layui-btn-warm">异常</span>
                     @endif
                 </td>
                 <td class="hidden-xs">{{$info['min_limit']['c']}}/{{$info['min_limit']['cu']}}<br>{{$info['min_limit']['p']}}${{$info['min_limit']['pu']}}</td>
@@ -96,7 +96,7 @@
                 <td class="hidden-xs">{{$info['max_pair_limit']['c']}}/{{$info['max_pair_limit']['cu']}}<br>{{$info['max_pair_limit']['p']}}${{$info['max_pair_limit']['pu']}}</td>
                 <td class="hidden-xs">
                     @if($info['is_alive']==0)
-                        <span class="layui-btn layui-btn-mini layui-btn">是</span>
+                        <span class="layui-btn layui-btn-mini layui-btn-normal">是</span>
                     @else
                         <span class="layui-btn layui-btn-mini layui-btn-warm">否</span>
                     @endif</td>
