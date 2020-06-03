@@ -86,7 +86,6 @@ Route::group(['namespace' => "Admin",'middleware' => ['auth', 'permission']], fu
     Route::resource('/stopDesk',        'StopDeskController'); //停用台桌列表
 
     Route::resource('/anchor',          'AnchorController'); //主播账号列表
-    Route::post('/checkUniqueAccount',  'AnchorController@checkUniqueAccount'); //效验主播账号是否存在
     Route::post('/changeStatus',        'AnchorController@changeStatus');//账号停用/启用
 
     Route::resource('/deskLog',         'DeskLogController'); //台桌操作日志

@@ -32,7 +32,6 @@
             <input type="text" value="{{$info['remark'] or ''}}" name="remark"  placeholder="备注" autocomplete="off" class="layui-input">
         </div>
     </div>
-    <input type="hidden" id="token" value="{{csrf_token()}}">
 @endsection
 @section('id',$id)
 @section('js')
@@ -47,23 +46,7 @@
                     if(value.length==0 || value.length<6){
                         return '账号不能为空，并且长度不能小于6';
                     }
-                    $.ajax({
-                        headers:{
-                            'X-CSRF-TOKEN':$("input[name='token']").val()
-                        },
-                        url:"{{url('/admin/checkUniqueAccount')}}",
-                        type:"post",
-                        data:{
-                            'account':value
-                        },
-                        dataType:"json",
-                        success:function (res) {
-                            if(res.status==1){
-                                return res.msg;
-                            }
-                        }
-                    });
-                },
+                }
             });
             var id = $("input[name='id']").val();
             var index = parent.layer.getFrameIndex(window.name);
