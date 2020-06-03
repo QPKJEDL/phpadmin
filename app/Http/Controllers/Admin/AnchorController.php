@@ -135,13 +135,15 @@ class AnchorController extends Controller
         unset($data['_token']);
         unset($data['id']);
 
-        dump($data);
+        if(empty($data["password"])){
+            unset($data['password']);
+        }
 
-        $count = UserAccount::where('id',$id)->update($data);
+        $count = UserAccount::where('user_id',$id)->update($data);
         if ($count!==false){
-            return ['msg'=>'操作成功','status'=>1];
+            return ['msg'=>'修改成功','status'=>1];
         }else{
-            return ['msg'=>'操作失败','status'=>0];
+            return ['msg'=>'修改失败','status'=>0];
         }
     }
 

@@ -4,7 +4,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">账号：</label>
         <div class="layui-input-inline">
-            <input type="text" value="{{$info['account'] or ''}}" name="account"  placeholder="请输入登录账号" lay-verify="account" lay-reqText="请输入账号" autocomplete="off" class="layui-input">
+            <input type="text" value="{{$info['account'] or ''}}" name="account"  placeholder="请输入登录账号" lay-verify="account" lay-reqText="请输入账号" autocomplete="off" class="layui-input" @if($id!=0) disabled @endif>
         </div>
     </div>
     <div class="layui-form-item">
