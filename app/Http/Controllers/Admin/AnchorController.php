@@ -6,7 +6,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRequest;
-use App\Models\User;
+use App\Models\UserAccount;
 use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
@@ -26,8 +26,8 @@ class AnchorController extends Controller
 //        if ($request->input('account')!=''||$request->input('account')!=null){
 //            $map['account']=$request->input('account');
 //        }
-        $map['type']=2;
-        $data = User::where($map)->paginate(10)->appends($request->all());
+        $map['shenfen']=1;//0用户1主播
+        $data = UserAccount::where($map)->paginate(10)->appends($request->all());
         foreach ($data as $key=>$value){
             $data[$key]['create_time'] = date("Y-m-d H:i:s",$value['create_time']);
 
@@ -44,7 +44,7 @@ class AnchorController extends Controller
     {
         $account = $request->input('account');
         //根据账号查询当前数据是否存在
-        if(Anchor::where('account','=',$account)->exists()){
+        if(UserAccount::where(array("account"=>$account,"shenfen"=>1))->exists()){
             return ['msg'=>'账号已存在！','status'=>1];
         }else{
             return ['msg'=>"账号可以使用",'status'=>0];
@@ -56,7 +56,7 @@ class AnchorController extends Controller
      */
     public function edit($id=0)
     {
-        $data = $id?Anchor::find($id):[];
+        $data = $id?UserAccount::find($id):[];
         return view('anchor.edit',['id'=>$id,'info'=>$data]);
     }
 
@@ -68,31 +68,24 @@ class AnchorController extends Controller
     public function store(StoreRequest $request)
     {
         $account = $request->input('account');
-        if (Anchor::where('account','=',$account)->exists()){
+        if (UserAccount::where('account','=',$account)->exists()){
             return ['msg'=>'账号已存在！','status'=>0];
         }else{
             $data = $request->all();
-            $data['password']=md5(md5($data['password']));
+            $data['password']=md5($data['password']);
             unset($data['_token']);
             //获取当前认证用户
-            $user = $this->getLoginUser();
+            $user = Auth::user();
             $data['create_by']=$user['username'];
-            $data['create_time']=time();
-            $count = Anchor::insert($data);
+            $data['creatime']=time();
+            $data['savetime']=time();
+            $count = UserAccount::insert($data);
             if($count){
                 return ['msg'=>'添加成功','status'=>1];
             }else{
                 return ['msg'=>'添加失败','status'=>0];
             }
         }
-    }
-
-    /**
-     * 获取当前的认证用户
-     */
-    public function getLoginUser()
-    {
-        return Auth::user();
     }
 
     /**
@@ -103,12 +96,22 @@ class AnchorController extends Controller
     public function changeStatus(StoreRequest $request)
     {
         $id = $request->input('id');
-        $status = $request->input('status');
-        $count = Anchor::where('id','=',$id)->update(['status'=>$status]);
-        if ($count){
-            return ['msg'=>'操作成功！','status'=>1];
-        }else{
-            return ['msg'=>'操作失败！','status'=>0];
+        $isover = $request->input('isover');
+        $sql=UserAccount::where(array("user_id"=>$id,"shenfen"=>1));
+        if($isover==0){
+            $on=$sql->update(['is_over'=>$isover]);
+            if($on){
+                return ['msg'=>'开启成功！','status'=>1];
+            }else{
+                return ['msg'=>'开启失败！','status'=>0];
+            }
+        }else if($isover==1){
+            $off=$sql->update(['is_over'=>$isover]);
+            if($off){
+                return ['msg'=>'停用成功！','status'=>1];
+            }else{
+                return ['msg'=>'停用失败！','status'=>0];
+            }
         }
     }
 

@@ -81,28 +81,18 @@ Route::group(['namespace' => "Admin",'middleware' => ['auth', 'permission']], fu
     Route::post('/version_isopen',      'VersionController@is_open');//开关
     Route::resource('/notices',          'NoticeController');//公告
     Route::resource('/orderlist',       'OrderlistController');//订单列表
-    //结果标签
-    Route::resource('/label',           'GameLabelController');
-    //停用台桌列表
-    Route::resource('/stopDesk',        'StopDeskController');
-    //主播账号列表
-    Route::resource('/anchor',          'AnchorController');
-    //效验主播账号是否存在
-    Route::post('/checkUniqueAccount',  'AnchorController@checkUniqueAccount');
-    //账号停用/启用
-    Route::post('/changeStatus',        'AnchorController@changeStatus');
-    //台桌操作日志
-    Route::resource('/deskLog',         'DeskLogController');
-    //台桌修改结果日志
-    Route::resource('/deskResultLog',   'DeskUpdateResultController');
-    //ip黑名单
-    Route::resource('/ipBlacklist',     'IpBlacklistController');
-    //修改封禁ip
-    Route::post('/updateIp',            'IpBlacklistController@update');
-    //效验ip是否存在
-    Route::post('/checkUniqueIp',       'IpBlacklsaveinfoistController@checkUniqueIp');
-    //第三方支付设置
-    Route::resource('/pay',             'PayController');
+
+    Route::resource('/label',           'GameLabelController');//结果标签
+    Route::resource('/stopDesk',        'StopDeskController'); //停用台桌列表
+    Route::resource('/anchor',          'AnchorController'); //主播账号列表
+    Route::post('/checkUniqueAccount',  'AnchorController@checkUniqueAccount'); //效验主播账号是否存在
+    Route::post('/changeStatus',        'AnchorController@changeStatus');//账号停用/启用
+    Route::resource('/deskLog',         'DeskLogController'); //台桌操作日志
+    Route::resource('/deskResultLog',   'DeskUpdateResultController');//台桌修改结果日志
+    Route::resource('/ipBlacklist',     'IpBlacklistController');    //ip黑名单
+    Route::post('/updateIp',            'IpBlacklistController@update');  //修改封禁ip
+    Route::post('/checkUniqueIp',       'IpBlacklsaveinfoistController@checkUniqueIp');   //效验ip是否存在
+    Route::resource('/pay',             'PayController'); //第三方支付设置
     Route::resource('/camera',          'CameraController');//摄像头管理展示
     Route::post('/camera/update',              'CameraController@update');
     Route::resource('/webnotice',        'WebNoticeController');//web轮播公告
