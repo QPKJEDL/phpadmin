@@ -28,9 +28,10 @@ class AnchorController extends Controller
         if(true==$request->has('business_code')){
             $sql->where('user.account','=',$request->input('account'));
         }
+        $sql->where('user.shenfen','=',1);
         $data = $sql->leftJoin('user_account','user.user_id','=','user_account.user_id')
                     ->select('user_account.balance','user.user_id','user.nickname','user.account','user.is_over','user.create_by','user.creatime','user.remark')
-                    ->where("user.shenfen",1)->paginate(10)->appends($request->all());
+                    ->paginate(10)->appends($request->all());
         foreach ($data as $key=>$value){
             $data[$key]['creatime'] = date("Y-m-d H:i:s",$value['creatime']);
         }
@@ -64,6 +65,7 @@ class AnchorController extends Controller
         unset($data['_token']);
         //获取当前登录用户
         $user = Auth::user();
+        $data["shenfen"]=1;
         $data['create_by']=$user['username'];
         $data['creatime']=time();
         $data['savetime']=time();
