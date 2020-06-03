@@ -56,11 +56,11 @@
             <th class="hidden-xs">IP限制</th>
             <th class="hidden-xs">台桌推送</th>
             <td class="hidden-xs">视频状态</td>
-            <th class="hidden-xs">最小限红<br/>(平倍最小平倍)</th>
-            <th class="hidden-xs">最小和限红</th>
-            <th class="hidden-xs">最小对限红</th>
-            <th class="hidden-xs">最大限红</th>
-            <th class="hidden-xs">最大和限红</th>
+            <th class="hidden-xs">最小限红<br/>(平倍最小限红)</th>
+            <th class="hidden-xs">最大限红<br/>(平倍最大限红)</th>
+            <th class="hidden-xs">最小和限红<br/>(翻倍最小限红)</th>
+            <th class="hidden-xs">最大和限红<br/>(翻倍最大限红)</th>
+            <th class="hidden-xs">最小对限红</th>0
             <th class="hidden-xs">最大对限红</th>
             <th class="hidden-xs">主播台</th>
             <th class="hidden-xs">倒计时</th>
@@ -87,10 +87,10 @@
                     @endif
                 </td>
                 <td class="hidden-xs">{{$info['min_limit']['c']}}/{{$info['min_limit']['cu']}}<br>{{$info['min_limit']['p']}}${{$info['min_limit']['pu']}}</td>
-                <td class="hidden-xs">{{$info['min_tie_limit']['c']}}/{{$info['min_tie_limit']['cu']}}<br>{{$info['min_tie_limit']['p']}}${{$info['min_tie_limit']['pu']}}</td>
-                <td class="hidden-xs">{{$info['min_pair_limit']['c']}}/{{$info['min_pair_limit']['cu']}}<br>{{$info['min_pair_limit']['p']}}${{$info['min_pair_limit']['pu']}}</td>
                 <td class="hidden-xs">{{$info['max_limit']['c']}}/{{$info['max_limit']['cu']}}<br>{{$info['max_limit']['p']}}${{$info['max_limit']['pu']}}</td>
+                <td class="hidden-xs">{{$info['min_tie_limit']['c']}}/{{$info['min_tie_limit']['cu']}}<br>{{$info['min_tie_limit']['p']}}${{$info['min_tie_limit']['pu']}}</td>
                 <td class="hidden-xs">{{$info['max_tie_limit']['c']}}/{{$info['max_tie_limit']['cu']}}<br>{{$info['max_tie_limit']['p']}}${{$info['max_tie_limit']['pu']}}</td>
+                <td class="hidden-xs">{{$info['min_pair_limit']['c']}}/{{$info['min_pair_limit']['cu']}}<br>{{$info['min_pair_limit']['p']}}${{$info['min_pair_limit']['pu']}}</td>
                 <td class="hidden-xs">{{$info['max_pair_limit']['c']}}/{{$info['max_pair_limit']['cu']}}<br>{{$info['max_pair_limit']['p']}}${{$info['max_pair_limit']['pu']}}</td>
                 <td class="hidden-xs">
                     @if($info['is_alive']==0)
