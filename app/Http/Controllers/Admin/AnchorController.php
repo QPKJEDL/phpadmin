@@ -26,7 +26,7 @@ class AnchorController extends Controller
         $sql=UserAccount::query();
         $map['shenfen']=1;//0用户1主播
         $data = $sql->leftJoin('user_account','user.user_id','=','user_account.user_id')
-                    ->select('user_account.balance','user.user_id','user.nick_name','user.account','user.is_over','user.create_by','user.creatime','user.remark')
+                    ->select('user_account.balance','user.user_id','user.nickname','user.account','user.is_over','user.create_by','user.creatime','user.remark')
                     ->paginate(10)->appends($request->all());
         foreach ($data as $key=>$value){
             $data[$key]['creatime'] = date("Y-m-d H:i:s",$value['creatime']);
