@@ -42,8 +42,8 @@
             <col class="hidden-xs" width="150">
             <col class="hidden-xs" width="150">
             <col class="hidden-xs" width="150">
-            <col class="hidden-xs" width="100">
-            <col class="hidden-xs" width="100">
+            <col class="hidden-xs" width="150">
+            <col class="hidden-xs" width="150">
             <col class="hidden-xs" width="100">
             <col class="hidden-xs" width="100">
             <col class="hidden-xs" width="100">
@@ -75,8 +75,10 @@
                 <td class="hidden-xs">{{$info['desk_name']}}[{{$info['game_name']}}]</td>
                 <td class="hidden-xs">{{$info['ip_limit']}}</td>
                 <td class="hidden-xs">
-                    @if($info['is_push']==0)<span class="layui-btn layui-btn-xs layui-btn-warm">点击</span>
-                    @else<span class="layui-btn layui-btn-xs layui-btn-normal">电话</span>
+                    @if($info['is_push']==0)
+                        <span class="layui-btn layui-btn-mini layui-btn-warm">点击</span>
+                    @else
+                        <span class="layui-btn layui-btn-mini layui-btn-normal">电话</span>
                     @endif
                 </td>
                 <td class="hidden-xs">
