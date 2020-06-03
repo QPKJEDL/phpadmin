@@ -6,7 +6,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRequest;
-use App\Models\Anchor;
+use App\Models\User;
 use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
@@ -22,13 +22,15 @@ class AnchorController extends Controller
      */
     public function index(Request $request)
     {
-        $map = array();
-        if ($request->input('account')!=''||$request->input('account')!=null){
-            $map['account']=$request->input('account');
-        }
-        $data = Anchor::where($map)->paginate(5)->appends($request->all());
+//        $map = array();
+//        if ($request->input('account')!=''||$request->input('account')!=null){
+//            $map['account']=$request->input('account');
+//        }
+        $map['type']=2;
+        $data = User::where($map)->paginate(10)->appends($request->all());
         foreach ($data as $key=>$value){
             $data[$key]['create_time'] = date("Y-m-d H:i:s",$value['create_time']);
+
         }
         return view('anchor.list',['list'=>$data,'input'=>$request->all()]);
     }
