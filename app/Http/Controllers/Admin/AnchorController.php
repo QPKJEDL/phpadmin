@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRequest;
 use App\Models\UserAccount;
+use App\Models\UserMoney;
 use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
@@ -22,15 +23,13 @@ class AnchorController extends Controller
      */
     public function index(Request $request)
     {
-//        $map = array();
-//        if ($request->input('account')!=''||$request->input('account')!=null){
-//            $map['account']=$request->input('account');
-//        }
+        $sql=UserAccount::query();
         $map['shenfen']=1;//0用户1主播
-        $data = UserAccount::where($map)->paginate(10)->appends($request->all());
+        $data = $sql->leftJoin('user_account','user.user_id','=','user_account.user_id')
+                    ->select('user_account.balance','user.user_id','user.nick_name','user.account','user.is_over','user.create_by','user.creatime','user.remark')
+                    ->paginate(10)->appends($request->all());
         foreach ($data as $key=>$value){
-            $data[$key]['create_time'] = date("Y-m-d H:i:s",$value['create_time']);
-
+            $data[$key]['creatime'] = date("Y-m-d H:i:s",$value['creatime']);
         }
         return view('anchor.list',['list'=>$data,'input'=>$request->all()]);
     }
@@ -70,22 +69,38 @@ class AnchorController extends Controller
         $account = $request->input('account');
         if (UserAccount::where('account','=',$account)->exists()){
             return ['msg'=>'账号已存在！','status'=>0];
-        }else{
-            $data = $request->all();
-            $data['password']=md5($data['password']);
-            unset($data['_token']);
-            //获取当前认证用户
-            $user = Auth::user();
-            $data['create_by']=$user['username'];
-            $data['creatime']=time();
-            $data['savetime']=time();
-            $count = UserAccount::insert($data);
-            if($count){
-                return ['msg'=>'添加成功','status'=>1];
-            }else{
-                return ['msg'=>'添加失败','status'=>0];
-            }
         }
+        $data = $request->all();
+        $data['password']=md5($data['password']);
+        unset($data['_token']);
+        //获取当前登录用户
+        $user = Auth::user();
+        $data['create_by']=$user['username'];
+        $data['creatime']=time();
+        $data['savetime']=time();
+        DB::beginTransaction();
+        try{
+            $insertId = UserAccount::insertGetId($data);
+            if(!$insertId){
+                return ['msg'=>'主播添加失败！'];
+            }
+            $account=[
+                "user_id"=>$insertId,
+                "creatime"=>time(),
+                "savetime"=>time(),
+            ];
+            $anchor=UserMoney::insert($account);
+            if(!$anchor){
+                return ['msg'=>'主播帐户添加失败！'];
+            }
+            DB::commit();
+            return ['msg'=>'主播添加成功！','status'=>1];
+
+        }catch (Exception $e){
+            DB::rollBack();
+            return ['msg'=>'操作异常！请稍后重试！'];
+        }
+
     }
 
     /**

@@ -37,12 +37,12 @@
                 <td class="hidden-xs">{{$info['user_id']}}</td>
                 <td class="hidden-xs">{{$info['account']}}</td>
                 <td class="hidden-xs">{{$info['nick_name']}}</td>
-                <td class="hidden-xs">{{$info['balance']}}</td>
+                <td class="hidden-xs">{{$info['balance']/100}}</td>
                 <td class="hidden-xs">
                     <input type="checkbox" name="is_over" value="{{$info['user_id']}}" lay-skin="switch" lay-text="正常|停用" lay-filter="is_over" {{ $info['is_over'] == 0 ? 'checked' : '' }}>
                 </td>
                 <td class="hidden-xs">{{$info['create_by']}}</td>
-                <td class="hidden-xs">{{$info['create_time']}}</td>
+                <td class="hidden-xs">{{$info['creatime']}}</td>
                 <td class="hidden-xs">{{$info['remark']}}</td>
                 <td style="text-align: center">
                     <div class="layui-inline">
