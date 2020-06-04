@@ -349,7 +349,7 @@
             if(id==0){
                 form.on('submit(formDemo)', function() {
                     $.ajax({
-                        url:"{{url('/admin/agent/agent')}}",
+                        url:"{{url('/admin/agent')}}",
                         data:data,
                         type:'post',
                         dataType:'json',
@@ -371,7 +371,7 @@
             }else{
                 form.on('submit(formDemo)', function() {
                     $.ajax({
-                        url:"{{url('/admin/agent/agentUpdate')}}",
+                        url:"{{url('/admin/agentUpdate')}}",
                         data:data,
                         type:'post',
                         dataType:'json',
