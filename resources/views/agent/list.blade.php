@@ -1,7 +1,7 @@
 @section('title', '代理列表')
 @section('header')
     <div class="layui-inline">
-    <button class="layui-btn layui-btn-small layui-btn-normal addBtn" id="addAgent" data-desc="添加代理" data-url="{{url('/admin/agent/0/edit')}}"><i class="layui-icon">&#xe654;</i></button>
+    <button class="layui-btn layui-btn-small layui-btn-normal" id="addAgent" data-desc="添加代理" data-url="{{url('/admin/agent/0/edit')}}"><i class="layui-icon">&#xe654;</i></button>
     <button class="layui-btn layui-btn-small layui-btn-warm freshBtn"><i class="layui-icon">&#x1002;</i></button>
     </div>
 @endsection
