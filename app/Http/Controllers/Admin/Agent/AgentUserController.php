@@ -105,12 +105,8 @@ class AgentUserController extends Controller
     public function destroy($id){
         $agent = Agent::where('id','=',$id)->update(array("del_flag"=>1));
         if($agent){
-            $user=UserAccount::where('agent_id',$id)->update(array("del_flag"=>1));
-            if($user){
-                return ['msg'=>'删除成功','status'=>1];
-            }else{
-                return ['msg'=>'删除失败','status'=>0];
-            }
+            UserAccount::where('agent_id',$id)->update(array("del_flag"=>1));
+            return ['msg'=>'删除成功','status'=>1];
         }else{
             return ['msg'=>'删除失败','status'=>0];
         }
