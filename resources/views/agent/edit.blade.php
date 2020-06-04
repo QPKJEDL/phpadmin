@@ -2,19 +2,19 @@
 @section('content')
     <div class="layui-form-item">
         <label class="layui-form-label">用户名：</label>
-        <div class="layui-input-block">
+        <div class="layui-input-inline">
             <input type="text" value="{{$info['username'] or ''}}" name="username" required lay-verify="user_name" placeholder="请输入用户名(请不要出现汉字)" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">名称：</label>
-        <div class="layui-input-block">
+        <div class="layui-input-inline">
             <input type="text" value="{{$info['nickname'] or ''}}" name="nickname" required lay-verify="required" placeholder="请输入名称" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">角色：</label>
-        <div class="layui-input-block">
+        <div class="layui-input-inline">
             <select name="user_role" lay-verify="required">
                 <option value=""></option>
                 @foreach($roles as $role)
@@ -27,7 +27,7 @@
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">状态：</label>
-        <div class="layui-input-block">
+        <div class="layui-input-inline">
             <input type="radio" name="status" value="0" title="正常"
                    @if(!isset($info['status']))
                    checked
@@ -41,27 +41,27 @@
     @if($info==null)
         <div class="layui-form-item">
             <label class="layui-form-label">密码：</label>
-            <div class="layui-input-block">
+            <div class="layui-input-inline">
                 <input type="password" name="pwd" lay-verify="pwd" placeholder="请输入6-12位数字加字母密码" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">确认密码：</label>
-            <div class="layui-input-block">
+            <div class="layui-input-inline">
                 <input type="password" name="pwd_confirmation" lay-verify="pwd_confirmation" placeholder="请确认密码" autocomplete="off" class="layui-input">
             </div>
         </div>
     @endif
     <div class="layui-form-item">
         <label class="layui-form-label">IP白名单：</label>
-        <div class="layui-input-block">
+        <div class="layui-input-inline">
             <textarea placeholder="请填写IP白名单（非必填）" name="ip_config" class="layui-textarea" style="resize: none">{{$info['ip_config'] or ''}}</textarea>
         </div>
     </div>
     @if($info!=null)
         <div class="layui-form-item">
             <label class="layui-form-label">抽水权限：</label>
-            <div class="layui-input-block">
+            <div class="layui-input-inline">
                 <input type="checkbox" id="baccarat" name="baccarat" lay-skin="primary" title="百家乐" {{isset($info['baccarat'])&&$info['baccarat']==1?'checked':''}}>
                 <input type="checkbox" id="dragon_tiger" name="dragon_tiger" lay-skin="primary" title="龙虎" {{isset($info['dragon_tiger'])&&$info['dragon_tiger']==1?'checked':''}}>
                 <input type="checkbox" id="niuniu" name="niuniu" lay-skin="primary" title="牛牛" {{isset($info['niuniu'])&&$info['niuniu']==1?'checked':''}}>
@@ -72,7 +72,7 @@
     @else
         <div class="layui-form-item">
             <label class="layui-form-label">抽水权限：</label>
-            <div class="layui-input-block">
+            <div class="layui-input-inline">
                 <input type="checkbox" name="baccarat" id="baccarat" lay-skin="primary" title="百家乐">
                 <input type="checkbox" name="dragon_tiger" id="dragon_tiger" lay-skin="primary" title="龙虎">
                 <input type="checkbox" name="niuniu" id="niuniu" lay-skin="primary" title="牛牛">
@@ -82,44 +82,44 @@
         </div>
     @endif
     <div class="layui-form-item">
-        <div class="layui-block">
+        <div class="layui-inline">
             <label class="layui-form-label">最小限红</label>
-            <div class="layui-input-block" style="width: 100px;">
+            <div class="layui-input-inline" style="width: 100px;">
                 <input type="number" name="limit[min]" lay-verify="minLimit" value="10"  placeholder="￥" autocomplete="off" class="layui-input">
             </div>
             <div class="layui-form-mid">最大限红</div>
-            <div class="layui-input-block" style="width: 100px;">
+            <div class="layui-input-inline" style="width: 100px;">
                 <input type="number" name="limit[max]" lay-verify="maxLimit" value="50000" placeholder="￥" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
     <div class="layui-form-item">
-        <div class="layui-block">
+        <div class="layui-inline">
             <label class="layui-form-label">最小和限红</label>
-            <div class="layui-input-block" style="width: 100px;">
+            <div class="layui-input-inline" style="width: 100px;">
                 <input type="number" name="limit[tieMin]" lay-verify="minPairLimit" value="10" placeholder="￥" autocomplete="off" class="layui-input">
             </div>
             <div class="layui-form-mid">最大和限红</div>
-            <div class="layui-input-block" style="width: 100px;">
+            <div class="layui-input-inline" style="width: 100px;">
                 <input type="number" name="limit[tieMax]" lay-verify="maxPairLimit" value="5000" placeholder="￥" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
     <div class="layui-form-item">
-        <div class="layui-block">
+        <div class="layui-inline">
             <label class="layui-form-label">最小对限红</label>
-            <div class="layui-input-block" style="width: 100px;">
+            <div class="layui-input-inline" style="width: 100px;">
                 <input type="number" name="limit[pairMin]" lay-verify="minTieLimit" value="10"  placeholder="￥" autocomplete="off" class="layui-input">
             </div>
             <div class="layui-form-mid">最大对限红</div>
-            <div class="layui-input-block" style="width: 100px;">
+            <div class="layui-input-inline" style="width: 100px;">
                 <input type="number" name="limit[pairMax]" lay-verify="maxTieLimit" value="5000"  placeholder="￥" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">状态：</label>
-        <div class="layui-input-block">
+        <div class="layui-input-inline">
             <input type="radio" name="data_permission" value="2" title="本人及以下权限"
                    @if(!isset($info['data_permission']))
                    checked
@@ -132,30 +132,30 @@
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">百家乐洗码率：</label>
-        <div class="layui-input-block">
+        <div class="layui-input-inline">
             <input type="number" name="fee[baccarat]" value="0.9" required lay-verify="required" placeholder="请输入百家乐洗码率" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">龙虎洗码率：</label>
-        <div class="layui-input-block">
+        <div class="layui-input-inline">
             <input type="number" name="fee[dragonTiger]" value="0.9" required lay-verify="required" placeholder="请输入龙虎洗码率" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">牛牛洗码率：</label>
-        <div class="layui-input-block">
+        <div class="layui-input-inline">
             <input type="number" name="fee[niuniu]" value="0.9" required lay-verify="required" placeholder="请输入牛牛洗码率" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">三公洗码率：</label>
-        <div class="layui-input-block">
+        <div class="layui-input-inline">
             <input type="number" name="fee[sangong]" value="0.9" required lay-verify="required" placeholder="请输入三公洗码率" autocomplete="off" class="layui-input">
         </div>
     </div><div class="layui-form-item">
         <label class="layui-form-label">A89洗码率：</label>
-        <div class="layui-input-block">
+        <div class="layui-input-inline">
             <input type="number" name="fee[A89]" value="0.9" required lay-verify="required" placeholder="请输入A89洗码率" autocomplete="off" class="layui-input">
         </div>
     </div>
