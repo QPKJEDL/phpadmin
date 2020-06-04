@@ -82,37 +82,37 @@
         </div>
     @endif
     <div class="layui-form-item">
-        <div class="layui-block">
+        <div class="layui-inline">
             <label class="layui-form-label">最小限红</label>
-            <div class="layui-input-block" style="width: 100px;">
+            <div class="layui-input-inline" style="width: 100px;">
                 <input type="number" name="limit[min]" lay-verify="minLimit" value="10"  placeholder="￥" autocomplete="off" class="layui-input">
             </div>
-            <div class="layui-form-label">最大限红</div>
-            <div class="layui-input-block" style="width: 100px;">
+            <div class="layui-form-mid">最大限红</div>
+            <div class="layui-input-inline" style="width: 100px;">
                 <input type="number" name="limit[max]" lay-verify="maxLimit" value="50000" placeholder="￥" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
     <div class="layui-form-item">
-        <div class="layui-block">
+        <div class="layui-inline">
             <label class="layui-form-label">最小和限红</label>
-            <div class="layui-input-block" style="width: 100px;">
+            <div class="layui-input-inline" style="width: 100px;">
                 <input type="number" name="limit[tieMin]" lay-verify="minPairLimit" value="10" placeholder="￥" autocomplete="off" class="layui-input">
             </div>
-            <div class="layui-form-label">最大和限红</div>
-            <div class="layui-input-block" style="width: 100px;">
+            <div class="layui-form-mid">最大和限红</div>
+            <div class="layui-input-inline" style="width: 100px;">
                 <input type="number" name="limit[tieMax]" lay-verify="maxPairLimit" value="5000" placeholder="￥" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
     <div class="layui-form-item">
-        <div class="layui-block">
+        <div class="layui-inline">
             <label class="layui-form-label">最小对限红</label>
-            <div class="layui-input-block" style="width: 100px;">
+            <div class="layui-input-inline" style="width: 100px;">
                 <input type="number" name="limit[pairMin]" lay-verify="minTieLimit" value="10"  placeholder="￥" autocomplete="off" class="layui-input">
             </div>
-            <div class="layui-form-label">最大对限红</div>
-            <div class="layui-input-block" style="width: 100px;">
+            <div class="layui-form-mid">最大对限红</div>
+            <div class="layui-input-inline" style="width: 100px;">
                 <input type="number" name="limit[pairMax]" lay-verify="maxTieLimit" value="5000"  placeholder="￥" autocomplete="off" class="layui-input">
             </div>
         </div>
