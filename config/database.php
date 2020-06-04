@@ -108,7 +108,7 @@ return [
             'password' => "lcf2954626",
             'port' => '6379',
             'database' => 0,
-            'prefix' => "hq_",
+            'prefix' => "",
         ],
 
     ],
