@@ -346,6 +346,7 @@
             }else{
                 data.push({"name":"A89","value":"0"});
             }
+            console.log(data)
             if(id==0){
                 form.on('submit(formDemo)', function() {
                     $.ajax({
