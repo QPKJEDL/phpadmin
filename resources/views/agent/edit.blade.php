@@ -131,7 +131,7 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label" style="width: 120px">百家乐洗码率：</label>
+        <label class="layui-form-label">百家乐洗码率：</label>
         <div class="layui-input-inline">
             <input type="number" name="fee[baccarat]" value="0.9" required lay-verify="required" placeholder="请输入百家乐洗码率" autocomplete="off" class="layui-input">
         </div>
