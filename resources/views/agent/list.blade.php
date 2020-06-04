@@ -79,7 +79,6 @@
             $('.stop').click(function () {
                 var that = $(this);
                 var id=that.attr('data-id');
-                console.log(id)
                 layer.confirm('确定要停用吗？',{title:'提示'},function (index) {
                         $.ajax({
                             headers: {

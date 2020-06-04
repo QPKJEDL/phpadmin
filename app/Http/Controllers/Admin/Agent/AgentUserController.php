@@ -115,7 +115,8 @@ class AgentUserController extends Controller
     /*
      * 停用
      */
-    public function stop($id){
+    public function stop(StoreRequest $request){
+        $id=$request->input('id');
         $stop = Agent::where('id','=',$id)->update(array("status"=>1));
         if($stop){
             return ['msg'=>'删除成功','status'=>1];
