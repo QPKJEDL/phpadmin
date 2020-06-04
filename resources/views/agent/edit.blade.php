@@ -55,7 +55,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">IP白名单：</label>
         <div class="layui-input-block">
-            <textarea placeholder="请填写IP白名单（非必填）" name="ip_config" class="layui-textarea">{{$info['ip_config'] or ''}}</textarea>
+            <textarea placeholder="请填写IP白名单（非必填）" name="ip_config" class="layui-textarea" style="resize: none">{{$info['ip_config'] or ''}}</textarea>
         </div>
     </div>
     @if($info!=null)
@@ -85,11 +85,11 @@
         <div class="layui-inline">
             <label class="layui-form-label">最小限红</label>
             <div class="layui-input-inline" style="width: 100px;">
-                <input type="number" lay-verify="minLimit" value="10" disabled="disabled" placeholder="￥" autocomplete="off" class="layui-input">
+                <input type="number" lay-verify="minLimit" value="10"  placeholder="￥" autocomplete="off" class="layui-input">
             </div>
             <div class="layui-form-mid">最大限红</div>
             <div class="layui-input-inline" style="width: 100px;">
-                <input type="number" lay-verify="maxLimit" value="50000" disabled="disabled" placeholder="￥" autocomplete="off" class="layui-input">
+                <input type="number" lay-verify="maxLimit" value="50000" placeholder="￥" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
@@ -97,11 +97,11 @@
         <div class="layui-inline">
             <label class="layui-form-label">最小和限红</label>
             <div class="layui-input-inline" style="width: 100px;">
-                <input type="number" lay-verify="minPairLimit" value="10" disabled="disabled" placeholder="￥" autocomplete="off" class="layui-input">
+                <input type="number" lay-verify="minPairLimit" value="10" placeholder="￥" autocomplete="off" class="layui-input">
             </div>
             <div class="layui-form-mid">最大和限红</div>
             <div class="layui-input-inline" style="width: 100px;">
-                <input type="number" lay-verify="maxPairLimit" value="5000" disabled="disabled" placeholder="￥" autocomplete="off" class="layui-input">
+                <input type="number" lay-verify="maxPairLimit" value="5000" placeholder="￥" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
@@ -109,11 +109,11 @@
         <div class="layui-inline">
             <label class="layui-form-label">最小对限红</label>
             <div class="layui-input-inline" style="width: 100px;">
-                <input type="number" lay-verify="minTieLimit" value="10" disabled="disabled" placeholder="￥" autocomplete="off" class="layui-input">
+                <input type="number" lay-verify="minTieLimit" value="10"  placeholder="￥" autocomplete="off" class="layui-input">
             </div>
             <div class="layui-form-mid">最大对限红</div>
             <div class="layui-input-inline" style="width: 100px;">
-                <input type="number" lay-verify="maxTieLimit" value="5000" disabled="disabled" placeholder="￥" autocomplete="off" class="layui-input">
+                <input type="number" lay-verify="maxTieLimit" value="5000"  placeholder="￥" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
@@ -131,7 +131,7 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">百家乐洗码率：</label>
+        <label class="layui-form-label" style="width: 120px">百家乐洗码率：</label>
         <div class="layui-input-inline">
             <input type="number" name="fee[baccarat]" value="0.9" required lay-verify="required" placeholder="请输入百家乐洗码率" autocomplete="off" class="layui-input">
         </div>
