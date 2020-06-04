@@ -50,42 +50,43 @@
                             </div>
                         </a>
                     </li>
-                    <li class="col-sm-12 col-md-4 col-xs-12">
-                        <a href="javascript:;" class="clearfix">
-                            <div class="icon-bg bg-green f-l">
-                                <span class="iconfont">&#xe605;</span>
-                            </div>
-                            <div class="right-text-con">
-                                <p class="name">今日成功率</p>
-                                <p><span class="color-green">0%</span></p>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="col-sm-12 col-md-4 col-xs-12">
-                        <a href="javascript:;" class="clearfix">
-                            <div class="icon-bg bg-green f-l">
-                                <span class="iconfont">&#xe605;</span>
-                            </div>
-                            <div class="right-text-con">
-                                <p class="name">今日成交金额</p>
-                                <p><span class="color-green">0元</span></p>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="col-sm-12 col-md-4 col-xs-12">
-                        <a href="javascript:;" class="clearfix">
-                            <div class="icon-bg bg-green f-l">
-                                <span class="iconfont">&#xe605;</span>
-                            </div>
-                            <div class="right-text-con">
-                                <p class="name">累计成交金额</p>
-                                <p><span class="color-green">0元</span></p>
-                            </div>
-                        </a>
-                    </li>
                 </ul>
             </div>
+            <!--服务器信息-->
+            <div class="server-panel panel panel-default">
+                <div class="panel-header">服务器信息</div>
+                <div class="panel-body clearfix">
+                    <div class="col-md-2">
+                        <p class="title">服务器环境</p>
+                        <span class="info">{{$sysinfo['web_server']}}</span>
+                    </div>
+                    <div class="col-md-2">
+                        <p class="title">服务器IP地址</p>
+                        <span class="info">{{$sysinfo['ip']}}</span>
+                    </div>
+                    <div class="col-md-2">
+                        <p class="title">服务器域名</p>
+                        <span class="info">{{$sysinfo['domain']}}</span>
+                    </div>
+                    <div class="col-md-2">
+                        <p class="title"> PHP版本</p>
+                        <span class="info">{{$sysinfo['phpv']}}</span>
+                    </div>
+                    <div class="col-md-2">
+                        <p class="title">数据库信息</p>
+                        <span class="info">{{$sysinfo['mysql_version']}}</span>
+                    </div>
+                    <div class="col-md-2">
+                        <p class="title">服务器当前时间</p>
+                        <span class="info">{{$sysinfo['time']}}</span>
+                    </div>
+                </div>
+            </div>
         </div>
+
+
+
+
     </div>
 </div>
 <script src="/static/admin/layui/layui.js" type="text/javascript" charset="utf-8"></script>
