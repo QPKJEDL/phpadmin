@@ -69,12 +69,30 @@ class AgentUserController extends Controller
         }
 
     }
-
-    public function insertUserRole($agentId,$roleId){
-        $data['user_id']=$agentId;
-        $data['role_id']=$roleId;
-        AgentRoleUser::insert($data);
+    public function update(StoreRequest $request){
+        $id = $request->input('id');
+        $data = $request->all();
+        unset($data['_token']);
+        unset($data['id']);
+        if(empty($data["pwd"])){
+            unset($data['pwd']);
+            unset($data['pwd_confirmation']);
+        }
+        $data['fee']=json_encode($data['fee']);
+        $data['limit']=json_encode($data['limit']);
+        $data['bjlbets_fee']=json_encode($data['bjlbets_fee']);
+        $data['lhbets_fee']=json_encode($data['lhbets_fee']);
+        $data['nnbets_fee']=json_encode($data['nnbets_fee']);
+        $data['a89bets_fee']=json_encode($data['a89bets_fee']);
+        $data['sgbets_fee']=json_encode($data['sgbets_fee']);
+        $up=Agent::where('id',$id)->update($data);
+        if($up!==false){
+            return ['msg'=>'修改成功','status'=>1];
+        }else{
+            return ['msg'=>'修改失败','status'=>0];
+        }
     }
+
     /**
      * 删除
      */
@@ -85,5 +103,14 @@ class AgentUserController extends Controller
         }else{
             return ['msg'=>'删除失败','status'=>0];
         }
+    }
+
+    /*
+    * 添加代理
+    */
+    public function insertUserRole($agentId,$roleId){
+        $data['user_id']=$agentId;
+        $data['role_id']=$roleId;
+        AgentRoleUser::insert($data);
     }
 }
