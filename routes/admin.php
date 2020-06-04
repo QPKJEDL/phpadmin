@@ -96,7 +96,7 @@ Route::group(['namespace' => "Admin",'middleware' => ['auth', 'permission']], fu
     Route::post('/checkUniqueIp',       'IpBlacklsaveinfoistController@checkUniqueIp');   //效验ip是否存在
     Route::resource('/pay',             'PayController'); //第三方支付设置
     Route::resource('/camera',          'CameraController');//摄像头管理展示
-    Route::post('/camera/update',              'CameraController@update');
+    Route::post('/camera/update',      'CameraController@update');
     Route::resource('/webnotice',        'WebNoticeController');//web轮播公告
     Route::resource('/gamenotice',       'GameNoticeController');//游戏轮播公告
     Route::resource('/entrance',         'EntranceNoticeController');//入口公告
@@ -111,13 +111,16 @@ Route::group(['namespace' => "Admin",'middleware' => ['auth', 'permission']], fu
     Route::resource('/forbidden',       'ForbiddenController');//禁言名单
     Route::resource('/userDesk',        'UserDeskController');//特定用户限红
     Route::post('/userDesk/update',     'UserDeskController@update');//修改
+
     //代理模块路由
     Route::group(['namespace'=>'Agent','middleware' => ['auth', 'permission']],function(){
         Route::resource('/agent','AgentUserController');//代理列表
+        Route::post('/agentUpdate',       'AgentUserController@update');//代理账号编辑
+
         Route::resource('/agentRole','AgentRoleController');//代理角色
         Route::resource('/agentMenu','AgentMenuController');
         Route::post('/agentRole/update','AgentRoleController@update');
-        Route::post('/agentUpdate',       'AgentUserController@update');//代理账号编辑
+
     });
 });
 
