@@ -46,7 +46,11 @@
                 <td>
                     <div class="layui-inline">
                         <button class="layui-btn layui-btn-small layui-btn-normal edit-btn" data-id="{{$info['id']}}" data-desc="修改代理" data-url="{{url('/admin/agent/'. $info['id'] .'/edit')}}">编辑</button>
-                        <button class="layui-btn layui-btn-small layui-btn-warm stop" data-id="{{$info['id']}}" data-desc="代理停用">停用</button>
+                        @if($info['status']==0)
+                            <button class="layui-btn layui-btn-small layui-btn-warm stop" data-id="{{$info['id']}}" data-desc="代理停用">停用</button>
+                        @elseif($info['status']==1)
+                            <button class="layui-btn layui-btn-small layui-btn start" data-id="{{$info['id']}}" data-desc="代理启用">启用</button>
+                        @endif
                         <button class="layui-btn layui-btn-small layui-btn-danger del-btn" data-id="{{$info['id']}}" data-url="{{url('/admin/agent/'.$info['id'])}}">删除</button>
                     </div>
                 </td>
@@ -85,6 +89,38 @@
                                 'X-CSRF-TOKEN': $('#token').val()
                             },
                             url:"{{url('/admin/agentStop')}}",
+                            data:{
+                                "id":id,
+                            },
+                            type:"post",
+                            dataType:"json",
+                            success:function (res) {
+                                if(res.status==1){
+                                    layer.msg(res.msg,{icon:6,time:1000},function () {
+                                        location.reload();
+                                    });
+
+                                }else{
+                                    layer.msg(res.msg,{icon:5,time:1000},function(){
+                                        location.reload();
+                                    });
+
+                                }
+                            }
+                        });
+                    }
+                );
+            });
+            //启用
+            $('.start').click(function () {
+                var that = $(this);
+                var id=that.attr('data-id');
+                layer.confirm('确定要启用吗？',{title:'提示'},function (index) {
+                        $.ajax({
+                            headers: {
+                                'X-CSRF-TOKEN': $('#token').val()
+                            },
+                            url:"{{url('/admin/agentStart')}}",
                             data:{
                                 "id":id,
                             },

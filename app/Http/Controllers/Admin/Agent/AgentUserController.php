@@ -125,6 +125,18 @@ class AgentUserController extends Controller
         }
     }
     /*
+     * 启用
+     */
+    public function start(StoreRequest $request){
+        $id=$request->input('id');
+        $stop = Agent::where('id','=',$id)->update(array("status"=>0));
+        if($stop){
+            return ['msg'=>'启用成功','status'=>1];
+        }else{
+            return ['msg'=>'启用失败','status'=>0];
+        }
+    }
+    /*
     * 添加代理
     */
     public function insertUserRole($agentId,$roleId){
