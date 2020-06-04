@@ -1,7 +1,7 @@
 @section('title', '代理列表')
 @section('header')
     <div class="layui-inline">
-    <button class="layui-btn layui-btn-small layui-btn-normal" id="addAgent" data-desc="添加代理" data-url="{{url('/admin/agent/0/edit')}}"><i class="layui-icon">&#xe654;</i></button>
+    <button class="layui-btn layui-btn-small layui-btn-normal addBtn" id="addAgent" data-desc="添加代理" data-url="{{url('/admin/agent/0/edit')}}"><i class="layui-icon">&#xe654;</i></button>
     <button class="layui-btn layui-btn-small layui-btn-warm freshBtn"><i class="layui-icon">&#x1002;</i></button>
     </div>
 @endsection
@@ -45,7 +45,7 @@
                 <td class="hidden-xs">{{$info['created_at']}}</td>
                 <td>
                     <div class="layui-inline">
-                        <button class="layui-btn layui-btn-small layui-btn-normal update" data-id="{{$info['id']}}" data-desc="修改用户" data-url="{{url('/admin/agent/'. $info['id'] .'/edit')}}"><i class="layui-icon">&#xe642;</i></button>
+                        <button class="layui-btn layui-btn-small layui-btn-normal edit-btn" data-id="{{$info['id']}}" data-desc="修改用户" data-url="{{url('/admin/agent/'. $info['id'] .'/edit')}}"><i class="layui-icon">&#xe642;</i></button>
                         <button class="layui-btn layui-btn-small layui-btn-danger del-btn" data-id="{{$info['id']}}" data-url="{{url('/admin/agent/'.$info['id'])}}"><i class="layui-icon">&#xe640;</i></button>
                     </div>
                 </td>
@@ -66,45 +66,6 @@
             form.render();
             form.on('submit(formDemo)', function(data) {
                 console.log(data);
-            });
-            //添加台桌
-            $("#addAgent").click(function () {
-                var url = $(this).attr("data-url");
-                var index = layer.open({
-                    type :2,
-                    title:'添加台桌',
-                    fix: false,
-                    id:'TWork',
-                    content:url,
-                    area: ['800px', '600px'],//宽高不影响最大化
-                    //不固定
-                    maxmin: true,
-                    shade:0.3,
-                    time:0,
-                    //弹层外区域关闭
-                    shadeClose:true,
-                })
-                layer.full(index);
-                return false
-            });
-            $(".update").click(function () {
-                var url = $(this).attr("data-url");
-                var index = layer.open({
-                    type :2,
-                    title:'修改台桌',
-                    fix: false,
-                    id:'TWor1k',
-                    content:url,
-                    area: ['800px', '600px'],//宽高不影响最大化
-                    //不固定
-                    maxmin: true,
-                    shade:0.3,
-                    time:0,
-                    //弹层外区域关闭
-                    shadeClose:true,
-                })
-                layer.full(index);
-                return false
             });
         });
     </script>
