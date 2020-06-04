@@ -84,7 +84,6 @@ class AgentUserController extends Controller
             unset($data['pwd']);
             unset($data['pwd_confirmation']);
         }
-        dump($data);
         $data['fee']=json_encode($data['fee']);
         $data['limit']=json_encode($data['limit']);
         $data['bjlbets_fee']=json_encode($data['bjlbets_fee']);
