@@ -176,11 +176,11 @@
             </div>
         </div>
         <div class="layui-inline">
-            <div class="layui-form-mid">闲对赔率</div>
+            <div class="layui-form-mid" style="padding-left: 64px">闲对赔率</div>
             <div class="layui-input-inline" style="width: 100px;">
                 <input type="number" name="bjlbets_fee[playerPair]" lay-verify="maxTieLimit" value="5000"  placeholder="￥" autocomplete="off" class="layui-input">
             </div>
-            <div class="layui-form-mid">和赔率</div>
+            <div class="layui-form-mid" style="padding-left: 14px">和赔率</div>
             <div class="layui-input-inline" style="width: 100px;">
                 <input type="number" name="bjlbets_fee[tie]" lay-verify="maxTieLimit" value="5000"  placeholder="￥" autocomplete="off" class="layui-input">
             </div>
