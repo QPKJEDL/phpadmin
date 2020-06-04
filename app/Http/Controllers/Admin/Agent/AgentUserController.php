@@ -30,6 +30,7 @@ class AgentUserController extends Controller
     {
         $data = $request->all();
         $roleId = $request->input('user_role');
+        unset($data['id']);
         unset($data['_token']);
         unset($data['user_role']);
         //判断两次密码是否相同

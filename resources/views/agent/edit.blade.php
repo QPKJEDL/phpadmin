@@ -221,6 +221,35 @@
         </div>
     </div>
 
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" style="width: 100px;">A89：平倍赔率</label>
+            <div class="layui-input-inline" style="width: 100px;">
+                <input type="number" name="a89bets_fee[Equal]" lay-verify="minTieLimit" value="0.97"  autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid">超倍赔率</div>
+            <div class="layui-input-inline" style="width: 100px;">
+                <input type="number" name="a89bets_fee[SuperDouble]" lay-verify="maxTieLimit" value="0.97"  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" style="width: 100px;">三公：平倍赔率</label>
+            <div class="layui-input-inline" style="width: 100px;">
+                <input type="number" name="sgbets_fee[Equal]" lay-verify="minTieLimit" value="0.97"  autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid">翻倍赔率</div>
+            <div class="layui-input-inline" style="width: 100px;">
+                <input type="number" name="sgbets_fee[Double]" lay-verify="maxTieLimit" value="0.97"  autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid">超倍赔率</div>
+            <div class="layui-input-inline" style="width: 100px;">
+                <input type="number" name="sgbets_fee[SuperDouble]" lay-verify="maxTieLimit" value="0.97"  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
 
 
 @endsection
