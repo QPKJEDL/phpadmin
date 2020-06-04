@@ -186,6 +186,25 @@
             </div>
         </div>
     </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" style="width: 100px;">龙虎：龙赔率</label>
+            <div class="layui-input-inline" style="width: 100px;">
+                <input type="number" name="bjlbets_fee[banker]" lay-verify="minTieLimit" value="0.97"  autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid">虎赔率</div>
+            <div class="layui-input-inline" style="width: 100px;">
+                <input type="number" name="bjlbets_fee[bankerPair]" lay-verify="maxTieLimit" value="0.97"  autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid">和赔率</div>
+            <div class="layui-input-inline" style="width: 100px;">
+                <input type="number" name="bjlbets_fee[player]" lay-verify="maxTieLimit" value="8"  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+
 @endsection
 @section('id',$id)
 @section('js')
