@@ -160,7 +160,7 @@ class DeskController extends Controller
         $data['max_pair_limit']=json_encode($max_pair_limit);
         $update = Desk::where('id',$id)->update($data);
         if($update!==false){
-            $deskInfo = $id?Desk::find($id):[];
+            //$deskInfo = $id?Desk::find($id):[];
             $desk=Redis::get("desk_info_".$id);
             $deskData=json_decode($desk,true);
             $deskData["CountDown"]=$data["count_down"];
