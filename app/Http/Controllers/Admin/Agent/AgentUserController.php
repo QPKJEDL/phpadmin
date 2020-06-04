@@ -24,7 +24,7 @@ class AgentUserController extends Controller
     public function edit($id=0){
         $data = $id?Agent::find($id):[];
         $info = AgentRoleUser::where('user_id','=',$id)->first();
-
+        dump($info);
         $info['fee']=json_decode($info['fee'],true);
         $info['limit']=json_decode($info['limit'],true);
         $info['bjlbets_fee']=json_decode($info['bjlbets_fee'],true);
