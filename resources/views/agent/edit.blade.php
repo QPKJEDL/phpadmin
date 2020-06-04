@@ -164,23 +164,23 @@
         <div class="layui-inline">
             <label class="layui-form-label">百家乐:</label>
             <label class="layui-form-label">庄赔率</label>
-            <div class="layui-input-inline">
+            <div class="layui-input-inline" style="width: 100px;">
                 <input type="number" name="bjlbets_fee[banker]" lay-verify="minTieLimit" value="10"  placeholder="￥" autocomplete="off" class="layui-input">
             </div>
             <div class="layui-form-mid">庄对赔率</div>
-            <div class="layui-input-inline">
+            <div class="layui-input-inline" style="width: 100px;">
                 <input type="number" name="bjlbets_fee[bankerPair]" lay-verify="maxTieLimit" value="5000"  placeholder="￥" autocomplete="off" class="layui-input">
             </div>
             <div class="layui-form-mid">闲赔率</div>
-            <div class="layui-input-inline">
+            <div class="layui-input-inline" style="width: 100px;">
                 <input type="number" name="bjlbets_fee[player]" lay-verify="maxTieLimit" value="5000"  placeholder="￥" autocomplete="off" class="layui-input">
             </div>
             <div class="layui-form-mid">闲对赔率</div>
-            <div class="layui-input-inline">
+            <div class="layui-input-inline" style="width: 100px;">
                 <input type="number" name="bjlbets_fee[playerPair]" lay-verify="maxTieLimit" value="5000"  placeholder="￥" autocomplete="off" class="layui-input">
             </div>
             <div class="layui-form-mid">和赔率</div>
-            <div class="layui-input-inline">
+            <div class="layui-input-inline" style="width: 100px;">
                 <input type="number" name="bjlbets_fee[tie]" lay-verify="maxTieLimit" value="5000"  placeholder="￥" autocomplete="off" class="layui-input">
             </div>
         </div>
