@@ -35,21 +35,23 @@ class AgentUserController extends Controller
         //判断两次密码是否相同
         if($data['pwd']!=$data['pwd_confirmation']){
             return ['msg'=>'两次密码不同','status'=>0];
-        }else{
-            //密码加密
-            $data['password']=bcrypt($data['pwd']);
-            unset($data['pwd']);
-            unset($data['pwd_confirmation']);
-            $data['created_at']=date('Y-m-d H:i:s',time());
-            $data['fee']=json_encode($data['fee']);
-            $count = Agent::insertGetId($data);
-            if ($count){
-                $this->insertUserRole($count,$roleId);
-                return ['msg'=>'操作成功','status'=>1];
-            }else{
-                return ['msg'=>'操作失败','status'=>0];
-            }
         }
+        dump($data);
+        //密码加密
+        $data['password']=bcrypt($data['pwd']);
+        unset($data['pwd']);
+        unset($data['pwd_confirmation']);
+        $data['created_at']=date('Y-m-d H:i:s',time());
+        $data['fee']=json_encode($data['fee']);
+        $data['limit']=json_encode($data['limit']);
+        $count = Agent::insertGetId($data);
+        if ($count){
+            $this->insertUserRole($count,$roleId);
+            return ['msg'=>'操作成功','status'=>1];
+        }else{
+            return ['msg'=>'操作失败','status'=>0];
+        }
+
     }
 
     public function insertUserRole($agentId,$roleId){
