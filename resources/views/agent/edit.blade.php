@@ -3,7 +3,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">用户名：</label>
         <div class="layui-input-block">
-            <input type="text" value="{{$info['username'] or ''}}" name="username" required lay-verify="user_name" placeholder="请输入用户名(请不要出现汉字)" autocomplete="off" class="layui-input">
+            <input type="text" value="{{$info['username'] or ''}}" name="username" required lay-verify="user_name" placeholder="请输入用户名(请不要出现汉字)" autocomplete="off" class="layui-input" @if($id!=0) disabled @endif>
         </div>
     </div>
     <div class="layui-form-item">
@@ -55,7 +55,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">IP白名单：</label>
         <div class="layui-input-block">
-            <textarea placeholder="请填写IP白名单（非必填）" name="ip_config" class="layui-textarea">{{$info['ip_config'] or ''}}</textarea>
+            <textarea placeholder="请填写IP白名单（非必填）" name="ip_config" class="layui-textarea" style="resize: none">{{$info['ip_config'] or ''}}</textarea>
         </div>
     </div>
     @if($info!=null)
@@ -85,11 +85,11 @@
         <div class="layui-inline">
             <label class="layui-form-label">最小限红</label>
             <div class="layui-input-inline" style="width: 100px;">
-                <input type="number" lay-verify="minLimit" value="10" disabled="disabled" placeholder="￥" autocomplete="off" class="layui-input">
+                <input type="number" name="limit[min]" lay-verify="minLimit" value="{{$info['limit']['min'] or '10'}}"  placeholder="￥" autocomplete="off" class="layui-input">
             </div>
             <div class="layui-form-mid">最大限红</div>
             <div class="layui-input-inline" style="width: 100px;">
-                <input type="number" lay-verify="maxLimit" value="50000" disabled="disabled" placeholder="￥" autocomplete="off" class="layui-input">
+                <input type="number" name="limit[max]" lay-verify="maxLimit" value="{{$info['limit']['max'] or '50000'}}" placeholder="￥" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
@@ -97,11 +97,11 @@
         <div class="layui-inline">
             <label class="layui-form-label">最小和限红</label>
             <div class="layui-input-inline" style="width: 100px;">
-                <input type="number" lay-verify="minPairLimit" value="10" disabled="disabled" placeholder="￥" autocomplete="off" class="layui-input">
+                <input type="number" name="limit[tieMin]" lay-verify="minPairLimit" value="{{$info['limit']['tieMin'] or '10'}}" placeholder="￥" autocomplete="off" class="layui-input">
             </div>
             <div class="layui-form-mid">最大和限红</div>
             <div class="layui-input-inline" style="width: 100px;">
-                <input type="number" lay-verify="maxPairLimit" value="5000" disabled="disabled" placeholder="￥" autocomplete="off" class="layui-input">
+                <input type="number" name="limit[tieMax]" lay-verify="maxPairLimit" value="{{$info['limit']['tieMax'] or '5000'}}" placeholder="￥" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
@@ -109,11 +109,11 @@
         <div class="layui-inline">
             <label class="layui-form-label">最小对限红</label>
             <div class="layui-input-inline" style="width: 100px;">
-                <input type="number" lay-verify="minTieLimit" value="10" disabled="disabled" placeholder="￥" autocomplete="off" class="layui-input">
+                <input type="number" name="limit[pairMin]" lay-verify="minTieLimit" value="{{$info['limit']['pairMin'] or '10'}}"  placeholder="￥" autocomplete="off" class="layui-input">
             </div>
             <div class="layui-form-mid">最大对限红</div>
             <div class="layui-input-inline" style="width: 100px;">
-                <input type="number" lay-verify="maxTieLimit" value="5000" disabled="disabled" placeholder="￥" autocomplete="off" class="layui-input">
+                <input type="number" name="limit[pairMax]" lay-verify="maxTieLimit" value="{{$info['limit']['pairMax'] or '5000'}}"  placeholder="￥" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
@@ -132,33 +132,126 @@
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">百家乐洗码率：</label>
-        <div class="layui-input-inline">
+        <div class="layui-input-block">
             <input type="number" name="fee[baccarat]" value="0.9" required lay-verify="required" placeholder="请输入百家乐洗码率" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">龙虎洗码率：</label>
-        <div class="layui-input-inline">
+        <div class="layui-input-block">
             <input type="number" name="fee[dragonTiger]" value="0.9" required lay-verify="required" placeholder="请输入龙虎洗码率" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">牛牛洗码率：</label>
-        <div class="layui-input-inline">
+        <div class="layui-input-block">
             <input type="number" name="fee[niuniu]" value="0.9" required lay-verify="required" placeholder="请输入牛牛洗码率" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">三公洗码率：</label>
-        <div class="layui-input-inline">
+        <div class="layui-input-block">
             <input type="number" name="fee[sangong]" value="0.9" required lay-verify="required" placeholder="请输入三公洗码率" autocomplete="off" class="layui-input">
         </div>
-    </div><div class="layui-form-item">
+    </div>
+    <div class="layui-form-item">
         <label class="layui-form-label">A89洗码率：</label>
-        <div class="layui-input-inline">
+        <div class="layui-input-block">
             <input type="number" name="fee[A89]" value="0.9" required lay-verify="required" placeholder="请输入A89洗码率" autocomplete="off" class="layui-input">
         </div>
     </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" style="width: 100px;">百家乐：庄赔率</label>
+            <div class="layui-input-inline" style="width: 100px;">
+                <input type="number" name="bjlbets_fee[banker]" lay-verify="minTieLimit" value="0.95"  autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid">庄对赔率</div>
+            <div class="layui-input-inline" style="width: 100px;">
+                <input type="number" name="bjlbets_fee[bankerPair]" lay-verify="maxTieLimit" value="11"  autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid">闲赔率</div>
+            <div class="layui-input-inline" style="width: 100px;">
+                <input type="number" name="bjlbets_fee[player]" lay-verify="maxTieLimit" value="1"  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <div class="layui-form-mid" style="padding-left: 64px">闲对赔率</div>
+            <div class="layui-input-inline" style="width: 100px;">
+                <input type="number" name="bjlbets_fee[playerPair]" lay-verify="maxTieLimit" value="11"  autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid" style="padding-left: 14px">和赔率</div>
+            <div class="layui-input-inline" style="width: 100px;">
+                <input type="number" name="bjlbets_fee[tie]" lay-verify="maxTieLimit" value="8" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" style="width: 100px;">龙虎：龙赔率</label>
+            <div class="layui-input-inline" style="width: 100px;">
+                <input type="number" name="lhbets_fee[dragon]" lay-verify="minTieLimit" value="0.97"  autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid">虎赔率</div>
+            <div class="layui-input-inline" style="width: 100px;">
+                <input type="number" name="lhbets_fee[tiger]" lay-verify="maxTieLimit" value="0.97"  autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid">和赔率</div>
+            <div class="layui-input-inline" style="width: 100px;">
+                <input type="number" name="lhbets_fee[tie]" lay-verify="maxTieLimit" value="8"  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" style="width: 100px;">牛牛：平倍赔率</label>
+            <div class="layui-input-inline" style="width: 100px;">
+                <input type="number" name="nnbets_fee[Equal]" lay-verify="minTieLimit" value="0.97"  autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid">翻倍赔率</div>
+            <div class="layui-input-inline" style="width: 100px;">
+                <input type="number" name="nnbets_fee[Double]" lay-verify="maxTieLimit" value="0.97"  autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid">超倍赔率</div>
+            <div class="layui-input-inline" style="width: 100px;">
+                <input type="number" name="nnbets_fee[SuperDouble]" lay-verify="maxTieLimit" value="0.97"  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" style="width: 100px;">A89：平倍赔率</label>
+            <div class="layui-input-inline" style="width: 100px;">
+                <input type="number" name="a89bets_fee[Equal]" lay-verify="minTieLimit" value="0.97"  autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid">超倍赔率</div>
+            <div class="layui-input-inline" style="width: 100px;">
+                <input type="number" name="a89bets_fee[SuperDouble]" lay-verify="maxTieLimit" value="0.97"  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" style="width: 100px;">三公：平倍赔率</label>
+            <div class="layui-input-inline" style="width: 100px;">
+                <input type="number" name="sgbets_fee[Equal]" lay-verify="minTieLimit" value="0.97"  autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid">翻倍赔率</div>
+            <div class="layui-input-inline" style="width: 100px;">
+                <input type="number" name="sgbets_fee[Double]" lay-verify="maxTieLimit" value="0.97"  autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid">超倍赔率</div>
+            <div class="layui-input-inline" style="width: 100px;">
+                <input type="number" name="sgbets_fee[SuperDouble]" lay-verify="maxTieLimit" value="0.97"  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+
 @endsection
 @section('id',$id)
 @section('js')
@@ -214,9 +307,69 @@
                     }
                 },
             });
-            form.on('submit(formDemo)', function(data) {
-                var id = $("input[name='id']").val();
-                if(id==0){
+
+            var id = $("input[name='id']").val();
+            if(id==0){
+                var data = $('form').serializeArray();
+                //获取dom元素
+                //百家乐
+                var baccarat = document.getElementById('baccarat');
+                if (baccarat.checked){
+                    data.push({"name":"baccarat","value":"1"});
+                }else{
+                    data.push({"name":"baccarat","value":"0"});
+                }
+                //龙虎
+                var dragonTiger = document.getElementById('dragon_tiger');
+                if (dragonTiger.checked){
+                    data.push({"name":"dragon_tiger","value":"1"});
+                }else{
+                    data.push({"name":"dragon_tiger","value":"0"});
+                }
+                //牛牛
+                var niuniu = document.getElementById('niuniu');
+                if(niuniu.checked){
+                    data.push({"name":"niuniu","value":"1"});
+                }else{
+                    data.push({"name":"niuniu","value":"0"});
+                }
+                //三公
+                var sanGong = document.getElementById('sangong');
+                if(sanGong.checked){
+                    data.push({"name":"sangong","value":"1"});
+                }else{
+                    data.push({"name":"sangong","value":"0"});
+                }
+                //A89
+                var A89 = document.getElementById('A89');
+                if(A89.checked){
+                    data.push({"name":"A89","value":"1"});
+                }else{
+                    data.push({"name":"A89","value":"0"});
+                }
+                form.on('submit(formDemo)', function() {
+                    $.ajax({
+                        url:"{{url('/admin/agent')}}",
+                        data:data,
+                        type:'post',
+                        dataType:'json',
+                        success:function(res){
+                            if(res.status == 1){
+                                layer.msg(res.msg,{icon:6});
+                                var index = parent.layer.getFrameIndex(window.name);
+                                setTimeout('parent.layer.close('+index+')',2000);
+                            }else{
+                                layer.msg(res.msg,{shift: 6,icon:5});
+                            }
+                        },
+                        error : function(XMLHttpRequest, textStatus, errorThrown) {
+                            layer.msg('网络失败', {time: 1000});
+                        }
+                    });
+                    return false;
+                });
+            }else{
+                form.on('submit(formDemo)', function() {
                     var data = $('form').serializeArray();
                     //获取dom元素
                     //百家乐
@@ -254,9 +407,8 @@
                     }else{
                         data.push({"name":"A89","value":"0"});
                     }
-                    console.log(data)
                     $.ajax({
-                        url:"{{url('/admin/agent')}}",
+                        url:"{{url('/admin/agentUpdate')}}",
                         data:data,
                         type:'post',
                         dataType:'json',
@@ -274,10 +426,9 @@
                         }
                     });
                     return false;
-                }else{
+                });
+            }
 
-                }
-            });
         });
     </script>
 @endsection

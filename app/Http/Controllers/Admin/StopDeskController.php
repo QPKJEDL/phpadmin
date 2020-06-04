@@ -18,9 +18,9 @@ class StopDeskController extends Controller
         $map = array();
         $map['status']=1;
         if ($request->input('desk_name')!=''||$request->input('desk_name')!=null){
-            $data = Desk::where('desk_name',$request->input('desk_name'))->orWhere('desk_name','like','%'.$request->input('desk_name').'%')->where($map)->paginate(5)->appends($request->all());
+            $data = Desk::where('desk_name',$request->input('desk_name'))->orWhere('desk_name','like','%'.$request->input('desk_name').'%')->where($map)->paginate(10)->appends($request->all());
         }else{
-            $data = Desk::where($map)->paginate(5)->appends($request->all());
+            $data = Desk::where($map)->paginate(10)->appends($request->all());
         }
         foreach ($data as $key=>$value){
             $data[$key]['min_limit'] = json_decode($data[$key]['min_limit'],true);

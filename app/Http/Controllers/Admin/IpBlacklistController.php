@@ -33,7 +33,7 @@ class IpBlacklistController extends Controller
             $data[$key]['start_date'] = date("Y-m-d",$value['start_date']);
             $data[$key]['end_date'] = date("Y-m-d",$value['end_date']);
             if ($data[$key]['update_time']!='' || $data[$key]['update_time']!=null){
-                $data[$key]['update_time'] = date("Y-m-d H:m:s",$value['update_time']);
+                $data[$key]['update_time'] = date("Y-m-d H:i:s",$value['update_time']);
             }
         }
         return view('ipBlacklist.list',['list'=>$data,'input'=>$request->all()]);

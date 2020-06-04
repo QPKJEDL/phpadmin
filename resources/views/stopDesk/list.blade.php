@@ -55,9 +55,9 @@
                 <td class="hidden-xs">{{$info['ip_limit']}}</td>
                 <td class="hidden-xs">
                     @if($info['video_status']==0)
-                        正常
+                        <span class="layui-btn layui-btn-mini layui-btn-danger">正常</span>
                     @else
-                        关闭
+                        <span class="layui-btn layui-btn-mini layui-btn-warm">关闭</span>
                     @endif
                 </td>
                 <td class="hidden-xs">{{$info['min_limit']['c']}}/{{$info['min_limit']['cu']}}<br>{{$info['min_limit']['p']}}${{$info['min_limit']['pu']}}</td>
@@ -68,9 +68,9 @@
                 <td class="hidden-xs">{{$info['max_pair_limit']['c']}}/{{$info['max_pair_limit']['cu']}}<br>{{$info['max_pair_limit']['p']}}${{$info['max_pair_limit']['pu']}}</td>
                 <td class="hidden-xs">
                     @if($info['is_alive']==0)
-                        <button type="button" class="layui-btn layui-btn-xs layui-btn-normal">是</button>
+                        <button type="button" class="layui-btn layui-btn-small layui-btn-normal">是</button>
                     @else
-                        <button type="button" class="layui-btn layui-btn-xs layui-btn-normal">否</button>
+                        <button type="button" class="layui-btn layui-btn-small layui-btn-danger">否</button>
                     @endif</td>
                 <td class="hidden-xs">{{$info['count_down']}}</td>
                 <td class="hidden-xs">{{$info['wait_down']}}</td>

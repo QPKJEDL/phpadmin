@@ -30,7 +30,7 @@ class DeskController extends Controller
         }
         $map['status']=0;
         //获取全部台桌数据
-        $data = Desk::where($map)->paginate(5)->appends($request->all());
+        $data = Desk::where($map)->paginate(10)->appends($request->all());
         foreach ($data as $key=>$value){
             $data[$key]['min_limit'] = json_decode($data[$key]['min_limit'],true);
             $data[$key]['min_tie_limit'] = json_decode($data[$key]['min_tie_limit'],true);
@@ -110,7 +110,7 @@ class DeskController extends Controller
         $count = Desk::insertGetId($data);
         if ($count){
             $deskInfo = $count?Desk::find($count):[];
-            Redis::set("admin_desk_".$count,json_encode($deskInfo));
+            //Redis::set("desk_info_".$count,json_encode($deskInfo));
            return ["msg"=>"保存成功！","status"=>1];
         }else{
             return ["msg"=>"操作失败！","status"=>0];
@@ -160,8 +160,21 @@ class DeskController extends Controller
         $data['max_pair_limit']=json_encode($max_pair_limit);
         $update = Desk::where('id',$id)->update($data);
         if($update!==false){
-            $deskInfo = $id?Desk::find($id):[];
-            Redis::set("admin_desk_".$id,json_encode($deskInfo));
+            //$deskInfo = $id?Desk::find($id):[];
+            $desk=Redis::get("desk_info_".$id);
+            $deskData=json_decode($desk,true);
+            $deskData["CountDown"]=(int)$data["count_down"];
+            $deskData["WaitDown"]=(int)$data["wait_down"];
+            $deskData["MinLimit"]=$min_limit["c"]/100;
+            $deskData["MaxLimit"]=$max_limit["c"]/100;
+            $deskData["TieMinLimit"]=$min_tie_limit["c"]/100;
+            $deskData["TieMaxLimit"]=$max_tie_limit["c"]/100;
+            $deskData["PairMinLimit"]=$min_pair_limit["c"]/100;
+            $deskData["PairMaxLimit"]=$max_pair_limit["c"]/100;
+            $deskData["PairMaxLimit"]=$max_pair_limit["c"]/100;
+            $deskData["LeftPlay"]=$data["left_play"];
+            $deskData["RightPlay"]=$data["right_play"];
+            Redis::set("desk_info_".$id,json_encode($deskData));
             insertDeskLogOperaType($id,'修改了台桌信息');
             return ['msg'=>'修改成功！','status'=>1];
         }else{

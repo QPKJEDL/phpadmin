@@ -1,11 +1,11 @@
-@section('title', '订单管理')
+@section('title', '台桌管理')
 @section('header')
     <div class="layui-inline">
         <button class="layui-btn layui-btn-small layui-btn-normal" id="addDesk" data-desc="添加桌台" data-url="{{url('/admin/desk/0/edit')}}"><i class="layui-icon">&#xe654;</i></button>
         <button class="layui-btn layui-btn-small layui-btn-warm freshBtn"><i class="layui-icon">&#x1002;</i></button>
     </div>
     <div class="layui-inline">
-        <select name="game_id" lay-filter="game_id" lay-verify="game_id">
+        <select name="game_id">
             <option value="">请选择游戏类型</option>
             @foreach($gameType as $game)
                 <option value="{{$game['id']}}" {{isset($input['game_id'])&&$input['game_id']==$game['id']?'selected':''}}>{{$game['game_name']}}</option>
@@ -13,14 +13,14 @@
         </select>
     </div>
     <div class="layui-inline">
-        <select name="is_alive" lay-filter="is_alive" lay-verify="is_alive">
+        <select name="is_alive">
             <option value="">请选择房间类型</option>
             <option value="0" {{isset($input['is_alive'])&&$input['is_alive']==0?'selected':''}}>是</option>
             <option value="1" {{isset($input['is_alive'])&&$input['is_alive']==1?'selected':''}}>否</option>
         </select>
     </div>
     <div class="layui-inline">
-        <select name="is_push" lay-filter="is_push" lay-verify="is_push">
+        <select name="is_push">
             <option value="">是否推送</option>
             <option value="0" {{isset($input['is_push'])&&$input['is_push']==0?'selected':''}}>点击</option>
             <option value="1" {{isset($input['is_push'])&&$input['is_push']==1?'selected':''}}>电话</option>
@@ -28,7 +28,13 @@
     </div>
     <div class="layui-inline">
         <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo">搜索</button>
+        <button id="res" class="layui-btn layui-btn-primary">重置</button>
     </div>
+    <style>
+        .hidden-xs{
+            text-align: center;
+        }
+    </style>
 @endsection
 @section('table')
     <table class="layui-table" lay-even lay-skin="nob">
@@ -38,35 +44,34 @@
             <col class="hidden-xs" width="100">
             <col class="hidden-xs" width="100">
             <col class="hidden-xs" width="100">
+            <col class="hidden-xs" width="150">
+            <col class="hidden-xs" width="150">
+            <col class="hidden-xs" width="150">
+            <col class="hidden-xs" width="150">
+            <col class="hidden-xs" width="150">
+            <col class="hidden-xs" width="150">
             <col class="hidden-xs" width="100">
             <col class="hidden-xs" width="100">
-            <col class="hidden-xs" width="100">
-            <col class="hidden-xs" width="100">
-            <col class="hidden-xs" width="100">
-            <col class="hidden-xs" width="100">
-            <col class="hidden-xs" width="100">
-            <col class="hidden-xs" width="100">
-            <col class="hidden-xs" width="100">
-            <col class="hidden-xs" width="100">
-            <col class="hidden-xs" width="100">
+            <col class="hidden-xs" width="200">
+            <col class="hidden-xs" width="250">
         </colgroup>
         <thead>
         <tr>
             <th class="hidden-xs">序号</th>
             <th class="hidden-xs">名称</th>
-            <th class="hidden-xs">台桌登录ip限制</th>
+            <th class="hidden-xs">IP限制</th>
             <th class="hidden-xs">台桌推送</th>
-            <td class="hidden-xs">视频状态</td>
-            <th class="hidden-xs">最小限红<br/>(平倍最小平倍)</th>
-            <th class="hidden-xs">最小和限红</th>
+            <th class="hidden-xs">视频状态</th>
+            <th class="hidden-xs">最小限红<br/>(平倍最小限红)</th>
+            <th class="hidden-xs">最大限红<br/>(平倍最大限红)</th>
+            <th class="hidden-xs">最小和限红<br/>(翻倍最小限红)</th>
+            <th class="hidden-xs">最大和限红<br/>(翻倍最大限红)</th>
             <th class="hidden-xs">最小对限红</th>
-            <th class="hidden-xs">最大限红</th>
-            <th class="hidden-xs">最大和限红</th>
             <th class="hidden-xs">最大对限红</th>
             <th class="hidden-xs">主播台</th>
             <th class="hidden-xs">倒计时</th>
             <th class="hidden-xs">待开牌时间</th>
-            <th class="hidden-xs" style="text-align: center">操作</th>
+            <th class="hidden-xs">操作</th>
         </tr>
         </thead>
         <tbody>
@@ -77,33 +82,33 @@
                 <td class="hidden-xs">{{$info['ip_limit']}}</td>
                 <td class="hidden-xs">
                     @if($info['is_push']==0)
-                        <button type="button" class="layui-btn layui-btn-xs layui-btn-normal">点击</button>
+                        <span class="layui-btn layui-btn-mini layui-btn-warm">点击</span>
                     @else
-                        <button type="button" class="layui-btn layui-btn-xs layui-btn-normal">电话</button>
+                        <span class="layui-btn layui-btn-mini layui-btn-normal">电话</span>
                     @endif
                 </td>
                 <td class="hidden-xs">
                     @if($info['status']==0)
-                        正常
+                        <span class="layui-btn layui-btn-mini layui-btn-danger">正常</span>
                     @else
-                        关闭
+                        <span class="layui-btn layui-btn-mini layui-btn-warm">异常</span>
                     @endif
                 </td>
                 <td class="hidden-xs">{{$info['min_limit']['c']}}/{{$info['min_limit']['cu']}}<br>{{$info['min_limit']['p']}}${{$info['min_limit']['pu']}}</td>
-                <td class="hidden-xs">{{$info['min_tie_limit']['c']}}/{{$info['min_tie_limit']['cu']}}<br>{{$info['min_tie_limit']['p']}}${{$info['min_tie_limit']['pu']}}</td>
-                <td class="hidden-xs">{{$info['min_pair_limit']['c']}}/{{$info['min_pair_limit']['cu']}}<br>{{$info['min_pair_limit']['p']}}${{$info['min_pair_limit']['pu']}}</td>
                 <td class="hidden-xs">{{$info['max_limit']['c']}}/{{$info['max_limit']['cu']}}<br>{{$info['max_limit']['p']}}${{$info['max_limit']['pu']}}</td>
+                <td class="hidden-xs">{{$info['min_tie_limit']['c']}}/{{$info['min_tie_limit']['cu']}}<br>{{$info['min_tie_limit']['p']}}${{$info['min_tie_limit']['pu']}}</td>
                 <td class="hidden-xs">{{$info['max_tie_limit']['c']}}/{{$info['max_tie_limit']['cu']}}<br>{{$info['max_tie_limit']['p']}}${{$info['max_tie_limit']['pu']}}</td>
+                <td class="hidden-xs">{{$info['min_pair_limit']['c']}}/{{$info['min_pair_limit']['cu']}}<br>{{$info['min_pair_limit']['p']}}${{$info['min_pair_limit']['pu']}}</td>
                 <td class="hidden-xs">{{$info['max_pair_limit']['c']}}/{{$info['max_pair_limit']['cu']}}<br>{{$info['max_pair_limit']['p']}}${{$info['max_pair_limit']['pu']}}</td>
                 <td class="hidden-xs">
                     @if($info['is_alive']==0)
-                        <button type="button" class="layui-btn layui-btn-xs layui-btn-normal">是</button>
+                        <span class="layui-btn layui-btn-mini layui-btn-normal">是</span>
                     @else
-                        <button type="button" class="layui-btn layui-btn-xs layui-btn-normal">否</button>
+                        <span class="layui-btn layui-btn-mini layui-btn-warm">否</span>
                     @endif</td>
                 <td class="hidden-xs">{{$info['count_down']}}</td>
                 <td class="hidden-xs">{{$info['wait_down']}}</td>
-                <td style="text-align: center">
+                <td>
                     <div class="layui-inline">
                         <button class="layui-btn layui-btn-small layui-btn-normal update" data-id="{{$info['id']}}" data-desc="修改" data-url="{{url('/admin/desk/'. $info['id'] .'/edit')}}">编辑</button>
                         <button class="layui-btn layui-btn-small layui-btn-danger changeStatus" data-id="{{$info['id']}}" data-v="1">停用</button>
@@ -129,21 +134,17 @@
 @endsection
 @section('js')
     <script>
-        layui.use(['form', 'jquery','laydate', 'layer'], function() {
+        layui.use(['form', 'jquery', 'layer'], function() {
             var form = layui.form(),
                 $ = layui.jquery,
-                laydate = layui.laydate,
                 layer = layui.layer;
-            laydate({istoday: true});
             form.render();
             form.on('submit(formDemo)', function(data) {
             });
             $('#res').click(function () {
-                $("input[name='business_code']").val('');
-                $("input[name='order_sn']").val('');
-                $("input[name='user_id']").val('');
-                $("input[name='creatime']").val('');
-                $("select[name='status']").val('');
+                $("select[name='game_id']").val('');
+                $("select[name='is_alive']").val('');
+                $("select[name='is_push']").val('');
                 $('form').submit();
             });
             //台桌停用

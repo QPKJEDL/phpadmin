@@ -30,7 +30,7 @@
             <tr data-tt-id="{{$info['id']}}" data-tt-parent-id="{{$info['parent_id']}}">
                 <td class="hidden-xs">{{$info['id']}}</td>
                 <td class="hidden-xs">{{$info['parent_id']}}</td>
-                <td class="hidden-xs">{{$info['title']}}</td>
+                <td class="hidden-xs">{{$info['name']}}</td>
             </tr>
         @endforeach
         </tbody>

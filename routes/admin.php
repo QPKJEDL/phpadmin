@@ -81,49 +81,53 @@ Route::group(['namespace' => "Admin",'middleware' => ['auth', 'permission']], fu
     Route::post('/version_isopen',      'VersionController@is_open');//开关
     Route::resource('/notices',          'NoticeController');//公告
     Route::resource('/orderlist',       'OrderlistController');//订单列表
-    //结果标签
-    Route::resource('/label',           'GameLabelController');
-    //停用台桌列表
-    Route::resource('/stopDesk',        'StopDeskController');
-    //主播账号列表
-    Route::resource('/anchor',          'AnchorController');
-    //效验主播账号是否存在
-    Route::post('/checkUniqueAccount',  'AnchorController@checkUniqueAccount');
-    //账号停用/启用
-    Route::post('/changeStatus',        'AnchorController@changeStatus');
-    //台桌操作日志
-    Route::resource('/deskLog',         'DeskLogController');
-    //台桌修改结果日志
-    Route::resource('/deskResultLog',   'DeskUpdateResultController');
-    //ip黑名单
-    Route::resource('/ipBlacklist',     'IpBlacklistController');
-    //修改封禁ip
-    Route::post('/updateIp',            'IpBlacklistController@update');
-    //效验ip是否存在
-    Route::post('/checkUniqueIp',       'IpBlacklsaveinfoistController@checkUniqueIp');
-    //第三方支付设置
-    Route::resource('/pay',             'PayController');
+
+    Route::resource('/label',           'GameLabelController');//结果标签
+    Route::resource('/stopDesk',        'StopDeskController'); //停用台桌列表
+
+    Route::resource('/anchor',          'AnchorController'); //主播账号列表
+    Route::post('/anchor/changeStatus', 'AnchorController@changeStatus');//账号停用/启用
+    Route::post('/anchorUpdate',     'AnchorController@update'); //主播账号编辑
+
+    Route::resource('/deskLog',         'DeskLogController'); //台桌操作日志
+    Route::resource('/deskResultLog',   'DeskUpdateResultController');//台桌修改结果日志
+    Route::resource('/ipBlacklist',     'IpBlacklistController');    //ip黑名单
+    Route::post('/updateIp',            'IpBlacklistController@update');  //修改封禁ip
+    Route::post('/checkUniqueIp',       'IpBlacklsaveinfoistController@checkUniqueIp');   //效验ip是否存在
+    Route::resource('/pay',             'PayController'); //第三方支付设置
     Route::resource('/camera',          'CameraController');//摄像头管理展示
-    Route::post('/camera/update',              'CameraController@update');
+    Route::post('/camera/update',      'CameraController@update');
     Route::resource('/webnotice',        'WebNoticeController');//web轮播公告
     Route::resource('/gamenotice',       'GameNoticeController');//游戏轮播公告
     Route::resource('/entrance',         'EntranceNoticeController');//入口公告
     Route::resource('/system',           'SystemController');//系统开关
     Route::post('/maintain',             'SystemController@maintain');//点击系统维护
     Route::post('/drawOpen',            'SystemController@drawOpen');//提现开关
-    Route::resource('/agent',           'AgentController');//代理账号管理
+
+
+    Route::resource('/agent','AgentUserController');//代理列表
+    Route::post('/agentUpdate',       'AgentUserController@update');//代理账号编辑
+    Route::post('/agentStop',       'AgentUserController@stop');//代理账号停用
+    Route::post('/agentStart',       'AgentUserController@start');//代理账号启用
+
     Route::resource('/agentRole',       'AgentRoleController');//代理角色管理
     Route::resource('/agentBlack',      'AgentBlackController');//代理黑名单
     Route::resource('/userBlack',       'UserBlackController');//会员黑名单
     Route::resource('/forbidden',       'ForbiddenController');//禁言名单
     Route::resource('/userDesk',        'UserDeskController');//特定用户限红
     Route::post('/userDesk/update',     'UserDeskController@update');//修改
+
     //代理模块路由
     Route::group(['namespace'=>'Agent','middleware' => ['auth', 'permission']],function(){
         Route::resource('/agent','AgentUserController');//代理列表
+        Route::post('/agentUpdate',       'AgentUserController@update');//代理账号编辑
+        Route::post('/agentStop',       'AgentUserController@stop');//代理账号停用
+        Route::post('/agentStart',       'AgentUserController@start');//代理账号启用
+
         Route::resource('/agentRole','AgentRoleController');//代理角色
         Route::resource('/agentMenu','AgentMenuController');
         Route::post('/agentRole/update','AgentRoleController@update');
+
     });
 });
 

@@ -3,7 +3,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">台桌名称：</label>
         <div class="layui-input-block">
-            <input type="text" value="{{$info['desk_name'] or ''}}" name="desk_name" required lay-verify="desk_name" placeholder="请输入名称" autocomplete="off" class="layui-input">
+            <input type="text" value="{{$info['desk_name'] or ''}}" name="desk_name" required lay-verify="desk_name" placeholder="请输入名称" autocomplete="off" class="layui-input" @if($id!=0) disabled @endif>
         </div>
 
     </div>
@@ -332,8 +332,8 @@
                     }
                 },
                 wait_down:function (value) {
-                    if(value < 20){
-                        return '等待开牌时间必须大于20秒'
+                    if(value < 5){
+                        return '等待开牌时间必须大于5秒'
                     }
                 },
                 ip_limit:function (value) {
