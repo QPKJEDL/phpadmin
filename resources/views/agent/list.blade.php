@@ -51,8 +51,14 @@
                 </td>
             </tr>
         @endforeach
+        @if(!$list[0])
+            <tr><td colspan="6" style="text-align: center;color: orangered;">暂无数据</td></tr>
+        @endif
         </tbody>
     </table>
+    <div class="page-wrap">
+        {{$list->render()}}
+    </div>
 @endsection
 @section('js')
     <script>

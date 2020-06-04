@@ -332,8 +332,8 @@
                     }
                 },
                 wait_down:function (value) {
-                    if(value < 20){
-                        return '等待开牌时间必须大于20秒'
+                    if(value < 5){
+                        return '等待开牌时间必须大于5秒'
                     }
                 },
                 ip_limit:function (value) {
