@@ -155,7 +155,7 @@ class AnchorController extends Controller
      */
     public function destroy($id)
     {
-        $count = Anchor::where('id','=',$id)->delete();
+        $count = Anchor::where('id','=',$id)->update(array("del_flag"=>1,"is_over"=>1));
         if ($count){
             return ['msg'=>"删除成功！",'status'=>1];
         }else{
