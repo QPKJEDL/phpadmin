@@ -36,7 +36,7 @@ class AgentUserController extends Controller
         if($data['pwd']!=$data['pwd_confirmation']){
             return ['msg'=>'两次密码不同','status'=>0];
         }
-        dump($data);
+        dump($data);die;
         //密码加密
         $data['password']=bcrypt($data['pwd']);
         unset($data['pwd']);
