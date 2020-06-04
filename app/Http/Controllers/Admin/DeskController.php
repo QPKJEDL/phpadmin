@@ -163,8 +163,8 @@ class DeskController extends Controller
             //$deskInfo = $id?Desk::find($id):[];
             $desk=Redis::get("desk_info_".$id);
             $deskData=json_decode($desk,true);
-            $deskData["CountDown"]=$data["count_down"];
-            $deskData["WaitDown"]=$data["wait_down"];
+            $deskData["CountDown"]=(int)$data["count_down"];
+            $deskData["WaitDown"]=(int)$data["wait_down"];
             $deskData["MinLimit"]=$min_limit["c"]/100;
             $deskData["MaxLimit"]=$max_limit["c"]/100;
             $deskData["TieMinLimit"]=$min_tie_limit["c"]/100;
