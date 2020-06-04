@@ -107,6 +107,7 @@ Route::group(['namespace' => "Admin",'middleware' => ['auth', 'permission']], fu
 
     Route::resource('/agent','AgentUserController');//代理列表
     Route::post('/agentUpdate',       'AgentUserController@update');//代理账号编辑
+    Route::post('/agentStop',       'AgentUserController@stop');//代理账号编辑
 
     Route::resource('/agentRole',       'AgentRoleController');//代理角色管理
     Route::resource('/agentBlack',      'AgentBlackController');//代理黑名单

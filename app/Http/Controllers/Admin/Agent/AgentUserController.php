@@ -71,7 +71,7 @@ class AgentUserController extends Controller
 
     }
     /*
-     *
+     * 编辑s
      */
     public function update(StoreRequest $request){
         $id = $request->input('id');
@@ -112,7 +112,17 @@ class AgentUserController extends Controller
             return ['msg'=>'删除失败','status'=>0];
         }
     }
-
+    /*
+     * 停用
+     */
+    public function stop($id){
+        $stop = Agent::where('id','=',$id)->update(array("status"=>1));
+        if($stop){
+            return ['msg'=>'删除成功','status'=>1];
+        }else{
+            return ['msg'=>'删除失败','status'=>0];
+        }
+    }
     /*
     * 添加代理
     */

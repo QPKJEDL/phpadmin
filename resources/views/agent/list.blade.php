@@ -45,8 +45,9 @@
                 <td class="hidden-xs">{{$info['created_at']}}</td>
                 <td>
                     <div class="layui-inline">
-                        <button class="layui-btn layui-btn-small layui-btn-normal edit-btn" data-id="{{$info['id']}}" data-desc="修改用户" data-url="{{url('/admin/agent/'. $info['id'] .'/edit')}}"><i class="layui-icon">&#xe642;</i></button>
-                        <button class="layui-btn layui-btn-small layui-btn-danger del-btn" data-id="{{$info['id']}}" data-url="{{url('/admin/agent/'.$info['id'])}}"><i class="layui-icon">&#xe640;</i></button>
+                        <button class="layui-btn layui-btn-small layui-btn-normal edit-btn" data-id="{{$info['id']}}" data-desc="修改代理" data-url="{{url('/admin/agent/'. $info['id'] .'/edit')}}">编辑</button>
+                        <button class="layui-btn layui-btn-small layui-btn-warm stop" data-id="{{$info['id']}}" data-desc="代理停用">停用</button>
+                        <button class="layui-btn layui-btn-small layui-btn-danger del-btn" data-id="{{$info['id']}}" data-url="{{url('/admin/agent/'.$info['id'])}}">删除</button>
                     </div>
                 </td>
             </tr>
@@ -56,6 +57,7 @@
         {{--@endif--}}
         </tbody>
     </table>
+    <input type="hidden" id="token" value="{{csrf_token()}}">
     {{--<div class="page-wrap">--}}
         {{--{{$list->render()}}--}}
     {{--</div>--}}
@@ -72,6 +74,39 @@
             form.render();
             form.on('submit(formDemo)', function(data) {
                 console.log(data);
+            });
+            //停用
+            $('.edits-btn').click(function () {
+                var that = $(this);
+                var id=that.attr('data-id');
+                //console.log(order_sn);
+                layer.confirm('确定要停用吗？',{title:'提示'},function (index) {
+                        $.ajax({
+                            headers: {
+                                'X-CSRF-TOKEN': $('#token').val()
+                            },
+                            url:"{{url('/admin/agentStop')}}",
+                            data:{
+                                "id":id,
+                            },
+                            type:"post",
+                            dataType:"json",
+                            success:function (res) {
+                                if(res.status==1){
+                                    layer.msg(res.msg,{icon:6,time:1000},function () {
+                                        location.reload();
+                                    });
+
+                                }else{
+                                    layer.msg(res.msg,{icon:5,time:1000},function(){
+                                        location.reload();
+                                    });
+
+                                }
+                            }
+                        });
+                    }
+                );
             });
         });
     </script>
