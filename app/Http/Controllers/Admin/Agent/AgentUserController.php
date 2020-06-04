@@ -23,15 +23,17 @@ class AgentUserController extends Controller
      */
     public function edit($id=0){
         $data = $id?Agent::find($id):[];
-        $info = AgentRoleUser::where('user_id','=',$id)->first();
-        dump($info);
-        $info['fee']=json_decode($info['fee'],true);
-        $info['limit']=json_decode($info['limit'],true);
-        $info['bjlbets_fee']=json_decode($info['bjlbets_fee'],true);
-        $info['lhbets_fee']=json_decode($info['lhbets_fee'],true);
-        $info['nnbets_fee']=json_decode($info['nnbets_fee'],true);
-        $info['a89bets_fee']=json_decode($info['a89bets_fee'],true);
-        $info['sgbets_fee']=json_decode($info['sgbets_fee'],true);
+        if($id!=0){
+            $info = AgentRoleUser::where('user_id','=',$id)->first();
+            $info['fee']=json_decode($info['fee'],true);
+            $info['limit']=json_decode($info['limit'],true);
+            $info['bjlbets_fee']=json_decode($info['bjlbets_fee'],true);
+            $info['lhbets_fee']=json_decode($info['lhbets_fee'],true);
+            $info['nnbets_fee']=json_decode($info['nnbets_fee'],true);
+            $info['a89bets_fee']=json_decode($info['a89bets_fee'],true);
+            $info['sgbets_fee']=json_decode($info['sgbets_fee'],true);
+        }
+
         return view('agent.edit',['id'=>$id,'roles'=>AgentRole::all(),'info'=>$data,'userRole'=>$info]);
     }
 
