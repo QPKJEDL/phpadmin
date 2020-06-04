@@ -79,6 +79,7 @@ class AgentUserController extends Controller
         $roleId = $request->input('user_role');
         unset($data['_token']);
         unset($data['id']);
+        unset($data['user_role']);
         if(empty($data["pwd"])){
             unset($data['pwd']);
             unset($data['pwd_confirmation']);
