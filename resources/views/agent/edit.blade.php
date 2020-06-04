@@ -307,46 +307,47 @@
                     }
                 },
             });
-            form.on('submit(formDemo)', function(data) {
-                var id = $("input[name='id']").val();
-                var data = $('form').serializeArray();
-                //获取dom元素
-                //百家乐
-                var baccarat = document.getElementById('baccarat');
-                if (baccarat.checked){
-                    data.push({"name":"baccarat","value":"1"});
-                }else{
-                    data.push({"name":"baccarat","value":"0"});
-                }
-                //龙虎
-                var dragonTiger = document.getElementById('dragon_tiger');
-                if (dragonTiger.checked){
-                    data.push({"name":"dragon_tiger","value":"1"});
-                }else{
-                    data.push({"name":"dragon_tiger","value":"0"});
-                }
-                //牛牛
-                var niuniu = document.getElementById('niuniu');
-                if(niuniu.checked){
-                    data.push({"name":"niuniu","value":"1"});
-                }else{
-                    data.push({"name":"niuniu","value":"0"});
-                }
-                //三公
-                var sanGong = document.getElementById('sangong');
-                if(sanGong.checked){
-                    data.push({"name":"sangong","value":"1"});
-                }else{
-                    data.push({"name":"sangong","value":"0"});
-                }
-                //A89
-                var A89 = document.getElementById('A89');
-                if(A89.checked){
-                    data.push({"name":"A89","value":"1"});
-                }else{
-                    data.push({"name":"A89","value":"0"});
-                }
-                if(id==0){
+
+            var id = $("input[name='id']").val();
+            var data = $('form').serializeArray();
+            //获取dom元素
+            //百家乐
+            var baccarat = document.getElementById('baccarat');
+            if (baccarat.checked){
+                data.push({"name":"baccarat","value":"1"});
+            }else{
+                data.push({"name":"baccarat","value":"0"});
+            }
+            //龙虎
+            var dragonTiger = document.getElementById('dragon_tiger');
+            if (dragonTiger.checked){
+                data.push({"name":"dragon_tiger","value":"1"});
+            }else{
+                data.push({"name":"dragon_tiger","value":"0"});
+            }
+            //牛牛
+            var niuniu = document.getElementById('niuniu');
+            if(niuniu.checked){
+                data.push({"name":"niuniu","value":"1"});
+            }else{
+                data.push({"name":"niuniu","value":"0"});
+            }
+            //三公
+            var sanGong = document.getElementById('sangong');
+            if(sanGong.checked){
+                data.push({"name":"sangong","value":"1"});
+            }else{
+                data.push({"name":"sangong","value":"0"});
+            }
+            //A89
+            var A89 = document.getElementById('A89');
+            if(A89.checked){
+                data.push({"name":"A89","value":"1"});
+            }else{
+                data.push({"name":"A89","value":"0"});
+            }
+            if(id==0){
+                form.on('submit(formDemo)', function(data) {
                     $.ajax({
                         url:"{{url('/admin/agent')}}",
                         data:data,
@@ -366,7 +367,9 @@
                         }
                     });
                     return false;
-                }else{
+                });
+            }else{
+                form.on('submit(formDemo)', function(data) {
                     $.ajax({
                         url:"{{url('/admin/agentUpdate')}}",
                         data:data,
@@ -385,8 +388,10 @@
                             layer.msg('网络失败', {time: 1000});
                         }
                     });
-                }
-            });
+                    return false;
+                });
+            }
+
         });
     </script>
 @endsection
