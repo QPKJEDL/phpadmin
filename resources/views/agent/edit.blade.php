@@ -101,7 +101,7 @@
             </div>
             <div class="layui-form-mid">最大和限红</div>
             <div class="layui-input-inline" style="width: 100px;">
-                <input type="number" name="limit[tieMax]" lay-verify="maxPairLimit" value="{$info['limit']['tieMax'] or '5000'}}" placeholder="￥" autocomplete="off" class="layui-input">
+                <input type="number" name="limit[tieMax]" lay-verify="maxPairLimit" value="{{$info['limit']['tieMax'] or '5000'}}" placeholder="￥" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
@@ -109,11 +109,11 @@
         <div class="layui-inline">
             <label class="layui-form-label">最小对限红</label>
             <div class="layui-input-inline" style="width: 100px;">
-                <input type="number" name="limit[pairMin]" lay-verify="minTieLimit" value="{$info['limit']['pairMin'] or '10'}}"  placeholder="￥" autocomplete="off" class="layui-input">
+                <input type="number" name="limit[pairMin]" lay-verify="minTieLimit" value="{{$info['limit']['pairMin'] or '10'}}"  placeholder="￥" autocomplete="off" class="layui-input">
             </div>
             <div class="layui-form-mid">最大对限红</div>
             <div class="layui-input-inline" style="width: 100px;">
-                <input type="number" name="limit[pairMax]" lay-verify="maxTieLimit" value="{$info['limit']['pairMax'] or '5000'}}"  placeholder="￥" autocomplete="off" class="layui-input">
+                <input type="number" name="limit[pairMax]" lay-verify="maxTieLimit" value="{{$info['limit']['pairMax'] or '5000'}}"  placeholder="￥" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
