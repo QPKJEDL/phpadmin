@@ -76,7 +76,7 @@
                 console.log(data);
             });
             //停用
-            $('.edits-btn').click(function () {
+            $('.stop').click(function () {
                 var that = $(this);
                 var id=that.attr('data-id');
                 //console.log(order_sn);
