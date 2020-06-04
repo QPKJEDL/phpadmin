@@ -14,7 +14,7 @@ class AgentUserController extends Controller
      * 列表
      */
     public function index(Request $request){
-        $list=Agent::with('agentRoles')->paginate(10)->appends($request->all());
+        $list=Agent::with('agentRoles')->get()->toArray();//paginate(10)->appends($request->all());
         return view('agent.list',['list'=>$list]);
     }
 
