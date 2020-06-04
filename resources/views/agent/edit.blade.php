@@ -370,6 +370,7 @@
                 });
             }else{
                 form.on('submit(formDemo)', function() {
+                    console.log(data)
                     $.ajax({
                         url:"{{url('/admin/agentUpdate')}}",
                         data:data,
