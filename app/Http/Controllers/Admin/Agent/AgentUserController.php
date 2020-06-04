@@ -15,7 +15,7 @@ class AgentUserController extends Controller
      * 列表
      */
     public function index(Request $request){
-        $list=Agent::with('agentRoles')->get()->toArray();
+        $list=Agent::where('del_flag',0)->with('agentRoles')->get()->toArray();
         return view('agent.list',['list'=>$list]);
     }
 
