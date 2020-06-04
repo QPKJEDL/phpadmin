@@ -104,8 +104,6 @@ Route::group(['namespace' => "Admin",'middleware' => ['auth', 'permission']], fu
     Route::post('/maintain',             'SystemController@maintain');//点击系统维护
     Route::post('/drawOpen',            'SystemController@drawOpen');//提现开关
 
-    Route::resource('/agent',           'AgentController');//代理账号管理
-    Route::post('/agentUpdate',        'AgentController@update');//代理账号编辑
 
     Route::resource('/agentRole',       'AgentRoleController');//代理角色管理
     Route::resource('/agentBlack',      'AgentBlackController');//代理黑名单
@@ -119,6 +117,7 @@ Route::group(['namespace' => "Admin",'middleware' => ['auth', 'permission']], fu
         Route::resource('/agentRole','AgentRoleController');//代理角色
         Route::resource('/agentMenu','AgentMenuController');
         Route::post('/agentRole/update','AgentRoleController@update');
+        Route::post('/agentUpdate',       'AgentUserController@update');//代理账号编辑
     });
 });
 
