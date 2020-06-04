@@ -162,8 +162,7 @@
     </div>
     <div class="layui-form-item">
         <div class="layui-inline">
-            <label class="layui-form-label">百家乐：</label>
-            <span>庄赔率</span>
+            <label class="layui-form-label">百家乐：</label> 庄赔率
             <div class="layui-input-inline" style="width: 100px;">
                 <input type="number" name="bjlbets_fee[banker]" lay-verify="minTieLimit" value="10"  placeholder="￥" autocomplete="off" class="layui-input">
             </div>
