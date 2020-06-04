@@ -346,9 +346,8 @@
             }else{
                 data.push({"name":"A89","value":"0"});
             }
-            console.log(data)
             if(id==0){
-                form.on('submit(formDemo)', function(data) {
+                form.on('submit(formDemo)', function() {
                     $.ajax({
                         url:"{{url('/admin/agent')}}",
                         data:data,
@@ -370,7 +369,7 @@
                     return false;
                 });
             }else{
-                form.on('submit(formDemo)', function(data) {
+                form.on('submit(formDemo)', function() {
                     $.ajax({
                         url:"{{url('/admin/agentUpdate')}}",
                         data:data,
