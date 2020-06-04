@@ -23,6 +23,14 @@ class AgentUserController extends Controller
     public function edit($id=0){
         $data = $id?Agent::find($id):[];
         $info = AgentRoleUser::where('user_id','=',$id)->first();
+
+        $info['fee']=json_decode($info['fee'],true);
+        $info['limit']=json_decode($info['limit'],true);
+        $info['bjlbets_fee']=json_decode($info['bjlbets_fee'],true);
+        $info['lhbets_fee']=json_decode($info['lhbets_fee'],true);
+        $info['nnbets_fee']=json_decode($info['nnbets_fee'],true);
+        $info['a89bets_fee']=json_decode($info['a89bets_fee'],true);
+        $info['sgbets_fee']=json_decode($info['sgbets_fee'],true);
         return view('agent.edit',['id'=>$id,'roles'=>AgentRole::all(),'info'=>$data,'userRole'=>$info]);
     }
 
@@ -37,7 +45,6 @@ class AgentUserController extends Controller
         if($data['pwd']!=$data['pwd_confirmation']){
             return ['msg'=>'两次密码不同','status'=>0];
         }
-        dump($data);die;
         //密码加密
         $data['password']=bcrypt($data['pwd']);
         unset($data['pwd']);
@@ -45,6 +52,12 @@ class AgentUserController extends Controller
         $data['created_at']=date('Y-m-d H:i:s',time());
         $data['fee']=json_encode($data['fee']);
         $data['limit']=json_encode($data['limit']);
+        $data['bjlbets_fee']=json_encode($data['bjlbets_fee']);
+        $data['lhbets_fee']=json_encode($data['lhbets_fee']);
+        $data['nnbets_fee']=json_encode($data['nnbets_fee']);
+        $data['a89bets_fee']=json_encode($data['a89bets_fee']);
+        $data['sgbets_fee']=json_encode($data['sgbets_fee']);
+
         $count = Agent::insertGetId($data);
         if ($count){
             $this->insertUserRole($count,$roleId);
