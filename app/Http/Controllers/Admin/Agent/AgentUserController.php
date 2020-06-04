@@ -119,9 +119,9 @@ class AgentUserController extends Controller
         $id=$request->input('id');
         $stop = Agent::where('id','=',$id)->update(array("status"=>1));
         if($stop){
-            return ['msg'=>'删除成功','status'=>1];
+            return ['msg'=>'停用成功','status'=>1];
         }else{
-            return ['msg'=>'删除失败','status'=>0];
+            return ['msg'=>'停用失败','status'=>0];
         }
     }
     /*
