@@ -6,6 +6,7 @@ use App\Http\Requests\StoreRequest;
 use App\Models\Agent\Agent;
 use App\Models\Agent\AgentRole;
 use App\Models\Agent\AgentRoleUser;
+use App\Models\UserAccount;
 use Illuminate\Http\Request;
 
 class AgentUserController extends Controller
@@ -75,6 +76,7 @@ class AgentUserController extends Controller
     public function update(StoreRequest $request){
         $id = $request->input('id');
         $data = $request->all();
+        $roleId = $request->input('user_role');
         unset($data['_token']);
         unset($data['id']);
         if(empty($data["pwd"])){
@@ -90,6 +92,7 @@ class AgentUserController extends Controller
         $data['sgbets_fee']=json_encode($data['sgbets_fee']);
         $up=Agent::where('id',$id)->update($data);
         if($up!==false){
+            AgentRoleUser::where('user_id',$id)->update(array('role_id'=>$roleId));
             return ['msg'=>'修改成功','status'=>1];
         }else{
             return ['msg'=>'修改失败','status'=>0];
@@ -100,9 +103,14 @@ class AgentUserController extends Controller
      * 删除
      */
     public function destroy($id){
-        $count = Agent::where('id','=',$id)->delete();
-        if($count){
-            return ['msg'=>'删除成功','status'=>1];
+        $agent = Agent::where('id','=',$id)->update(array("del_flag"=>1));
+        if($agent){
+            $user=UserAccount::where('agent_id',$id)->update(array("del_flag"=>1));
+            if($user){
+                return ['msg'=>'删除成功','status'=>1];
+            }else{
+                return ['msg'=>'删除失败','status'=>0];
+            }
         }else{
             return ['msg'=>'删除失败','status'=>0];
         }
