@@ -37,9 +37,9 @@
                 <td class="hidden-xs">{{$info['ip_config']}}</td>
                 <td class="hidden-xs">
                     @if($info['status']==0)
-                        正常
+                        <span class="layui-btn layui-btn-mini layui-btn-danger">正常</span>
                     @elseif($info['status']==1)
-                        停用
+                        <span class="layui-btn layui-btn-mini layui-btn-warm">停用</span>
                     @endif
                 </td>
                 <td class="hidden-xs">{{$info['created_at']}}</td>
