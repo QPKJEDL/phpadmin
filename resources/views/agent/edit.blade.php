@@ -191,18 +191,36 @@
         <div class="layui-inline">
             <label class="layui-form-label" style="width: 100px;">龙虎：龙赔率</label>
             <div class="layui-input-inline" style="width: 100px;">
-                <input type="number" name="bjlbets_fee[banker]" lay-verify="minTieLimit" value="0.97"  autocomplete="off" class="layui-input">
+                <input type="number" name="lhbets_fee[dragon]" lay-verify="minTieLimit" value="0.97"  autocomplete="off" class="layui-input">
             </div>
             <div class="layui-form-mid">虎赔率</div>
             <div class="layui-input-inline" style="width: 100px;">
-                <input type="number" name="bjlbets_fee[bankerPair]" lay-verify="maxTieLimit" value="0.97"  autocomplete="off" class="layui-input">
+                <input type="number" name="lhbets_fee[tiger]" lay-verify="maxTieLimit" value="0.97"  autocomplete="off" class="layui-input">
             </div>
             <div class="layui-form-mid">和赔率</div>
             <div class="layui-input-inline" style="width: 100px;">
-                <input type="number" name="bjlbets_fee[player]" lay-verify="maxTieLimit" value="8"  autocomplete="off" class="layui-input">
+                <input type="number" name="lhbets_fee[tie]" lay-verify="maxTieLimit" value="8"  autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" style="width: 100px;">牛牛：平倍赔率</label>
+            <div class="layui-input-inline" style="width: 100px;">
+                <input type="number" name="nnbets_fee[Equal]" lay-verify="minTieLimit" value="0.97"  autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid">翻倍赔率</div>
+            <div class="layui-input-inline" style="width: 100px;">
+                <input type="number" name="nnbets_fee[Double]" lay-verify="maxTieLimit" value="0.97"  autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid">超倍赔率</div>
+            <div class="layui-input-inline" style="width: 100px;">
+                <input type="number" name="nnbets_fee[SuperDouble]" lay-verify="maxTieLimit" value="0.97"  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
 
 
 @endsection
