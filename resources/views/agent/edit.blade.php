@@ -347,7 +347,6 @@
                 }else{
                     data.push({"name":"A89","value":"0"});
                 }
-                console.log(data)
                 form.on('submit(formDemo)', function() {
                     $.ajax({
                         url:"{{url('/admin/agent')}}",
@@ -406,11 +405,10 @@
                 }else{
                     data.push({"name":"A89","value":"0"});
                 }
-                console.log(data)
                 form.on('submit(formDemo)', function() {
                     $.ajax({
                         url:"{{url('/admin/agentUpdate')}}",
-                        data:data,
+                        data:$('form').serialize,
                         type:'post',
                         dataType:'json',
                         success:function(res){
