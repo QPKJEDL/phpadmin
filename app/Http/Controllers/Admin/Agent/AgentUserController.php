@@ -69,8 +69,12 @@ class AgentUserController extends Controller
         }
 
     }
+    /*
+     *
+     */
     public function update(StoreRequest $request){
         $id = $request->input('id');
+        dump($id);
         $data = $request->all();
         unset($data['_token']);
         unset($data['id']);
