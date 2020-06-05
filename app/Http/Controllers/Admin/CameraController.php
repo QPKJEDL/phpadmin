@@ -27,14 +27,19 @@ class CameraController extends Controller
         {
             Camera::where('id',$arr[$key]['id'])->update(["url"=>$arr[$key]['value']]);
 
-            $k="hq_admin_".$value['redis_key'];
-            $v=$value['url'];
-            Redis::set($k,$v);
+
             $num = $num + 1;
 
         }
+        $data = Camera::get()->toArray();
 
         if ($num==4){
+            foreach ($data as $key1=>&$value1)
+            {
+                $k="hq_admin_".$value1['redis_key'];
+                $v=$value1['url'];
+                Redis::set($k,$v);
+            }
             return ['msg'=>"操作成功！",'status'=>1];
         }else{
             return ['msg'=>"操作失败！",'status'=>0];
