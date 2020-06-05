@@ -3,14 +3,15 @@
  * Created by PhpStorm.
  * User: Administrator
  * Date: 2020-6-5
- * Time: 9:54
+ * Time: 11:00
  */
 namespace App\Models;
 
+
 use Illuminate\Database\Eloquent\Model;
 
-class UserBlacklist extends Model
+class Silence extends Model
 {
-    protected $table = 'user_blacklist';
+    protected $table = 'silencelist';
     public $timestamps = false;
 }

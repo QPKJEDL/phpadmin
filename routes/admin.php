@@ -120,6 +120,8 @@ Route::group(['namespace' => "Admin",'middleware' => ['auth', 'permission']], fu
     Route::post('/userBlackUpdate',       'UserBlackController@update');//修改会员黑名单
 
     Route::resource('/forbidden',       'ForbiddenController');//禁言名单
+    Route::post('/forbiddenUpdate',    'ForbiddenController@update');//修改禁言名单
+
     Route::resource('/userDesk',        'UserDeskController');//特定用户限红
     Route::post('/userDesk/update',     'UserDeskController@update');//修改
 

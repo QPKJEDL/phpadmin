@@ -1,11 +1,11 @@
 @section('title', '配置列表')
 @section('header')
     <div class="layui-inline">
-        <a class="layui-btn layui-btn-small layui-btn-normal addBtn" data-desc="添加" data-url="{{url('/admin/ipBlacklist/0/edit')}}"><i class="layui-icon">&#xe654;</i></a>
+        <a class="layui-btn layui-btn-small layui-btn-normal addBtn" data-desc="添加" data-url="{{url('/admin/forbidden/0/edit')}}"><i class="layui-icon">&#xe654;</i></a>
         <button class="layui-btn layui-btn-small layui-btn-warm freshBtn"><i class="layui-icon">&#x1002;</i></button>
     </div>
     <div class="layui-inline">
-        <input type="text"  value="{{ $input['ip_address'] or '' }}" name="ip_address" placeholder="会员账号" autocomplete="off" class="layui-input">
+        <input type="text"  value="{{ $input['user_account'] or '' }}" name="user_account" placeholder="会员账号" autocomplete="off" class="layui-input">
     </div>
     <div class="layui-inline">
         <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo">搜索</button>
@@ -34,8 +34,8 @@
                 <td class="hidden-xs">{{$info['']}}</td>
                 <td>
                     <div class="layui-inline">
-                        <button class="layui-btn layui-btn-small layui-btn-normal edit-btn" data-id="{{$info['id']}}" data-desc="修改配置" data-url="{{url('/admin/ipBlacklist/'. $info['id'] .'/edit')}}">编辑</button>
-                        <button class="layui-btn layui-btn-small layui-btn-danger del-btn" data-id="{{$info['id']}}" data-url="{{url('/admin/ipBlacklist/'.$info['id'])}}">解禁</button>
+                        <button class="layui-btn layui-btn-small layui-btn-normal edit-btn" data-id="{{$info['id']}}" data-desc="修改配置" data-url="{{url('/admin/forbidden/'. $info['id'] .'/edit')}}">编辑</button>
+                        <button class="layui-btn layui-btn-small layui-btn-danger del-btn" data-id="{{$info['id']}}" data-url="{{url('/admin/forbidden/'.$info['id'])}}">解禁</button>
                     </div>
                 </td>
             </tr>
@@ -66,7 +66,7 @@
             });
             //重置
             $("#reset").click(function () {
-                $("input[name='ip_address']").val('');
+                $("input[name='user_account']").val('');
             });
         });
     </script>
