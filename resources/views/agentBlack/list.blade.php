@@ -1,7 +1,7 @@
 @section('title', '配置列表')
 @section('header')
     <div class="layui-inline">
-        <a class="layui-btn layui-btn-small layui-btn-normal addBtn" data-desc="添加封禁IP" data-url="{{url('/admin/ipBlacklist/0/edit')}}"><i class="layui-icon">&#xe654;</i></a>
+        <a class="layui-btn layui-btn-small layui-btn-normal addBtn" data-desc="添加封禁IP" data-url="{{url('/admin/agentBlack/0/edit')}}"><i class="layui-icon">&#xe654;</i></a>
         <button class="layui-btn layui-btn-small layui-btn-warm freshBtn"><i class="layui-icon">&#x1002;</i></button>
     </div>
     <div class="layui-inline">
@@ -9,7 +9,7 @@
     </div>
     <div class="layui-inline">
         <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo">搜索</button>
-        <button class="layui-btn layui-btn-normal" id="reset">重置</button>
+        <button class="layui-btn layui-btn-primary" id="reset">重置</button>
     </div>
 @endsection
 @section('table')
@@ -52,7 +52,7 @@
                 <td>
                     <div class="layui-inline">
                         <button class="layui-btn layui-btn-small layui-btn-normal edit-btn" data-id="{{$info['id']}}" data-desc="修改代理黑名单" data-url="{{url('/admin/ipBlacklist/'. $info['id'] .'/edit')}}">编辑</button>
-                        <button class="layui-btn layui-btn-small layui-btn-danger del-btn" data-id="{{$info['id']}}" data-url="{{url('/admin/ipBlacklist/'.$info['id'])}}">解禁</button>
+                        <button class="layui-btn layui-btn-small layui-btn-danger del-btn" data-id="{{$info['id']}}" data-url="{{url('/admin/agentBlack/'.$info['id'])}}">解禁</button>
                     </div>
                 </td>
             </tr>

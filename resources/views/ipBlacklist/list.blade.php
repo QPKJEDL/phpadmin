@@ -9,7 +9,7 @@
     </div>
     <div class="layui-inline">
         <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo">搜索</button>
-        <button class="layui-btn layui-btn-normal" id="reset">重置</button>
+        <button class="layui-btn layui-btn-primary" id="reset">重置</button>
     </div>
 @endsection
 @section('table')
