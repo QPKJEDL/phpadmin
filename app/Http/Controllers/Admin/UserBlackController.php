@@ -13,8 +13,8 @@ class UserBlackController extends Controller
      */
     public function index(Request $request){
         $map = array();
-        if (true==$request->has('agent_id')){
-            $map['agent_id']=$request->input('agent_id');
+        if (true==$request->has('user_account')){
+            $map['user_account']=$request->input('user_account');
         }
         $data = UserBlacklist::where($map)->paginate(10)->appends($request->all());
         foreach ($data as $key=>$value){
@@ -48,12 +48,12 @@ class UserBlackController extends Controller
     public function store(StoreRequest $request)
     {
         $data = $request->all();
-        $user_id=$data["user_id"];
-        $is=UserAccount::where("user_id",$user_id)->first();
+        $user_account=$data["user_account"];
+        $is=UserAccount::where("account",$user_account)->first();
         if(!$is){
             return ['msg'=>'会员不存在！'];
         }
-        $black=UserBlacklist::where("user_id",$user_id)->exists();
+        $black=UserBlacklist::where("user_account",$user_account)->exists();
         if($black){
             return ['msg'=>'该会员已封禁！'];
         }
@@ -77,12 +77,12 @@ class UserBlackController extends Controller
         $data = $request->all();
         $id = $data['id'];
 
-        $user_id=$data["user_id"];
-        $is=UserAccount::where("user_id",$user_id)->first();
+        $user_account=$data["user_account"];
+        $is=UserAccount::where("account",$user_account)->first();
         if(!$is){
             return ['msg'=>'会员不存在！'];
         }
-        $has=UserBlacklist::where('user_id',$user_id)->where('id','<>',$id)->first();
+        $has=UserBlacklist::where('user_account',$user_account)->where('id','<>',$id)->first();
         if ($has){
             return ['msg'=>'该会员已封禁！'];
         }
