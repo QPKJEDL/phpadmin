@@ -7,7 +7,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRequest;
 use App\Models\Camera;
-
+use Illuminate\Support\Facades\Redis;
 class CameraController extends Controller
 {
     /**
@@ -16,6 +16,7 @@ class CameraController extends Controller
     public function index()
     {
         $data = Camera::get()->toArray();
+        dump($data);
         return view("camera.list",["list"=>$data]);
     }
 
@@ -30,6 +31,7 @@ class CameraController extends Controller
             $num = $num + 1;
 
         }
+
         if ($num==4){
             return ['msg'=>"操作成功！",'status'=>1];
         }else{
