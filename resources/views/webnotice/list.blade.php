@@ -16,8 +16,8 @@
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">语言：</label>
-        <div class="layui-input-inline">
-            <select name="language" lay-filter="aihao" style="width: 300px">
+        <div class="layui-input-inline" style="width: 300px">
+            <select name="language" lay-filter="aihao">
                 <option value="1"{{isset($info['language'])&&$info['language']==1?'selected':''}}>中文</option>
                 <option value="2" {{isset($info['language'])&&$info['language']==2?'selected':''}}>英文</option>
             </select>
@@ -26,7 +26,7 @@
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">公告内容：</label>
         <div class="layui-input-inline">
-            <textarea placeholder="请输入内容" id="content" name="content" class="layui-textarea" style="resize: none;width: 300px;height: 200px">{{$info['content']}}</textarea>
+            <textarea placeholder="请输入内容" id="content" name="content" class="layui-textarea" style="resize: none;width: 300px;height: 200px;overflow-y:visible">{{$info['content']}}</textarea>
         </div>
     </div>
     <div class="layui-form-item">
