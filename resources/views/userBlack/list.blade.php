@@ -41,14 +41,14 @@
         <tbody>
         @foreach($list as $info)
             <tr>
-                <td class="hidden-xs">{{$info['']}}</td>
-                <td class="hidden-xs">{{$info['']}}</td>
-                <td class="hidden-xs">{{$info['']}}</td>
-                <td class="hidden-xs">{{$info['']}}</td>
-                <td class="hidden-xs">{{$info['']}}</td>
-                <td class="hidden-xs"></td>
-                <td class="hidden-xs">{{$info['']}}</td>
-                <td class="hidden-xs">{{$info['']}}</td>
+                <td class="hidden-xs">{{$info['id']}}</td>
+                <td class="hidden-xs">{{$info['user_id']}}</td>
+                <td class="hidden-xs">{{$info['start_date']}}</td>
+                <td class="hidden-xs">{{$info['end_date']}}</td>
+                <td class="hidden-xs">{{$info['create_by']}}</td>
+                <td class="hidden-xs">禁止</td>
+                <td class="hidden-xs">{{$info['update_time']}}</td>
+                <td class="hidden-xs">{{$info['update_by']}}</td>
                 <td>
                     <div class="layui-inline">
                         <button class="layui-btn layui-btn-small layui-btn-normal edit-btn" data-id="{{$info['id']}}" data-desc="修改会员黑名单" data-url="{{url('/admin/userBlack/'. $info['id'] .'/edit')}}">编辑</button>
