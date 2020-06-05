@@ -24,7 +24,7 @@
         </div>
     </div>
     <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label" style="width: 100px">公告内容：</label>
+        <label class="layui-form-label">公告内容：</label>
         <div class="layui-input-block">
             <textarea placeholder="请输入内容" id="content" name="content" class="layui-textarea" style="resize: none">{{$info['content']}}</textarea>
         </div>
