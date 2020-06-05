@@ -30,8 +30,8 @@
         <tbody>
         @foreach($list as $info)
             <tr>
-                <td class="hidden-xs">{{$info['']}}</td>
-                <td class="hidden-xs">{{$info['']}}</td>
+                <td class="hidden-xs">{{$info['id']}}</td>
+                <td class="hidden-xs">{{$info['user_account']}}</td>
                 <td>
                     <div class="layui-inline">
                         <button class="layui-btn layui-btn-small layui-btn-normal edit-btn" data-id="{{$info['id']}}" data-desc="修改配置" data-url="{{url('/admin/forbidden/'. $info['id'] .'/edit')}}">编辑</button>
