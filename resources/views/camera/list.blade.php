@@ -10,7 +10,7 @@
     @foreach($list as $info)
     <div class="layui-form-item">
         <label class="layui-form-label">{{$info['descript']}}</label>
-        <div class="layui-input-block">
+        <div class="layui-input-inline">
             <input type="text" id="{{$info['id']}}" lay-verify="title" value="{{$info['url']}}"  autocomplete="off" placeholder="请输入{{$info['descript']}}" class="layui-input">
         </div>
     </div>
