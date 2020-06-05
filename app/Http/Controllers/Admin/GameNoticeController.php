@@ -22,7 +22,7 @@ class GameNoticeController extends Controller
         $data["content"]=$request->input('content');
         $data["language"]=$request->input('language');
         $count = Notice::where('id',$id)->update($data);
-        if ($count){
+        if ($count!==false){
             return ['msg'=>'操作成功！','status'=>1];
         }else{
             return ['msg'=>'操作失败！','status'=>0];

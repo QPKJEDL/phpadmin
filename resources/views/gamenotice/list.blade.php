@@ -10,13 +10,13 @@
     <input type="hidden" id="id" value="{{$info['id']}}">
     <div class="layui-form-item">
         <label class="layui-form-label">标题：</label>
-        <div class="layui-input-block">
-            <input type="text" name="title" lay-verify="title" value="{{$info['title']}}" autocomplete="off" readonly class="layui-input">
+        <div class="layui-input-inline">
+            <input type="text" name="title" lay-verify="title" value="{{$info['title']}}" autocomplete="off" readonly class="layui-input" style="width: 300px">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">语言：</label>
-        <div class="layui-input-block">
+        <div class="layui-input-inline" style="width: 300px">
             <select name="language" lay-filter="aihao">
                 <option value="1"{{isset($info['language'])&&$info['language']==1?'selected':''}}>中文</option>
                 <option value="2" {{isset($info['language'])&&$info['language']==2?'selected':''}}>英文</option>
@@ -25,8 +25,8 @@
     </div>
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">公告内容：</label>
-        <div class="layui-input-block">
-            <textarea placeholder="请输入内容" id="content" name="content" class="layui-textarea" style="resize: none">{{$info['content']}}</textarea>
+        <div class="layui-input-inline">
+            <textarea placeholder="请输入内容" id="content" name="content" class="layui-textarea" style="resize: none;width: 300px;height: 200px;overflow-y:visible">{{$info['content']}}</textarea>
         </div>
     </div>
     <div class="layui-form-item">
@@ -59,8 +59,9 @@
                     dataType:"json",
                     success:function (res) {
                         if(res.status==1){
-                            layer.msg(res.msg,{icon:6});
-                            window.location.reload();
+                            layer.msg(res.msg,{icon:6,time:2000},function () {
+                                window.location.reload();
+                            });
                         }else{
                             layer.msg(res.msg,{shift: 6,icon:5});
                         }
