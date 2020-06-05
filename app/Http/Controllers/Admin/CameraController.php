@@ -23,7 +23,7 @@ class CameraController extends Controller
         $data = $request->input('data');
         $arr = json_decode($data,true);
         $num=0;
-        foreach ($arr as $key=>$value)
+        foreach ($arr as $key=>&$value)
         {
             Camera::where('id',$arr[$key]['id'])->update(["url"=>$arr[$key]['value']]);
 
