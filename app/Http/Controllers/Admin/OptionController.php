@@ -91,7 +91,7 @@ class OptionController extends Controller
         if(!$res){
             $update=Option::where('id',$id)->update($data);
             if($update!==false){
-                $k=$data['key'];
+                $k="hq_".$data['key'];
                 $v=$data['value'];
                 Redis::set($k,$v);
                 $a=Redis::get($k);
