@@ -24,10 +24,6 @@
 @section('id',$id)
 @section('js')
     <script>
-        window.onload=function(){
-            $("#data").hide();
-            $("#camera").hide();
-        }
         layui.use(['form','jquery','layer'], function() {
             var form = layui.form()
                 ,layer = layui.layer
