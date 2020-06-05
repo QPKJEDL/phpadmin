@@ -88,7 +88,6 @@ class UserBlackController extends Controller
         }
         unset($data['_token']);
         unset($data['id']);
-        dump($data);die;
         $data['start_date']=strtotime($data['start_date']);
         $data['end_date']=strtotime($data['end_date']);
         $data['update_time']=time();
