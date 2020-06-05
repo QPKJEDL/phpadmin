@@ -60,8 +60,6 @@ class ForbiddenController extends Controller
             return ['msg'=>'该会员禁言！'];
         }
         unset($data['_token']);
-        $data['start_date']=strtotime($data['start_date']);
-        $data['end_date']=strtotime($data['end_date']);
         $data['create_by']=getLoginUser();
         $count = Silence::insert($data);
         if ($count){
@@ -91,8 +89,6 @@ class ForbiddenController extends Controller
         }
         unset($data['_token']);
         unset($data['id']);
-        $data['start_date']=strtotime($data['start_date']);
-        $data['end_date']=strtotime($data['end_date']);
         $data['update_time']=time();
         $data['update_by']=getLoginUser();
         $count = Silence::where('id',$id)->update($data);
