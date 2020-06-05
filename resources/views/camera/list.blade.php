@@ -1,7 +1,6 @@
 @section('title', '公告管理')
 @section('header')
     <div class="layui-inline">
-        {{--<button class="layui-btn layui-btn-small layui-btn-normal addBtn" data-desc="添加游戏" data-url="{{url('/admin/game/0/edit')}}"><i class="layui-icon">&#xe654;</i></button>--}}
         <button class="layui-btn layui-btn-small layui-btn-warm freshBtn"><i class="layui-icon">&#x1002;</i></button>
     </div>
 @endsection
@@ -9,7 +8,7 @@
     <input type="hidden" id="token" value="{{csrf_token()}}">
     @foreach($list as $info)
     <div class="layui-form-item">
-        <label class="layui-form-label">{{$info['descript']}}</label>
+        <label class="layui-form-label" style="width: 100px">{{$info['descript']}}</label>
         <div class="layui-input-inline">
             <input type="text" id="{{$info['id']}}" lay-verify="title" value="{{$info['url']}}"  autocomplete="off" placeholder="请输入{{$info['descript']}}" class="layui-input">
         </div>
