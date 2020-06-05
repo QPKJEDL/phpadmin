@@ -13,8 +13,8 @@ class AgentBlackController extends Controller
      */
     public function index(Request $request){
         $map = array();
-        if (true==$request->has('agent_id')){
-            $map['agent_id']=$request->input('agent_id');
+        if (true==$request->has('agent_username')){
+            $map['agent_username']=$request->input('agent_username');
         }
         $data = AgentBlacklist::where($map)->paginate(10)->appends($request->all());
         foreach ($data as $key=>$value){
@@ -47,12 +47,12 @@ class AgentBlackController extends Controller
     public function store(StoreRequest $request)
     {
         $data = $request->all();
-        $agent_id=$data["agent_id"];
-        $is=Agent::where("id",$agent_id)->first();
+        $agent_name=$data["agent_username"];
+        $is=Agent::where("username",$agent_name)->first();
         if(!$is){
             return ['msg'=>'代理不存在！'];
         }
-        $black=AgentBlacklist::where("agent_id",$agent_id)->exists();
+        $black=AgentBlacklist::where("agent_username",$agent_name)->exists();
         if($black){
             return ['msg'=>'该代理已封禁！'];
         }
@@ -76,14 +76,14 @@ class AgentBlackController extends Controller
         $data = $request->all();
         $id = $data['id'];
 
-        $agent_id=$data["agent_id"];
-        $is=Agent::where("id",$agent_id)->first();
+        $agent_name=$data["agent_username"];
+        $is=Agent::where("username",$agent_name)->first();
         if(!$is){
             return ['msg'=>'代理不存在！'];
         }
-        $has=AgentBlacklist::where('agent_id',$agent_id)->where('id','<>',$id)->first();
+        $has=AgentBlacklist::where('agent_username',$agent_name)->where('id','<>',$id)->first();
         if ($has){
-            return ['msg'=>'该IP已被封禁！'];
+            return ['msg'=>'该代理已被封禁！'];
         }
         unset($data['_token']);
         unset($data['id']);

@@ -5,7 +5,7 @@
         <button class="layui-btn layui-btn-small layui-btn-warm freshBtn"><i class="layui-icon">&#x1002;</i></button>
     </div>
     <div class="layui-inline">
-        <input type="text"  value="{{ $input['agent_id'] or '' }}" name="agent_id" placeholder="代理账号" autocomplete="off" class="layui-input">
+        <input type="text"  value="{{ $input['agent_username'] or '' }}" name="agent_username" placeholder="代理账号" autocomplete="off" class="layui-input">
     </div>
     <div class="layui-inline">
         <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo">搜索</button>
@@ -42,7 +42,7 @@
         @foreach($list as $info)
             <tr>
                 <td class="hidden-xs">{{$info['id']}}</td>
-                <td class="hidden-xs">{{$info['agent_id']}}</td>
+                <td class="hidden-xs">{{$info['agent_username']}}</td>
                 <td class="hidden-xs">{{$info['start_date']}}</td>
                 <td class="hidden-xs">{{$info['end_date']}}</td>
                 <td class="hidden-xs">{{$info['create_by']}}</td>
@@ -83,7 +83,7 @@
             });
             //重置
             $("#reset").click(function () {
-                $("input[name='agent_id']").val('');
+                $("input[name='agent_username']").val('');
             });
         });
     </script>
