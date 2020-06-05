@@ -16,7 +16,6 @@ class CameraController extends Controller
     public function index()
     {
         $data = Camera::get()->toArray();
-        dump($data);
         return view("camera.list",["list"=>$data]);
     }
 
@@ -28,6 +27,9 @@ class CameraController extends Controller
         {
             Camera::where('id',$arr[$key]['id'])->update(["url"=>$arr[$key]['value']]);
 
+            $k="hq_admin_".$value['redis_key'];
+            $v=$value['url'];
+            Redis::set($k,$v);
             $num = $num + 1;
 
         }
