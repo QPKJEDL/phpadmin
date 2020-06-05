@@ -3,7 +3,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">会员账号：</label>
         <div class="layui-input-block">
-            <input type="text" value="{{$info['user_id'] or ''}}" name="agent_id" placeholder="请填写会员账号" lay-verify="required" autocomplete="off" class="layui-input">
+            <input type="text" value="{{$info['user_id'] or ''}}" name="user_id" placeholder="请填写会员账号" lay-verify="required" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
