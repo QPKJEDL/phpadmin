@@ -51,7 +51,7 @@
                 <td class="hidden-xs">{{$info['update_by']}}</td>
                 <td>
                     <div class="layui-inline">
-                        <button class="layui-btn layui-btn-small layui-btn-normal edit-btn" data-id="{{$info['id']}}" data-desc="修改代理黑名单" data-url="{{url('/admin/ipBlacklist/'. $info['id'] .'/edit')}}">编辑</button>
+                        <button class="layui-btn layui-btn-small layui-btn-normal edit-btn" data-id="{{$info['id']}}" data-desc="修改代理黑名单" data-url="{{url('/admin/agentBlack/'. $info['id'] .'/edit')}}">编辑</button>
                         <button class="layui-btn layui-btn-small layui-btn-danger del-btn" data-id="{{$info['id']}}" data-url="{{url('/admin/agentBlack/'.$info['id'])}}">解禁</button>
                     </div>
                 </td>
