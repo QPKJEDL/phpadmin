@@ -51,35 +51,39 @@ Route::group(['namespace' => "Admin",'middleware' => ['auth', 'permission']], fu
     Route::post('/saveinfo/{type}',     'UserController@saveInfo');
     Route::resource('/roles',           'RoleController');
     Route::resource('/permissions',     'PermissionController');
-    //台桌管理
-    Route::resource("/desk",            'DeskController');
+
+    Route::resource("/desk",            'DeskController');//台桌管理
     Route::post('/changStatus',         'DeskController@changStatus');//台桌停用
     Route::post('/closeVideo',          'DeskController@closeVideo');//关视频
     Route::post('/resetPassword',       'DeskController@resetPassword');//重置台桌密码
-    //游戏类型
-    Route::resource('/game',            'GameController');
+
+    Route::resource('/game',            'GameController');//游戏类型
     Route::post('/gameUpdate',      'GameController@update');
-    //游戏用户管理
-    Route::resource('/userAccount', 'UserAccountController');
-    //富文本编辑器文件上传
-    Route::post('/uploadFile','UploadFileController@uploadFile');
-    //修改台桌
-    Route::post('/deskUpdate','DeskController@update');
-    //台桌结果
-    Route::resource('/gameRecord',      'GameRecordController');
-    //修改游戏结果的密码效验
-    Route::post('/checkUpdateResultPassword','GameRecordController@checkUpdateResultPassword');
+
+    Route::resource('/userAccount', 'UserAccountController'); //游戏用户管理
+    Route::post('/resetPwd',        'UserAccountController@resetPwd');//修改密码
+    Route::post('/isLogin',         'UserAccountController@isLogin');//封禁
+
+    Route::post('/uploadFile','UploadFileController@uploadFile');//富文本编辑器文件上传
+
+    Route::post('/deskUpdate','DeskController@update');//修改台桌
+
+    Route::resource('/gameRecord',      'GameRecordController'); //台桌结果
+    Route::post('/checkUpdateResultPassword','GameRecordController@checkUpdateResultPassword'); //修改游戏结果的密码效验
     Route::post('/updateDragonAndTigerResult','GameRecordController@updateDragonAndTigerResult');//修改龙虎游戏结果
     Route::post('/updateBaccaratResult',    'GameRecordController@updateBaccaratResult');//修改百家乐游戏结果
     Route::get('/edit','GameRecordController@edit');
-    Route::post('/resetPwd',        'UserAccountController@resetPwd');//修改密码
-    Route::post('/isLogin',         'UserAccountController@isLogin');//封禁
+
+
+
     Route::resource('/options',         'OptionController');//系统设置-缓存设置
     Route::post('/optionsUpdate',       'OptionController@update');
+
     Route::resource('/version',         'VersionController');//系统设置-版本控制
     Route::post('/versionUpdate',       'VersionController@update');
     Route::post('/version_isopen',      'VersionController@is_open');//开关
     Route::resource('/notices',          'NoticeController');//公告
+
     Route::resource('/orderlist',       'OrderlistController');//订单列表
 
     Route::resource('/label',           'GameLabelController');//结果标签
@@ -94,11 +98,14 @@ Route::group(['namespace' => "Admin",'middleware' => ['auth', 'permission']], fu
 
     Route::post('/checkUniqueIp',       'IpBlacklsaveinfoistController@checkUniqueIp');   //效验ip是否存在
     Route::resource('/pay',             'PayController'); //第三方支付设置
+
     Route::resource('/camera',          'CameraController');//摄像头管理展示
     Route::post('/camera/update',      'CameraController@update');
+
     Route::resource('/webnotice',        'WebNoticeController');//web轮播公告
     Route::resource('/gamenotice',       'GameNoticeController');//游戏轮播公告
     Route::resource('/entrance',         'EntranceNoticeController');//入口公告
+
     Route::resource('/system',           'SystemController');//系统开关
     Route::post('/maintain',             'SystemController@maintain');//点击系统维护
     Route::post('/drawOpen',            'SystemController@drawOpen');//提现开关
