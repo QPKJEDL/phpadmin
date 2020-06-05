@@ -91,8 +91,7 @@ Route::group(['namespace' => "Admin",'middleware' => ['auth', 'permission']], fu
 
     Route::resource('/deskLog',         'DeskLogController'); //台桌操作日志
     Route::resource('/deskResultLog',   'DeskUpdateResultController');//台桌修改结果日志
-    Route::resource('/ipBlacklist',     'IpBlacklistController');    //ip黑名单
-    Route::post('/updateIp',            'IpBlacklistController@update');  //修改封禁ip
+
     Route::post('/checkUniqueIp',       'IpBlacklsaveinfoistController@checkUniqueIp');   //效验ip是否存在
     Route::resource('/pay',             'PayController'); //第三方支付设置
     Route::resource('/camera',          'CameraController');//摄像头管理展示
@@ -109,9 +108,14 @@ Route::group(['namespace' => "Admin",'middleware' => ['auth', 'permission']], fu
     Route::post('/agentUpdate',       'AgentUserController@update');//代理账号编辑
     Route::post('/agentStop',       'AgentUserController@stop');//代理账号停用
     Route::post('/agentStart',       'AgentUserController@start');//代理账号启用
-
     Route::resource('/agentRole',       'AgentRoleController');//代理角色管理
+
+    Route::resource('/ipBlacklist',     'IpBlacklistController');    //ip黑名单
+    Route::post('/updateIp',            'IpBlacklistController@update');  //修改封禁ip
+
     Route::resource('/agentBlack',      'AgentBlackController');//代理黑名单
+    Route::post('/agentBlackUpdate',      'AgentBlackController@update');//修改代理黑名单
+
     Route::resource('/userBlack',       'UserBlackController');//会员黑名单
     Route::resource('/forbidden',       'ForbiddenController');//禁言名单
     Route::resource('/userDesk',        'UserDeskController');//特定用户限红

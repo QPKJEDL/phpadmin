@@ -5,7 +5,7 @@
         <button class="layui-btn layui-btn-small layui-btn-warm freshBtn"><i class="layui-icon">&#x1002;</i></button>
     </div>
     <div class="layui-inline">
-        <input type="text"  value="{{ $input['ip_address'] or '' }}" name="ip_address" placeholder="代理账号" autocomplete="off" class="layui-input">
+        <input type="text"  value="{{ $input['agent_id'] or '' }}" name="agent_id" placeholder="代理账号" autocomplete="off" class="layui-input">
     </div>
     <div class="layui-inline">
         <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo">搜索</button>
@@ -41,17 +41,17 @@
         <tbody>
         @foreach($list as $info)
             <tr>
-                <td class="hidden-xs">{{$info['']}}</td>
-                <td class="hidden-xs">{{$info['']}}</td>
-                <td class="hidden-xs">{{$info['']}}</td>
-                <td class="hidden-xs">{{$info['']}}</td>
-                <td class="hidden-xs">{{$info['']}}</td>
-                <td class="hidden-xs"></td>
-                <td class="hidden-xs">{{$info['']}}</td>
-                <td class="hidden-xs">{{$info['']}}</td>
+                <td class="hidden-xs">{{$info['id']}}</td>
+                <td class="hidden-xs">{{$info['agent_id']}}</td>
+                <td class="hidden-xs">{{$info['start_date']}}</td>
+                <td class="hidden-xs">{{$info['end_date']}}</td>
+                <td class="hidden-xs">{{$info['create_by']}}</td>
+                <td class="hidden-xs">禁止</td>
+                <td class="hidden-xs">{{$info['update_time']}}</td>
+                <td class="hidden-xs">{{$info['update_by']}}</td>
                 <td>
                     <div class="layui-inline">
-                        <button class="layui-btn layui-btn-small layui-btn-normal edit-btn" data-id="{{$info['id']}}" data-desc="修改配置" data-url="{{url('/admin/ipBlacklist/'. $info['id'] .'/edit')}}">编辑</button>
+                        <button class="layui-btn layui-btn-small layui-btn-normal edit-btn" data-id="{{$info['id']}}" data-desc="修改代理黑名单" data-url="{{url('/admin/ipBlacklist/'. $info['id'] .'/edit')}}">编辑</button>
                         <button class="layui-btn layui-btn-small layui-btn-danger del-btn" data-id="{{$info['id']}}" data-url="{{url('/admin/ipBlacklist/'.$info['id'])}}">解禁</button>
                     </div>
                 </td>
@@ -83,7 +83,7 @@
             });
             //重置
             $("#reset").click(function () {
-                $("input[name='ip_address']").val('');
+                $("input[name='agent_id']").val('');
             });
         });
     </script>
