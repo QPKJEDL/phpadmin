@@ -44,16 +44,16 @@
         <tbody>
         @foreach($list as $info)
             <tr>
-                <td class="hidden-xs">{{$info['']}}</td>
-                <td class="hidden-xs">{{$info['']}}</td>
-                <td class="hidden-xs">{{$info['']}}</td>
+                <td class="hidden-xs">{{$info['account']}}[{{$info['nickname']}}]</td>
+                <td class="hidden-xs">{{$info['savetime']}}</td>
+                <td class="hidden-xs">{{$info['last_ip']}}</td>
                 <td class="hidden-xs">{{$info[""]}}</td>
+                <td class="hidden-xs">{{$info['logaddr']}}</td>
                 <td class="hidden-xs">{{$info['']}}</td>
                 <td class="hidden-xs">{{$info['']}}</td>
                 <td class="hidden-xs">{{$info['']}}</td>
-                <td class="hidden-xs">{{$info['']}}</td>
-                <td class="hidden-xs">{{$info['']}}</td>
-                <td class="hidden-xs">{{$info['']}}</td>
+                <td class="hidden-xs">{{$info['agent_id']}}[{{$info['par_agent_nickname']}}}]</td>
+                <td class="hidden-xs">{{$info['dir_agent_id']}}[{{$info['dir_agent_nickname']}}}]</td>
                 <td style="text-align: center">
                     <div class="layui-inline">
                         <button class="layui-btn layui-btn-small layui-btn-danger kick" data-id="{{$info['user_id']}}" data-status="1">踢下线</button>

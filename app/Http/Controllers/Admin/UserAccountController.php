@@ -16,10 +16,6 @@ class UserAccountController extends Controller
      * 数据列表
      */
     public function index(Request $request){
-        dump(2333);
-        $data=$this->get_direct_agent(35);
-        dump($data);
-        die;
 
         $map = array();
 
@@ -32,6 +28,11 @@ class UserAccountController extends Controller
         $data = UserAccount::where($map)->paginate(10)->appends($request->all());
         foreach ($data as $key=>$value){
             $data[$key]['savetime'] = date("Y-m-d H:i:s",$value['savetime']);
+            $data[$key]['logaddr']=$this->iptoaddr($value['last_ip']);
+            $data[$key]['par_agent_nickname']=$this->par_agent($value['agent_id']);
+            $dir_agent=$this->get_direct_agent($value['agent_id']);
+            $data[$key]['dir_agent_id']=$dir_agent['agent_id'];
+            $data[$key]['dir_agent_nickname']=$dir_agent['nickname'];
 
         }
         return view('userAccount.list',['list'=>$data,'input'=>$request->all()]);
