@@ -90,12 +90,10 @@
             $(".kick").click(function () {
                 var userId = $(this).attr('data-id');
                 layer.confirm('确定要封禁吗？',function (index) {
-                    $.ajaxSetup({
+                    $.ajax({
                         headers: {
                             'X-CSRF-TOKEN': $("#token").val()
-                        }
-                    });
-                    $.ajax({
+                        },
                         url:"{{url('/admin/userAccountOffline')}}",
                         data:{
                             "userId":userId,
