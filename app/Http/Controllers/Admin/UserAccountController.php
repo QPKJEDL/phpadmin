@@ -16,8 +16,8 @@ class UserAccountController extends Controller
      * 数据列表
      */
     public function index(Request $request){
-        dump(233);
-        
+        dump(2333);
+
         die;
 
         $map = array();
