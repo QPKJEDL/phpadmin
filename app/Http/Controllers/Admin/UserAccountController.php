@@ -19,7 +19,7 @@ class UserAccountController extends Controller
 
         $map = array();
         if($request->input('user_account')!='' || $request->input('user_account')!=null){
-            $map['user_account']=$request->input('user_account');
+            $map['account']=$request->input('user_account');
             $agent_id=$request->input('user_account');
             $data=$this->get_direct_agent_info($agent_id);
             dump($data);
