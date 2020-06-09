@@ -17,6 +17,7 @@ class UserAccountController extends Controller
      */
     public function index(Request $request){
         dump(233);
+        
         die;
 
         $map = array();
