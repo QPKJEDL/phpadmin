@@ -19,7 +19,7 @@
             <col class="hidden-xs" width="200">
             <col class="hidden-xs" width="150">
             <col class="hidden-xs" width="150">
-            <col class="hidden-xs" width="150">
+            <col class="hidden-xs" width="200">
             <col class="hidden-xs" width="150">
             <col class="hidden-xs" width="100">
             <col class="hidden-xs" width="200">
