@@ -17,8 +17,7 @@ class UserAccountController extends Controller
      */
     public function index(Request $request){
         dump(233);
-        $data=$this->get_direct_agent(35);
-        dump($data);die;
+        die;
 
         $map = array();
 
