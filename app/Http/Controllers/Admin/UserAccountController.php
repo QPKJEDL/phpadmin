@@ -69,7 +69,7 @@ class UserAccountController extends Controller
      * 递归查询直属一级
      */
     private function get_direct_agent($agent_id){
-        $agentlist=Agent::get()->select('id','nickname','parent_id')->toArray();
+        $agentlist=Agent::select('id','nickname','parent_id')->get()->toArray();
         foreach ($agentlist as $key=>&$value){
             if ($value['id']==$agent_id){
                 if($agentlist[$key]["parent_id"]>0){
