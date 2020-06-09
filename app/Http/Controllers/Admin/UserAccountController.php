@@ -19,8 +19,8 @@ class UserAccountController extends Controller
 
         $map = array();
 
-        $data=$this->get_direct_agent_info(35);
-        dump($data);
+//        $data=$this->get_direct_agent_info(35);
+//        dump($data);
         if($request->input('account')!='' || $request->input('account')!=null){
             $map['account']=$request->input('account');
 
