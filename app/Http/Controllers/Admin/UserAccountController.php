@@ -25,7 +25,7 @@ class UserAccountController extends Controller
         $map["is_online"]=1;
 
         $agent_id=$request->input('user_account');
-        $data=$this->direct_agent($agent_id);
+        $data=$this->get_direct_agent_info($agent_id);
         dump($data);
 
         //获取全部用户数据
@@ -67,8 +67,7 @@ class UserAccountController extends Controller
     /*
      * 代理数据
      */
-    private function agentinfo($agent_id){
-        $agentlist=Agent::select('id','nickname','parent_id')->get()->toArray();
+    private function get_agent_info($agent_id,$agentlist){
         foreach ($agentlist as $key=>&$value){
             if ($agent_id==$value['id']){
                 return $agentlist[$key];
@@ -77,16 +76,24 @@ class UserAccountController extends Controller
         }
     }
     /*
-     * 获取直属一级
+     * 递归查询直属一级
      */
-    private function direct_agent($agent_id){
-        $agent_info=$this->agentinfo($agent_id);
+    private function get_direct_agent($agent_id,$agentlist){
+        $agent_info=$this->agentinfo($agent_id,$agentlist);
         if($agent_info["parent_id"]==0){
             return $agent_info;
         }else{
-            return $this->direct_agent($agent_info["id"]);
+            return $this->direct_agent($agent_info["id"],$agentlist);
         }
     }
 
+    /*
+     * 获取直属一级信息
+     */
+    private function get_direct_agent_info($agent_id){
+        $list=$agentlist=Agent::select('id','nickname','parent_id')->get()->toArray();
+        $data=$this->get_direct_agent($agent_id,$list);
+        return $data;
+    }
 
 }
