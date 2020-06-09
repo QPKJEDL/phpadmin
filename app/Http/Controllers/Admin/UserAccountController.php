@@ -32,7 +32,7 @@ class UserAccountController extends Controller
                     ->where($map)->paginate(10)->appends($request->all());
         foreach ($data as $key=>$value){
             $data[$key]['savetime'] = date("Y-m-d H:i:s",$value['savetime']);
-            $data[$key]['server_ip']=$_SERVER['SERVER_ADDR'];
+            $data[$key]['server_ip']=GetHostByName($_SERVER['SERVER_NAME']);
             $data[$key]['logaddr']=$this->iptoaddr($value['last_ip']);
             $data[$key]['par_agent_nickname']=$value['nickname'];
             $dir_agent=$this->get_direct_agent($value['agent_id']);
