@@ -49,15 +49,20 @@ class UserAccountController extends Controller
      * 踢下线
      */
     public function offline(StoreRequest $request){
-
         //获取userId
         $userId = $request->input("userId");
         $userdata=Redis::get('UserInfo_'.$userId);
         $userinfo=json_decode($userdata,true);
-        dump($userinfo);
-
-
-
+        $token=$this->get_token();
+        $off=UserAccount::where('user_id',$userId)->update(array('token'=>$token));
+        if($off){
+            $userinfo["Token"]=$token;
+            $new=json_encode($userinfo);
+            Redis::set("UserInfo_".$userId,$new);
+            return ['msg'=>'操作成功！','status'=>1];
+        }else{
+            return ['msg'=>'操作失败！'];
+        }
     }
     /*
      * ip获取登录地址
@@ -87,7 +92,7 @@ class UserAccountController extends Controller
     /*
      * 随机token
      */
-    private function gettoken(){
+    private function get_token(){
         $str="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
         $key = "";
         for($i=0;$i<32;$i++)
