@@ -18,21 +18,27 @@ class UserAccountController extends Controller
     public function index(Request $request){
 
         $map = array();
+        $sql=UserAccount::query();
 
         if(true==$request->has('account')){
-            $map['account']=$request->input('account');
+            $map['user.account']=$request->input('account');
 
         }
-        $map["is_online"]=1;
+        $map["user.is_online"]=1;
         //获取全部用户数据
-        $data = UserAccount::where($map)->paginate(10)->appends($request->all());
+        $data = $sql->leftJoin('agent_users','user.agent_id','=','agent_users.id')
+                    ->leftJoin('desk','user.desk_id','=','desk.id')
+                    ->select('user.*','agent.id','agent.nickname','desk.id','desk.desk_name')
+                    ->where($map)->paginate(10)->appends($request->all());
         foreach ($data as $key=>$value){
             $data[$key]['savetime'] = date("Y-m-d H:i:s",$value['savetime']);
+            $data[$key]['server_ip']=$_SERVER['SERVER_ADDR'];
             $data[$key]['logaddr']=$this->iptoaddr($value['last_ip']);
-            $data[$key]['par_agent_nickname']=$this->par_agent($value['agent_id']);
+            $data[$key]['par_agent_nickname']=$value['nickname'];
             $dir_agent=$this->get_direct_agent($value['agent_id']);
             $data[$key]['dir_agent_id']=$dir_agent['id'];
             $data[$key]['dir_agent_nickname']=$dir_agent['nickname'];
+
 
         }
         return view('userAccount.list',['list'=>$data,'input'=>$request->all()]);
@@ -59,13 +65,6 @@ class UserAccountController extends Controller
         $result = json_decode($result,true);
         return $result['addr'];
     }
-    /*
-     * 直属上级
-     */
-    private function par_agent($agent_id){
-        return Agent::where('id',$agent_id)->value('nickname');
-    }
-
     /*
      * 递归查询直属一级
      */
