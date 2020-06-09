@@ -9,7 +9,7 @@ use App\Http\Requests\StoreRequest;
 use App\Models\UserAccount;
 use App\Models\Agent\Agent;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Redis;
 class UserAccountController extends Controller
 {
     /**
@@ -52,6 +52,10 @@ class UserAccountController extends Controller
 
         //获取userId
         $userId = $request->input("userId");
+        $userdata=Redis::get('UserInfo_'.$userId);
+        $userinfo=json_decode($userdata,true);
+        dump($userinfo);
+
 
 
     }
@@ -79,6 +83,20 @@ class UserAccountController extends Controller
                 continue;
             }
         }
+    }
+    /*
+     * 随机token
+     */
+    private function gettoken(){
+        $str="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        $key = "";
+        for($i=0;$i<32;$i++)
+        {
+            $key .= $str{mt_rand(0,32)};
+        }
+        $timestamp = time();
+        $tokenSalt = 'hq_admin_user_login_token';//自定义的18~32字符串
+        return md5($key . $timestamp . $tokenSalt);
     }
 
 }

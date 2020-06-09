@@ -105,7 +105,7 @@
             //踢下线
             $(".kick").click(function () {
                 var userId = $(this).attr('data-id');
-                layer.confirm('确定要封禁吗？',function (index) {
+                layer.confirm('确定要踢下线吗？',function (index) {
                     $.ajax({
                         headers: {
                             'X-CSRF-TOKEN': $("#token").val()
