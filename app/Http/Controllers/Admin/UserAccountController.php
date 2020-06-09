@@ -16,6 +16,7 @@ class UserAccountController extends Controller
      * 数据列表
      */
     public function index(Request $request){
+        dump(233);
         $data=$this->get_direct_agent_info(35);
         dump($data);die;
 
