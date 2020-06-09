@@ -19,7 +19,7 @@ class UserAccountController extends Controller
 
         $map = array();
 
-        if($request->input('account')!='' || $request->input('account')!=null){
+        if(true==$request->has('account')){
             $map['account']=$request->input('account');
 
         }
