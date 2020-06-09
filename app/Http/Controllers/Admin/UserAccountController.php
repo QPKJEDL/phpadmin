@@ -80,7 +80,6 @@ class UserAccountController extends Controller
      */
     private function get_direct_agent($agent_id,$agentlist){
         $agent_info=$this->get_agent_info($agent_id,$agentlist);
-        dump($agent_info);
         if($agent_info["parent_id"]==0){
             return $agent_info;
         }else{
