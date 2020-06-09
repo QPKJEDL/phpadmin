@@ -79,11 +79,11 @@ class UserAccountController extends Controller
      * 递归查询直属一级
      */
     private function get_direct_agent($agent_id,$agentlist){
-        $agent_info=$this->agentinfo($agent_id,$agentlist);
+        $agent_info=$this->get_agent_info($agent_id,$agentlist);
         if($agent_info["parent_id"]==0){
             return $agent_info;
         }else{
-            return $this->direct_agent($agent_info["id"],$agentlist);
+            return $this->get_direct_agent($agent_info["id"],$agentlist);
         }
     }
 
