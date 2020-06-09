@@ -6,7 +6,7 @@
     <div class="layui-inline">
         <input type="text"  value="{{ $input['user_account'] or '' }}" name="user_account" placeholder="登录账号" autocomplete="off" class="layui-input">
     </div>
-    <div class="layui-inline" style="padding-top: 10px;float: right;padding-right: 95px;">
+    <div class="layui-inline">
         <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo">搜索</button>
         <button id="res" class="layui-btn layui-btn-primary">重置</button>
     </div>
