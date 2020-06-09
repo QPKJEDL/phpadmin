@@ -17,7 +17,8 @@ class UserAccountController extends Controller
      */
     public function index(Request $request){
         dump(2333);
-
+        $data=$this->get_direct_agent(35);
+        dump($data);
         die;
 
         $map = array();
@@ -65,34 +66,19 @@ class UserAccountController extends Controller
     }
 
     /*
-     * 代理数据
+     * 递归查询直属一级
      */
-    private function get_agent_info($agent_id,$agentlist){
-        foreach ($agentlist as $key=>$value){
+    private function get_direct_agent($agent_id){
+        $agentlist=Agent::get()->select('id','nickname','parent_id')->toArray();
+        foreach ($agentlist as $key=>&$value){
             if ($value['id']==$agent_id){
+                if($agentlist[$key]["parent_id"]>0){
+                    return $this->get_direct_agent($agentlist[$key]["parent_id"]);
+                }
                 return $agentlist[$key];
                 continue;
             }
         }
-    }
-    /*
-     * 递归查询直属一级
-     */
-    private function get_direct_agent($agent_id){
-        $agent_info=Agent::where('id',$agent_id)->select('id','nickname','parent_id')->first()->toArray();
-        if($agent_info["parent_id"]>0){
-            $this->get_direct_agent($agent_info["parent_id"]);
-        }
-        return $agent_info;
-    }
-
-    /*
-     * 获取直属一级信息
-     */
-    private function get_direct_agent_info($agent_id){
-        //$list=Agent::select('id','nickname','parent_id')->get()->toArray();
-        $data=$this->get_direct_agent($agent_id);
-        return $data;
     }
 
 }
