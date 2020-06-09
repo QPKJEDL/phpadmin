@@ -16,7 +16,7 @@
         <colgroup>
             <col class="hidden-xs" width="100">
             <col class="hidden-xs" width="200">
-            <col class="hidden-xs" width="100">
+            <col class="hidden-xs" width="200">
             <col class="hidden-xs" width="150">
             <col class="hidden-xs" width="150">
             <col class="hidden-xs" width="150">
@@ -50,7 +50,13 @@
                 <td class="hidden-xs">{{$info['last_ip']}}</td>
                 <td class="hidden-xs">{{$info["server_ip"]}}</td>
                 <td class="hidden-xs">{{$info['logaddr']}}</td>
-                <td class="hidden-xs">{{$info['desk_name']}}</td>
+                <td class="hidden-xs">
+                    @if($info['desk_name']=="")
+                        未入台
+                    @else
+                        {{$info["desk_name"]}}
+                    @endif
+                </td>
                 <td class="hidden-xs">
                     @if($info['online_type']==1)
                         电脑
@@ -62,8 +68,8 @@
                         网页
                     @endif
                 </td>
-                <td class="hidden-xs">{{$info['agent_id']}}[{{$info['par_agent_nickname']}}]</td>
-                <td class="hidden-xs">{{$info['dir_agent_id']}}[{{$info['dir_agent_nickname']}}]</td>
+                <td class="hidden-xs">{{$info['par_agent_nickname']}}[{{$info['agent_id']}}]</td>
+                <td class="hidden-xs">{{$info['dir_agent_nickname']}}[{{$info['dir_agent_id']}}]</td>
                 <td style="text-align: center">
                     <div class="layui-inline">
                         <button class="layui-btn layui-btn-small layui-btn-danger kick" data-id="{{$info['user_id']}}" data-status="1">踢下线</button>
