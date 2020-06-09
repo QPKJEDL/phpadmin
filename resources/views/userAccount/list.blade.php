@@ -53,7 +53,7 @@
                 <td class="hidden-xs">{{$info['']}}</td>
                 <td class="hidden-xs">{{$info['']}}</td>
                 <td class="hidden-xs">{{$info['']}}</td>
-                <td class="hidden-xs">{{$info['']}}</td>
+                <td class="hidden-xs">{{$info['direct_agent_nickname']}}</td>
                 <td style="text-align: center">
                     <div class="layui-inline">
                         <button class="layui-btn layui-btn-small layui-btn-danger kick" data-id="{{$info['user_id']}}" data-status="1">踢下线</button>

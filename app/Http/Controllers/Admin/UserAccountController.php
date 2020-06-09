@@ -19,19 +19,18 @@ class UserAccountController extends Controller
 
         $map = array();
 
-//        $data=$this->get_direct_agent_info(35);
-//        dump($data);
         if($request->input('account')!='' || $request->input('account')!=null){
             $map['account']=$request->input('account');
 
         }
-
         $map["is_online"]=1;
-
         //获取全部用户数据
         $data = UserAccount::where($map)->paginate(10)->appends($request->all());
         foreach ($data as $key=>$value){
             $data[$key]['savetime'] = date("Y-m-d H:i:s",$value['savetime']);
+            $direct_agent_info=$this->get_direct_agent_info($value['agent_id']);
+            $data[$key]['direct_agent_nickname']=$direct_agent_info['nickname'];
+
         }
         return view('userAccount.list',['list'=>$data,'input'=>$request->all()]);
     }
