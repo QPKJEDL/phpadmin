@@ -4,7 +4,7 @@
         <button class="layui-btn layui-btn-small layui-btn-warm freshBtn"><i class="layui-icon">&#x1002;</i></button>
     </div>
     <div class="layui-inline">
-        <input type="text"  value="{{ $input['user_account'] or '' }}" name="user_account" placeholder="登录账号" autocomplete="off" class="layui-input">
+        <input type="text"  value="{{ $input['account'] or '' }}" name="account" placeholder="登录账号" autocomplete="off" class="layui-input">
     </div>
     <div class="layui-inline">
         <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo">搜索</button>
@@ -13,7 +13,6 @@
 @endsection
 @section('table')
     <table class="layui-table" lay-even lay-skin="nob">
-        <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
         <colgroup>
             <col class="hidden-xs" width="100">
             <col class="hidden-xs" width="100">
@@ -85,7 +84,7 @@
             });
             //重置
             $("#reset").click(function () {
-                $("input[name='user_account']").val('');
+                $("input[name='account']").val('');
             });
             //踢下线
             $(".kick").click(function () {
@@ -93,7 +92,7 @@
                 layer.confirm('确定要封禁吗？',function (index) {
                     $.ajaxSetup({
                         headers: {
-                            'X-CSRF-TOKEN': $('input[name="_token"]').val()
+                            'X-CSRF-TOKEN': $("#token").val()
                         }
                     });
                     $.ajax({

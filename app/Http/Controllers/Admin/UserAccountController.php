@@ -18,11 +18,12 @@ class UserAccountController extends Controller
     public function index(Request $request){
 
         $map = array();
-        if($request->input('user_account')!='' || $request->input('user_account')!=null){
-            $map['account']=$request->input('user_account');
-            $agent_id=$request->input('user_account');
-            $data=$this->get_direct_agent_info($agent_id);
-            dump($data);
+
+        $data=$this->get_direct_agent_info(35);
+        dump($data);
+        if($request->input('account')!='' || $request->input('account')!=null){
+            $map['account']=$request->input('account');
+
         }
 
         $map["is_online"]=1;
