@@ -18,14 +18,14 @@ class UserAccountController extends Controller
     public function index(Request $request){
 
         $map = array();
-//        if($request->input('game_id')!='' || $request->input('game_id')!=null){
-//            $map['game_id']=$request->input('game_id');
-//        }
+        if($request->input('user_account')!='' || $request->input('user_account')!=null){
+            $map['user_account']=$request->input('user_account');
+        }
 
         $map["is_online"]=1;
 
-
-        $data=$this->direct_agent(35);
+        $agent_id=$request->input('user_account');
+        $data=$this->direct_agent($agent_id);
         dump($data);
 
         //获取全部用户数据
@@ -68,7 +68,7 @@ class UserAccountController extends Controller
      * 代理数据
      */
     private function agentinfo($agent_id){
-        $agentlist=Agent::get();
+        $agentlist=Agent::select('id','nickname')->get()->toArray();
         foreach ($agentlist as $key=>&$value){
             if ($agent_id==$value['id']){
                 return $agentlist[$key];
