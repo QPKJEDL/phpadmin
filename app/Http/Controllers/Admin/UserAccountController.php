@@ -82,7 +82,7 @@ class UserAccountController extends Controller
         $agent_info=Agent::where('id',$agent_id)->select('id','nickname','parent_id')->first();
         dump($agent_info);
         if($agent_info["parent_id"]!=0){
-          return  $this->get_direct_agent($agent_info["id"]);
+          return  $this->get_direct_agent($agent_info["parent_id"]);
 
         }
         return $agent_info;
