@@ -91,7 +91,7 @@ class UserAccountController extends Controller
      * 获取直属一级信息
      */
     private function get_direct_agent_info($agent_id){
-        $list=$agentlist=Agent::select('id','nickname','parent_id')->get()->toArray();
+        $list=Agent::select('id','nickname','parent_id')->get()->toArray();
         $data=$this->get_direct_agent($agent_id,$list);
         return $data;
     }
