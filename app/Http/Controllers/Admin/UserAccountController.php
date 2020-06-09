@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRequest;
 use App\Models\UserAccount;
 use App\Models\Agent\Agent;
+use App\Models\UserKickLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
 class UserAccountController extends Controller
@@ -51,14 +52,22 @@ class UserAccountController extends Controller
     public function offline(StoreRequest $request){
         //获取userId
         $userId = $request->input("userId");
+        $account=UserAccount::where('user_id',$userId)->value('account');
         $userdata=Redis::get('UserInfo_'.$userId);
         $userinfo=json_decode($userdata,true);
         $token=$this->get_token();
-        $off=UserAccount::where('user_id',$userId)->update(array('token'=>$token));
+        $off=UserAccount::where('user_id',$userId)->update(array('token'=>$token,"is_online"=>0));
         if($off){
             $userinfo["Token"]=$token;
             $new=json_encode($userinfo);
             Redis::set("UserInfo_".$userId,$new);
+            $log=[
+                'user_id'=>$userId,
+                'account'=>$account,
+                'create_by'=>getLoginUser(),
+                'create_time'=>time()
+            ];
+            UserKickLog::insert($log);
             return ['msg'=>'操作成功！','status'=>1];
         }else{
             return ['msg'=>'操作失败！'];
