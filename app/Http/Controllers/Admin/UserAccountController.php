@@ -80,6 +80,7 @@ class UserAccountController extends Controller
      */
     private function get_direct_agent($agent_id,$agentlist){
         $agent_info=$this->get_agent_info($agent_id,$agentlist);
+        dump($agent_info);
         if($agent_info["parent_id"]==0){
             return $agent_info;
         }else{
@@ -92,7 +93,6 @@ class UserAccountController extends Controller
      */
     private function get_direct_agent_info($agent_id){
         $list=Agent::select('id','nickname','parent_id')->get()->toArray();
-        dump($list);
         $data=$this->get_direct_agent($agent_id,$list);
         return $data;
     }
