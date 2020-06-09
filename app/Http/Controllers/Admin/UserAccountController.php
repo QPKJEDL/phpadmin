@@ -68,7 +68,7 @@ class UserAccountController extends Controller
      * 代理数据
      */
     private function agentinfo($agent_id){
-        $agentlist=Agent::select('id','nickname')->get()->toArray();
+        $agentlist=Agent::select('id','nickname','parent_id')->get()->toArray();
         foreach ($agentlist as $key=>&$value){
             if ($agent_id==$value['id']){
                 return $agentlist[$key];
