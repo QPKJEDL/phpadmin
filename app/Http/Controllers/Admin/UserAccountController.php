@@ -79,7 +79,7 @@ class UserAccountController extends Controller
      * 递归查询直属一级
      */
     private function get_direct_agent($agent_id){
-        $agent_info=Agent::where('id',$agent_id)->select('id','nickname','parent_id')->get();
+        $agent_info=Agent::where('id',$agent_id)->select('id','nickname','parent_id')->first();
         if($agent_info["parent_id"]!=0){
           return  $this->get_direct_agent($agent_info["id"]);
 
