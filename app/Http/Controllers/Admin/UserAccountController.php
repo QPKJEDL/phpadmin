@@ -65,8 +65,8 @@ class UserAccountController extends Controller
      * 代理数据
      */
     private function get_agent_info($agent_id,$agentlist){
-        foreach ($agentlist as $key=>&$value){
-            if ($agent_id==$value['id']){
+        foreach ($agentlist as $key=>$value){
+            if ($value['id']==$agent_id){
                 return $agentlist[$key];
                 continue;
             }
@@ -80,7 +80,7 @@ class UserAccountController extends Controller
         if($agent_info["parent_id"]==0){
             return $agent_info;
         }else{
-            return $this->get_direct_agent($agent_info["id"],$agentlist);
+            $this->get_direct_agent($agent_info["id"],$agentlist);
         }
     }
 
