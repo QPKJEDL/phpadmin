@@ -28,7 +28,6 @@ class UserAccountController extends Controller
 
         $map["is_online"]=1;
 
-
         //获取全部用户数据
         $data = UserAccount::where($map)->paginate(10)->appends($request->all());
         foreach ($data as $key=>$value){
@@ -93,6 +92,7 @@ class UserAccountController extends Controller
      */
     private function get_direct_agent_info($agent_id){
         $list=Agent::select('id','nickname','parent_id')->get()->toArray();
+        dump($list);
         $data=$this->get_direct_agent($agent_id,$list);
         return $data;
     }
