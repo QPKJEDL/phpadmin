@@ -25,7 +25,7 @@ class UserAccountController extends Controller
         $map["is_online"]=1;
 
 
-        $data=$this->direct_agent(1);
+        $data=$this->direct_agent(35);
         dump($data);
 
         //获取全部用户数据
