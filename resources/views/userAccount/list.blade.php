@@ -60,7 +60,7 @@
         </colgroup>
         <thead>
         <tr>
-            <th class="hidden-xs">序号</th>
+            <th class="hidden-xs">序号1</th>
             <th class="hidden-xs">登录账号</th>
             <th class="hidden-xs">真实姓名</th>
             <th class="hidden-xs">手机号</th>
