@@ -28,8 +28,6 @@ class UserAccountController extends Controller
         $data = UserAccount::where($map)->paginate(10)->appends($request->all());
         foreach ($data as $key=>$value){
             $data[$key]['savetime'] = date("Y-m-d H:i:s",$value['savetime']);
-            $direct_agent_info=$this->get_direct_agent_info($value['agent_id']);
-            $data[$key]['direct_agent_nickname']=$direct_agent_info['nickname'];
 
         }
         return view('userAccount.list',['list'=>$data,'input'=>$request->all()]);
