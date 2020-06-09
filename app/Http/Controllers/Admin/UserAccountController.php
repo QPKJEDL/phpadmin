@@ -19,7 +19,6 @@ class UserAccountController extends Controller
         $data=$this->get_direct_agent_info(35);
         dump($data);die;
 
-
         $map = array();
 
         if(true==$request->has('account')){
@@ -80,11 +79,11 @@ class UserAccountController extends Controller
      */
     private function get_direct_agent($agent_id,$agentlist){
         $agent_info=$this->get_agent_info($agent_id,$agentlist);
-        if($agent_info["parent_id"]==0){
-            return $agent_info;
-        }else{
-            $this->get_direct_agent($agent_info["id"],$agentlist);
+        if($agent_info["parent_id"]!=0){
+          return  $this->get_direct_agent($agent_info["id"],$agentlist);
+
         }
+        return $agent_info;
     }
 
     /*
