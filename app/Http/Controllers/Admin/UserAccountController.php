@@ -80,8 +80,8 @@ class UserAccountController extends Controller
      */
     private function get_direct_agent($agent_id){
         $agent_info=Agent::where('id',$agent_id)->select('id','nickname','parent_id')->first();
-        if($agent_info["parent_id"]!=0){
-            return  $this->get_direct_agent($agent_info["parent_id"]);
+        if($agent_info["parent_id"]>0){
+            $this->get_direct_agent($agent_info["parent_id"]);
         }
         return $agent_info;
     }
@@ -90,8 +90,8 @@ class UserAccountController extends Controller
      * 获取直属一级信息
      */
     private function get_direct_agent_info($agent_id){
-        $list=Agent::select('id','nickname','parent_id')->get()->toArray();
-        $data=$this->get_direct_agent($agent_id,$list);
+        //$list=Agent::select('id','nickname','parent_id')->get()->toArray();
+        $data=$this->get_direct_agent($agent_id);
         return $data;
     }
 
