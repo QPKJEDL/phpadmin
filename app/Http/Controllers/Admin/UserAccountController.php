@@ -34,7 +34,7 @@ class UserAccountController extends Controller
         foreach ($data as $key=>$value){
             $data[$key]['savetime'] = date("Y-m-d H:i:s",$value['savetime']);
             $data[$key]['server_ip']=GetHostByName($_SERVER['SERVER_NAME']);
-            $data[$key]['logaddr']=$this->iptoaddr($value['last_ip']);
+            $data[$key]['logaddr']=iptoaddr($value['last_ip']);
             $data[$key]['par_agent_nickname']=$value['nickname'];
             $dir_agent=$this->get_direct_agent($value['agent_id']);
             $data[$key]['dir_agent_id']=$dir_agent['id'];
@@ -72,16 +72,6 @@ class UserAccountController extends Controller
         }else{
             return ['msg'=>'操作失败！'];
         }
-    }
-    /*
-     * ip获取登录地址
-     */
-    private function iptoaddr($ip){
-        $url = "http://whois.pconline.com.cn/ipJson.jsp?ip=".$ip."'&json=true";
-        $result = file_get_contents($url);
-        $result = iconv('gb2312','utf-8//IGNORE',$result);
-        $result = json_decode($result,true);
-        return $result['addr'];
     }
     /*
      * 递归查询直属一级

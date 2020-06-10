@@ -115,14 +115,19 @@ Route::group(['namespace' => "Admin",'middleware' => ['auth', 'permission']], fu
 //    Route::post('/resetPwd',        'UserAccountController@resetPwd');//修改密码
 //    Route::post('/isLogin',         'UserAccountController@isLogin');//封禁
 
+    //登录日志
+    Route::resource('/agentloginlog',    'AgentLoginLogController');//代理登录日志
+    Route::resource('/userloginlog',     'UserLoginLogController');//会员登录日志
+
 
     //日志管理
     Route::resource('/deskLog',         'DeskLogController'); //台桌操作日志
     Route::resource('/deskResultLog',   'DeskUpdateResultController');//台桌修改结果日志
+    Route::resource('/userkicklog',    'UserKickLogController');//踢人操作日志
 
     //游戏类型
     Route::resource('/game',            'GameController');//游戏类型
-    Route::post('/gameUpdate',      'GameController@update');
+    Route::post('/gameUpdate',        'GameController@update');
 
     //特定用户限红
     Route::resource('/userDesk',        'UserDeskController');//特定用户限红

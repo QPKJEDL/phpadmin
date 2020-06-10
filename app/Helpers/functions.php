@@ -98,7 +98,16 @@ function insertDeskLogOperaResultType($deskId,$record,$bootNum,$paveNum,$bootTim
     $data['create_time']=time();
     DeskLog::insert($data);
 }
-
+/*
+     * ip获取登录地址
+     */
+function iptoaddr($ip){
+    $url = "http://whois.pconline.com.cn/ipJson.jsp?ip=".$ip."'&json=true";
+    $result = file_get_contents($url);
+    $result = iconv('gb2312','utf-8//IGNORE',$result);
+    $result = json_decode($result,true);
+    return $result['addr'];
+}
 /**
 
  * 数据导出

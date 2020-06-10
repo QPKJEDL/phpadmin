@@ -104,7 +104,7 @@ return [
 
         'default' => [
 
-            'host' => "127.0.0.1",
+            'host' => "129.211.114.135",
             'password' => "lcf2954626",
             'port' => '6379',
             'database' => 0,
