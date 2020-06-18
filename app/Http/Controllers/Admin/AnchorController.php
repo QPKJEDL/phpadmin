@@ -8,13 +8,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRequest;
 use App\Models\UserAccount;
 use App\Models\UserMoney;
+use App\Models\LiveInfo;
 use Illuminate\Support\Facades\DB;
 use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
-
+use Illuminate\Support\Facades\Redis;
 class AnchorController extends Controller
 {
     /**
@@ -45,6 +46,11 @@ class AnchorController extends Controller
     public function edit($id=0)
     {
         $data = $id?UserAccount::find($id):[];
+        $info=LiveInfo::where("live_user_id",$id)->first();
+        $data["age"]=$info["age"];
+        $data["height"]=$info["height"];
+        $data["three_sides"]=$info["three_sides"];
+        $data["hobby"]=$info["hobby"];
         return view('anchor.edit',['id'=>$id,'info'=>$data]);
     }
 
@@ -61,8 +67,17 @@ class AnchorController extends Controller
         }
         $data = $request->all();
         $data['password']=md5($data['password']);
+
+        $info["age"]=$data["age"];
+        $info["height"]=$data["height"];
+        $info["three_sides"]=$data["three_sides"];
+        $info["hobby"]=$data["hobby"];
         unset($data['id']);
         unset($data['_token']);
+        unset($data["age"]);
+        unset($data["height"]);
+        unset($data["three_sides"]);
+        unset($data["hobby"]);
         //获取当前登录用户
         $user = Auth::user();
         $data["shenfen"]=1;
@@ -86,7 +101,30 @@ class AnchorController extends Controller
                 DB::rollBack();
                 return ['msg'=>'主播帐户添加失败！'];
             }
+            $live=[
+                "live_user_id"=>$insertId,
+                "age"=>$info["age"],
+                "height"=>$info["height"],
+                "three_sides"=>$info["three_sides"],
+                "hobby"=>$info["hobby"],
+                "creatime"=>time(),
+            ];
+            $liveinfo=LiveInfo::insert($live);
+            if(!$liveinfo){
+                DB::rollBack();
+                return ['msg'=>'主播信息添加失败！'];
+            }
             DB::commit();
+            $live_user_info=[
+                'LiveUserId'=>$insertId,
+                'NickName'=>$data["nickname"],
+                'Age'=>$info["age"],
+                'Height'=>$info["height"],
+                'ThreeSides'=>$info["three_sides"],
+                'Hobby'=>$info["hobby"]
+            ];
+            $new=json_encode($live_user_info);
+            Redis::set("LiveUserInfo_".$insertId,$new);
             return ['msg'=>'主播添加成功！','status'=>1];
 
         }catch (Exception $e){
@@ -132,6 +170,17 @@ class AnchorController extends Controller
         $id = $request->input('id');
         $data = $request->all();
 
+        $info["age"]=$data["age"];
+        $info["height"]=$data["height"];
+        $info["three_sides"]=$data["three_sides"];
+        $info["hobby"]=$data["hobby"];
+        unset($data['id']);
+        unset($data['_token']);
+        unset($data["age"]);
+        unset($data["height"]);
+        unset($data["three_sides"]);
+        unset($data["hobby"]);
+
         unset($data['_token']);
         unset($data['id']);
 
@@ -141,7 +190,22 @@ class AnchorController extends Controller
 
         $count = UserAccount::where('user_id',$id)->update($data);
         if ($count!==false){
-            return ['msg'=>'修改成功','status'=>1];
+            $live=LiveInfo::where('live_user_id',$id)->update($info);
+            if($live!==false){
+                $live_user_info=[
+                    'LiveUserId'=>$id,
+                    'NickName'=>$data["nickname"],
+                    'Age'=>$info["age"],
+                    'Height'=>$info["height"],
+                    'ThreeSides'=>$info["three_sides"],
+                    'Hobby'=>$info["hobby"]
+                ];
+                $new=json_encode($live_user_info);
+                Redis::set("LiveUserInfo_".$id,$new);
+                return ['msg'=>'修改成功','status'=>1];
+            }else{
+                return ['msg'=>'修改失败','status'=>0];
+            }
         }else{
             return ['msg'=>'修改失败','status'=>0];
         }
