@@ -43,6 +43,14 @@
     </div>
 
     <div class="layui-form-item">
+        <label class="layui-form-label">星座：</label>
+        <div class="layui-input-inline">
+            <input type="text" value="{{$info['star'] or ''}}" name="star"  placeholder="星座" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
         <label class="layui-form-label">爱好：</label>
         <div class="layui-input-inline">
             <textarea placeholder="爱好" name="hobby" class="layui-textarea" style="resize: none;width: 300px;height: 100px;overflow-y:visible">{{$info['hobby'] or ''}}</textarea>

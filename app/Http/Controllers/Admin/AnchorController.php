@@ -50,6 +50,7 @@ class AnchorController extends Controller
         $data["age"]=$info["age"];
         $data["height"]=$info["height"];
         $data["three_sides"]=$info["three_sides"];
+        $data["star"]=$info["star"];
         $data["hobby"]=$info["hobby"];
         return view('anchor.edit',['id'=>$id,'info'=>$data]);
     }
@@ -71,12 +72,14 @@ class AnchorController extends Controller
         $info["age"]=$data["age"];
         $info["height"]=$data["height"];
         $info["three_sides"]=$data["three_sides"];
+        $info["star"]=$data["star"];
         $info["hobby"]=$data["hobby"];
         unset($data['id']);
         unset($data['_token']);
         unset($data["age"]);
         unset($data["height"]);
         unset($data["three_sides"]);
+        unset($data["star"]);
         unset($data["hobby"]);
         //获取当前登录用户
         $user = Auth::user();
@@ -106,6 +109,7 @@ class AnchorController extends Controller
                 "age"=>$info["age"],
                 "height"=>$info["height"],
                 "three_sides"=>$info["three_sides"],
+                "star"=>$info["star"],
                 "hobby"=>$info["hobby"],
                 "creatime"=>time(),
             ];
@@ -121,6 +125,7 @@ class AnchorController extends Controller
                 'Age'=>$info["age"],
                 'Height'=>$info["height"],
                 'ThreeSides'=>$info["three_sides"],
+                'Star'=>$info["star"],
                 'Hobby'=>$info["hobby"]
             ];
             $new=json_encode($live_user_info);
@@ -173,12 +178,14 @@ class AnchorController extends Controller
         $info["age"]=$data["age"];
         $info["height"]=$data["height"];
         $info["three_sides"]=$data["three_sides"];
+        $info["star"]=$data["star"];
         $info["hobby"]=$data["hobby"];
         unset($data['id']);
         unset($data['_token']);
         unset($data["age"]);
         unset($data["height"]);
         unset($data["three_sides"]);
+        unset($data["star"]);
         unset($data["hobby"]);
 
         unset($data['_token']);
@@ -198,6 +205,7 @@ class AnchorController extends Controller
                     'Age'=>$info["age"],
                     'Height'=>$info["height"],
                     'ThreeSides'=>$info["three_sides"],
+                    'Star'=>$info["star"],
                     'Hobby'=>$info["hobby"]
                 ];
                 $new=json_encode($live_user_info);
