@@ -54,7 +54,7 @@
             {{--</div>--}}
             <!--服务器信息-->
             <div class="server-panel panel panel-default">
-                <div class="panel-header">服务器信息</div>
+                <div class="panel-header">服务器信息:</div>
                 <div class="panel-body clearfix">
                     <div class="col-md-2">
                         <p class="title">服务器环境</p>
