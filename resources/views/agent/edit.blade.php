@@ -3,7 +3,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">用户名：</label>
         <div class="layui-input-block">
-            <input type="text" value="{{$info['username'] or ''}}" name="username" required lay-verify="user_name" placeholder="请输入用户名(请不要出现汉字)" autocomplete="off" class="layui-input" @if($id!=0) disabled @endif>
+            <input type="text" value="{{$info['username'] or ''}}" name="username" required lay-verify="user_name" placeholder="请输入用户名(请不要出现汉字)" autocomplete="off" class="layui-input" @if($id!=0) readonly @endif>
         </div>
     </div>
     <div class="layui-form-item">
@@ -310,44 +310,44 @@
 
             var id = $("input[name='id']").val();
             if(id==0){
-                var data = $('form').serializeArray();
-                //获取dom元素
-                //百家乐
-                var baccarat = document.getElementById('baccarat');
-                if (baccarat.checked){
-                    data.push({"name":"baccarat","value":"1"});
-                }else{
-                    data.push({"name":"baccarat","value":"0"});
-                }
-                //龙虎
-                var dragonTiger = document.getElementById('dragon_tiger');
-                if (dragonTiger.checked){
-                    data.push({"name":"dragon_tiger","value":"1"});
-                }else{
-                    data.push({"name":"dragon_tiger","value":"0"});
-                }
-                //牛牛
-                var niuniu = document.getElementById('niuniu');
-                if(niuniu.checked){
-                    data.push({"name":"niuniu","value":"1"});
-                }else{
-                    data.push({"name":"niuniu","value":"0"});
-                }
-                //三公
-                var sanGong = document.getElementById('sangong');
-                if(sanGong.checked){
-                    data.push({"name":"sangong","value":"1"});
-                }else{
-                    data.push({"name":"sangong","value":"0"});
-                }
-                //A89
-                var A89 = document.getElementById('A89');
-                if(A89.checked){
-                    data.push({"name":"A89","value":"1"});
-                }else{
-                    data.push({"name":"A89","value":"0"});
-                }
                 form.on('submit(formDemo)', function() {
+                    var data = $('form').serializeArray();
+                    //获取dom元素
+                    //百家乐
+                    var baccarat = document.getElementById('baccarat');
+                    if (baccarat.checked){
+                        data.push({"name":"baccarat","value":"1"});
+                    }else{
+                        data.push({"name":"baccarat","value":"0"});
+                    }
+                    //龙虎
+                    var dragonTiger = document.getElementById('dragon_tiger');
+                    if (dragonTiger.checked){
+                        data.push({"name":"dragon_tiger","value":"1"});
+                    }else{
+                        data.push({"name":"dragon_tiger","value":"0"});
+                    }
+                    //牛牛
+                    var niuniu = document.getElementById('niuniu');
+                    if(niuniu.checked){
+                        data.push({"name":"niuniu","value":"1"});
+                    }else{
+                        data.push({"name":"niuniu","value":"0"});
+                    }
+                    //三公
+                    var sanGong = document.getElementById('sangong');
+                    if(sanGong.checked){
+                        data.push({"name":"sangong","value":"1"});
+                    }else{
+                        data.push({"name":"sangong","value":"0"});
+                    }
+                    //A89
+                    var A89 = document.getElementById('A89');
+                    if(A89.checked){
+                        data.push({"name":"A89","value":"1"});
+                    }else{
+                        data.push({"name":"A89","value":"0"});
+                    }
                     $.ajax({
                         url:"{{url('/admin/agent')}}",
                         data:data,
