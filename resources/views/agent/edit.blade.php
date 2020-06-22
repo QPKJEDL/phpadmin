@@ -53,6 +53,15 @@
         </div>
     @endif
     <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">占比：</label>
+            <div class="layui-input-inline" style="width: 100px;">
+                <input type="number" name="proportion" lay-verify="proportion" value="{{$info['proportion'] or ''}}"  placeholder="%" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid layui-word-aux">比如20%就填写20</div>
+        </div>
+    </div>
+    <div class="layui-form-item">
         <label class="layui-form-label">IP白名单：</label>
         <div class="layui-input-block">
             <textarea placeholder="请填写IP白名单（非必填）" name="ip_config" class="layui-textarea" style="resize: none">{{$info['ip_config'] or ''}}</textarea>
@@ -250,8 +259,6 @@
             </div>
         </div>
     </div>
-
-
 @endsection
 @section('id',$id)
 @section('js')
@@ -306,6 +313,11 @@
                         return '两次输入密码不一致';
                     }
                 },
+                proportion:function (value) {
+                    if (value<=0){
+                        return '占比必填'
+                    }
+                }
             });
 
             var id = $("input[name='id']").val();
