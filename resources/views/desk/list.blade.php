@@ -57,7 +57,7 @@
         </colgroup>
         <thead>
         <tr>
-            <th class="hidden-xs">序号</th>
+            <th class="hidden-xs">序号1</th>
             <th class="hidden-xs">名称</th>
             <th class="hidden-xs">IP限制</th>
             <th class="hidden-xs">台桌推送</th>
