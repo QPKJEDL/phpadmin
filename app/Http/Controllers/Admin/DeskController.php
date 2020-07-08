@@ -112,6 +112,7 @@ class DeskController extends Controller
             $deskData["DeskId"]=(int)$count;
             $deskData["BootNum"]=(int)1;
             $deskData["GameId"]=(int)$data["game_id"];
+            $deskData["Phase"]=(int)0;
             $deskData["PaveNum"]=(int)0;
             $deskData["BootSn"]=date("YmdHis").$count."1";
             $deskData["DeskName"]=$this->getDeskName($count);
@@ -176,9 +177,6 @@ class DeskController extends Controller
         $data['max_tie_limit']=json_encode($max_tie_limit);
         $data['max_pair_limit']=json_encode($max_pair_limit);
         $update = Desk::where('id',$id)->update($data);
-        $gameName=Game::where('id',$data["game_id"])->value("game_name");
-        dump($gameName);
-
         if($update!==false){
             //$deskInfo = $id?Desk::find($id):[];
             $desk=Redis::get("desk_info_".$id);
@@ -202,6 +200,7 @@ class DeskController extends Controller
             }else{
                 $gameName=Game::where('id',$data["game_id"])->value("game_name");
                 $deskData["DeskId"]=(int)$id;
+                $deskData["Phase"]=(int)0;
                 $deskData["BootNum"]=(int)1;
                 $deskData["GameId"]=(int)$data["game_id"];
                 $deskData["GameName"]=$gameName;
