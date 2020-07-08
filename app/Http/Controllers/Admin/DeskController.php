@@ -197,9 +197,11 @@ class DeskController extends Controller
                 insertDeskLogOperaType($id,'修改了台桌信息');
                 return ['msg'=>'修改成功！','status'=>1];
             }else{
+                $gameName=Game::where('id',$data["game_id"])->value("game_name");
                 $deskData["DeskId"]=(int)$id;
                 $deskData["BootNum"]=(int)1;
                 $deskData["GameId"]=(int)$data["game_id"];
+                $deskData["GameName"]=$gameName;
                 $deskData["PaveNum"]=(int)0;
                 $deskData["BootSn"]=date("YmdHis").$id."1";
                 $deskData["DeskName"]=$this->getDeskName($id);
