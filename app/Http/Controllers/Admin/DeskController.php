@@ -177,6 +177,9 @@ class DeskController extends Controller
         $data['max_tie_limit']=json_encode($max_tie_limit);
         $data['max_pair_limit']=json_encode($max_pair_limit);
         $update = Desk::where('id',$id)->update($data);
+        $gameName=Game::where('id',$data["game_id"])->value("game_name");
+        dump($gameName);die;
+
         if($update!==false){
             //$deskInfo = $id?Desk::find($id):[];
             $desk=Redis::get("desk_info_".$id);
