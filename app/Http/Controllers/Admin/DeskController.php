@@ -110,6 +110,7 @@ class DeskController extends Controller
         $count = Desk::insertGetId($data);
         if ($count){
             $deskData["DeskId"]=(int)$count;
+            $deskData["Phase"]=(int)0;
             $deskData["BootNum"]=(int)1;
             $deskData["GameId"]=(int)$data["game_id"];
             $deskData["PaveNum"]=(int)0;
@@ -176,6 +177,7 @@ class DeskController extends Controller
         $data['max_tie_limit']=json_encode($max_tie_limit);
         $data['max_pair_limit']=json_encode($max_pair_limit);
         $update = Desk::where('id',$id)->update($data);
+
         if($update!==false){
             //$deskInfo = $id?Desk::find($id):[];
             $desk=Redis::get("desk_info_".$id);
@@ -198,6 +200,7 @@ class DeskController extends Controller
                 return ['msg'=>'修改成功！','status'=>1];
             }else{
                 $deskData["DeskId"]=(int)$id;
+                $deskData["Phase"]=(int)0;
                 $deskData["BootNum"]=(int)1;
                 $deskData["GameId"]=(int)$data["game_id"];
                 $deskData["PaveNum"]=(int)0;
@@ -238,13 +241,13 @@ class DeskController extends Controller
             case 1:
                 return (string)"百家乐";
             case 2:
-                return "龙虎";
+                return (string)"龙虎";
             case 3:
-                return "牛牛";
+                return (string)"牛牛";
             case 4:
-                return "A89";
+                return (string)"三公";
             case 5:
-                return "三公";
+                return (string)"A89";
             default:
                 return "";
         }
