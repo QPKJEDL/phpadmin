@@ -180,6 +180,7 @@ class DeskController extends Controller
         $gameName=Game::where('id',$data["game_id"])->value("game_name");
         dump($gameName);die;
 
+
         if($update!==false){
             //$deskInfo = $id?Desk::find($id):[];
             $desk=Redis::get("desk_info_".$id);
