@@ -101,7 +101,7 @@
                 <td class="hidden-xs">{{$info['min_pair_limit']['c']/100}}/{{$info['min_pair_limit']['cu']/100}}<br>{{$info['min_pair_limit']['p']/100}}${{$info['min_pair_limit']['pu']/100}}</td>
                 <td class="hidden-xs">{{$info['max_pair_limit']['c']/100}}/{{$info['max_pair_limit']['cu']/100}}<br>{{$info['max_pair_limit']['p']/100}}${{$info['max_pair_limit']['pu']/100}}</td>
                 <td class="hidden-xs">
-                    @if($info['is_alive']==0)
+                    @if($info['is_alive']==1)
                         <span class="layui-btn layui-btn-mini layui-btn-normal">是</span>
                     @else
                         <span class="layui-btn layui-btn-mini layui-btn-warm">否</span>
