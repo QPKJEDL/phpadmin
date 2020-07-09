@@ -107,7 +107,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">点击:</label>
             <div class="layui-input-inline" style="width: 100px;">
-                <input type="number" name="min_limit[c]" value="{{$minLimit['c']/100 or ''}}" placeholder="" autocomplete="off" class="layui-input">
+                <input type="number" name="min_limit[c]" value="{{$minLimit['c'] or ''}}" placeholder="" autocomplete="off" class="layui-input">
             </div>
             <div class="layui-form-mid">US:</div>
             <div class="layui-input-inline" style="width: 100px;">
