@@ -94,12 +94,12 @@
                         <span class="layui-btn layui-btn-mini layui-btn-warm">异常</span>
                     @endif
                 </td>
-                <td class="hidden-xs">{{$info['min_limit']['c']}}/{{$info['min_limit']['cu']}}<br>{{$info['min_limit']['p']}}${{$info['min_limit']['pu']}}</td>
-                <td class="hidden-xs">{{$info['max_limit']['c']}}/{{$info['max_limit']['cu']}}<br>{{$info['max_limit']['p']}}${{$info['max_limit']['pu']}}</td>
-                <td class="hidden-xs">{{$info['min_tie_limit']['c']}}/{{$info['min_tie_limit']['cu']}}<br>{{$info['min_tie_limit']['p']}}${{$info['min_tie_limit']['pu']}}</td>
-                <td class="hidden-xs">{{$info['max_tie_limit']['c']}}/{{$info['max_tie_limit']['cu']}}<br>{{$info['max_tie_limit']['p']}}${{$info['max_tie_limit']['pu']}}</td>
-                <td class="hidden-xs">{{$info['min_pair_limit']['c']}}/{{$info['min_pair_limit']['cu']}}<br>{{$info['min_pair_limit']['p']}}${{$info['min_pair_limit']['pu']}}</td>
-                <td class="hidden-xs">{{$info['max_pair_limit']['c']}}/{{$info['max_pair_limit']['cu']}}<br>{{$info['max_pair_limit']['p']}}${{$info['max_pair_limit']['pu']}}</td>
+                <td class="hidden-xs">{{$info['min_limit']['c']/100}}/{{$info['min_limit']['cu']/100}}<br>{{$info['min_limit']['p']/100}}${{$info['min_limit']['pu']/100}}</td>
+                <td class="hidden-xs">{{$info['max_limit']['c']/100}}/{{$info['max_limit']['cu']/100}}<br>{{$info['max_limit']['p']/100}}${{$info['max_limit']['pu']/100}}</td>
+                <td class="hidden-xs">{{$info['min_tie_limit']['c']/100}}/{{$info['min_tie_limit']['cu']/100}}<br>{{$info['min_tie_limit']['p']/100}}${{$info['min_tie_limit']['pu']/100}}</td>
+                <td class="hidden-xs">{{$info['max_tie_limit']['c']/100}}/{{$info['max_tie_limit']['cu']/100}}<br>{{$info['max_tie_limit']['p']/100}}${{$info['max_tie_limit']['pu']/100}}</td>
+                <td class="hidden-xs">{{$info['min_pair_limit']['c']/100}}/{{$info['min_pair_limit']['cu']/100}}<br>{{$info['min_pair_limit']['p']/100}}${{$info['min_pair_limit']['pu']/100}}</td>
+                <td class="hidden-xs">{{$info['max_pair_limit']['c']/100}}/{{$info['max_pair_limit']['cu']/100}}<br>{{$info['max_pair_limit']['p']/100}}${{$info['max_pair_limit']['pu']/100}}</td>
                 <td class="hidden-xs">
                     @if($info['is_alive']==0)
                         <span class="layui-btn layui-btn-mini layui-btn-normal">是</span>
