@@ -62,6 +62,37 @@ class DeskController extends Controller
             $maxLimit = json_decode($info['max_limit'],true);
             $maxTieLimit = json_decode($info['max_tie_limit'],true);
             $maxPairLimit = json_decode($info['max_pair_limit'],true);
+
+            $minLimit["c"]=(int)$minLimit["c"]/100;
+            $minLimit['cu']=(int)$minLimit["cu"]/100;
+            $minLimit['p']=(int)$minLimit['p']/100;
+            $minLimit['pu']=(int)$minLimit['pu']/100;
+
+            $minTieLimit["c"]=(int)$minTieLimit["c"]/100;
+            $minTieLimit['cu']=(int)$minTieLimit["cu"]/100;
+            $minTieLimit['p']=(int)$minTieLimit['p']/100;
+            $minTieLimit['pu']=(int)$minTieLimit['pu']/100;
+
+            $minPairLimit["c"]=(int)$minPairLimit["c"]/100;
+            $minPairLimit['cu']=(int)$minPairLimit["cu"]/100;
+            $minPairLimit['p']=(int)$minPairLimit['p']/100;
+            $minPairLimit['pu']=(int)$minPairLimit['pu']/100;
+
+            $maxLimit["c"]=(int)$maxLimit["c"]/100;
+            $maxLimit['cu']=(int)$maxLimit["cu"]/100;
+            $maxLimit['p']=(int)$maxLimit['p']/100;
+            $maxLimit['pu']=(int)$maxLimit['pu']/100;
+
+            $maxTieLimit["c"]=(int)$maxTieLimit["c"]/100;
+            $maxTieLimit['cu']=(int)$maxTieLimit["cu"]/100;
+            $maxTieLimit['p']=(int)$maxTieLimit['p']/100;
+            $maxTieLimit['pu']=(int)$maxTieLimit['pu']/100;
+
+            $maxPairLimit["c"]=(int)$maxPairLimit["c"]/100;
+            $maxPairLimit['cu']=(int)$maxPairLimit["cu"]/100;
+            $maxPairLimit['p']=(int)$maxPairLimit['p']/100;
+            $maxPairLimit['pu']=(int)$maxPairLimit['pu']/100;
+
             return view("desk.edit",['id'=>$id,'info'=>$info,'gameType'=>$gameType,"minLimit"=>$minLimit,'minTieLimit'=>$minTieLimit,'minPairLimit'=>$minPairLimit,'maxLimit'=>$maxLimit,'maxTieLimit'=>$maxTieLimit,'maxPairLimit'=>$maxPairLimit]);
         }
     }
