@@ -31,6 +31,7 @@ class AgentMenu extends Model
     public static function editTree($parent_id,$roleId)
     {
         $data = AgentMenu::where('parent_id',$parent_id)->get();
+        $data['name']=$data['name'].'----'.$data['mark'];
         $arr = array();
         if (sizeof($data) != 0){
             foreach ($data as $key=>&$datum){
@@ -48,6 +49,10 @@ class AgentMenu extends Model
     public static function editTreeList($roleId)
     {
         $data = AgentMenu::get()->toArray();
+        foreach ($data as $key=>$datum)
+        {
+            $data[$key]['name'] = $datum['name'].'---'.$datum['mark'];
+        }
         foreach ($data as $key=>&$value){
             $roleMenu = AgentRoleMenu::getInfo($roleId,$value['id']);
             if ($roleMenu!=null){
