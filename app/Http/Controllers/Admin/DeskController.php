@@ -109,8 +109,26 @@ class DeskController extends Controller
         $data['max_pair_limit']=json_encode($max_pair_limit);
         $count = Desk::insertGetId($data);
         if ($count){
-            $deskInfo = $count?Desk::find($count):[];
-            //Redis::set("desk_info_".$count,json_encode($deskInfo));
+            $deskData["DeskId"]=(int)$count;
+            $deskData["BootNum"]=(int)1;
+            $deskData["GameId"]=(int)$data["game_id"];
+            $deskData["Phase"]=(int)0;
+            $deskData["PaveNum"]=(int)0;
+            $deskData["BootSn"]=date("YmdHis").$count."1";
+            $deskData["DeskName"]=$this->getDeskName($count);
+            $deskData["GameName"]=$this->getGameName($data["game_id"]);
+            $deskData["CountDown"]=(int)$data["count_down"];
+            $deskData["WaitDown"]=(int)$data["wait_down"];
+            $deskData["MinLimit"]=$min_limit["c"]/100;
+            $deskData["MaxLimit"]=$max_limit["c"]/100;
+            $deskData["TieMinLimit"]=$min_tie_limit["c"]/100;
+            $deskData["TieMaxLimit"]=$max_tie_limit["c"]/100;
+            $deskData["PairMinLimit"]=$min_pair_limit["c"]/100;
+            $deskData["PairMaxLimit"]=$max_pair_limit["c"]/100;
+            $deskData["PairMaxLimit"]=$max_pair_limit["c"]/100;
+            $deskData["LeftPlay"]=$data["left_play"];
+            $deskData["RightPlay"]=$data["right_play"];
+            Redis::set("desk_info_".$count,json_encode($deskData));
            return ["msg"=>"保存成功！","status"=>1];
         }else{
             return ["msg"=>"操作失败！","status"=>0];
@@ -159,28 +177,86 @@ class DeskController extends Controller
         $data['max_tie_limit']=json_encode($max_tie_limit);
         $data['max_pair_limit']=json_encode($max_pair_limit);
         $update = Desk::where('id',$id)->update($data);
+        $gameName=Game::where('id',$data["game_id"])->value("game_name");
+        dump($gameName);die;
+
         if($update!==false){
             //$deskInfo = $id?Desk::find($id):[];
             $desk=Redis::get("desk_info_".$id);
-            $deskData=json_decode($desk,true);
-            $deskData["CountDown"]=(int)$data["count_down"];
-            $deskData["WaitDown"]=(int)$data["wait_down"];
-            $deskData["MinLimit"]=$min_limit["c"]/100;
-            $deskData["MaxLimit"]=$max_limit["c"]/100;
-            $deskData["TieMinLimit"]=$min_tie_limit["c"]/100;
-            $deskData["TieMaxLimit"]=$max_tie_limit["c"]/100;
-            $deskData["PairMinLimit"]=$min_pair_limit["c"]/100;
-            $deskData["PairMaxLimit"]=$max_pair_limit["c"]/100;
-            $deskData["PairMaxLimit"]=$max_pair_limit["c"]/100;
-            $deskData["LeftPlay"]=$data["left_play"];
-            $deskData["RightPlay"]=$data["right_play"];
-            Redis::set("desk_info_".$id,json_encode($deskData));
-            insertDeskLogOperaType($id,'修改了台桌信息');
-            return ['msg'=>'修改成功！','status'=>1];
+
+            if($desk){
+                $deskData=json_decode($desk,true);
+                $deskData["CountDown"]=(int)$data["count_down"];
+                $deskData["WaitDown"]=(int)$data["wait_down"];
+                $deskData["MinLimit"]=$min_limit["c"]/100;
+                $deskData["MaxLimit"]=$max_limit["c"]/100;
+                $deskData["TieMinLimit"]=$min_tie_limit["c"]/100;
+                $deskData["TieMaxLimit"]=$max_tie_limit["c"]/100;
+                $deskData["PairMinLimit"]=$min_pair_limit["c"]/100;
+                $deskData["PairMaxLimit"]=$max_pair_limit["c"]/100;
+                $deskData["PairMaxLimit"]=$max_pair_limit["c"]/100;
+                $deskData["LeftPlay"]=$data["left_play"];
+                $deskData["RightPlay"]=$data["right_play"];
+                Redis::set("desk_info_".$id,json_encode($deskData));
+                insertDeskLogOperaType($id,'修改了台桌信息');
+                return ['msg'=>'修改成功！','status'=>1];
+            }else{
+                $gameName=Game::where('id',$data["game_id"])->value("game_name");
+                $deskData["DeskId"]=(int)$id;
+                $deskData["Phase"]=(int)0;
+                $deskData["BootNum"]=(int)1;
+                $deskData["GameId"]=(int)$data["game_id"];
+                $deskData["GameName"]=$gameName;
+                $deskData["PaveNum"]=(int)0;
+                $deskData["BootSn"]=date("YmdHis").$id."1";
+                $deskData["DeskName"]=$this->getDeskName($id);
+                $deskData["GameName"]=$this->getGameName($data["game_id"]);
+                $deskData["CountDown"]=(int)$data["count_down"];
+                $deskData["WaitDown"]=(int)$data["wait_down"];
+                $deskData["MinLimit"]=$min_limit["c"]/100;
+                $deskData["MaxLimit"]=$max_limit["c"]/100;
+                $deskData["TieMinLimit"]=$min_tie_limit["c"]/100;
+                $deskData["TieMaxLimit"]=$max_tie_limit["c"]/100;
+                $deskData["PairMinLimit"]=$min_pair_limit["c"]/100;
+                $deskData["PairMaxLimit"]=$max_pair_limit["c"]/100;
+                $deskData["PairMaxLimit"]=$max_pair_limit["c"]/100;
+                $deskData["LeftPlay"]=$data["left_play"];
+                $deskData["RightPlay"]=$data["right_play"];
+                Redis::set("desk_info_".$id,json_encode($deskData));
+                insertDeskLogOperaType($id,'修改了台桌信息');
+                return ['msg'=>'修改成功！','status'=>1];
+            }
+
         }else{
             return ['msg'=>"修改失败！",'status'=>0];
         }
     }
+    //getDeskName
+    private function getDeskName($id){
+        return Desk::where("id",$id)->value("desk_name");
+    }
+
+
+
+    //gameID->gameName
+    private function getGameName($gameId){
+
+        switch ($gameId){
+            case 1:
+                return (string)"百家乐";
+            case 2:
+                return "龙虎";
+            case 3:
+                return "牛牛";
+            case 4:
+                return "A89";
+            case 5:
+                return "三公";
+            default:
+                return "";
+        }
+    }
+
 
     /**
      * 停用

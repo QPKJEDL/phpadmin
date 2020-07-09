@@ -20,6 +20,44 @@
             <input type="text" value="{{$info['nickname'] or ''}}" name="nickname"  placeholder="名称" autocomplete="off" class="layui-input">
         </div>
     </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">年龄：</label>
+        <div class="layui-input-inline">
+            <input type="number" value="{{$info['age'] or ''}}" name="age"  placeholder="年龄" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">身高：</label>
+        <div class="layui-input-inline">
+            <input type="number" value="{{$info['height'] or ''}}" name="height"  placeholder="身高" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">三围：</label>
+        <div class="layui-input-inline">
+            <input type="text" value="{{$info['three_sides'] or ''}}" name="three_sides"  placeholder=",逗号隔开" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">星座：</label>
+        <div class="layui-input-inline">
+            <input type="text" value="{{$info['star'] or ''}}" name="star"  placeholder="星座" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">爱好：</label>
+        <div class="layui-input-inline">
+            <textarea placeholder="爱好" name="hobby" class="layui-textarea" style="resize: none;width: 300px;height: 100px;overflow-y:visible">{{$info['hobby'] or ''}}</textarea>
+        </div>
+    </div>
+
+
     {{--<div class="layui-form-item">--}}
         {{--<label class="layui-form-label">头像：</label>--}}
         {{--<div class="layui-input-inline">--}}

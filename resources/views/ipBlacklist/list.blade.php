@@ -9,7 +9,7 @@
     </div>
     <div class="layui-inline">
         <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo">搜索</button>
-        <button class="layui-btn layui-btn-normal" id="reset">重置</button>
+        <button class="layui-btn layui-btn-primary" id="reset">重置</button>
     </div>
 @endsection
 @section('table')
@@ -51,7 +51,7 @@
                 <td class="hidden-xs">{{$info['update_by']}}</td>
                 <td>
                     <div class="layui-inline">
-                        <button class="layui-btn layui-btn-small layui-btn-normal edit-btn" data-id="{{$info['id']}}" data-desc="修改配置" data-url="{{url('/admin/ipBlacklist/'. $info['id'] .'/edit')}}">编辑</button>
+                        <button class="layui-btn layui-btn-small layui-btn-normal edit-btn" data-id="{{$info['id']}}" data-desc="修改IP黑名单" data-url="{{url('/admin/ipBlacklist/'. $info['id'] .'/edit')}}">编辑</button>
                         <button class="layui-btn layui-btn-small layui-btn-danger del-btn" data-id="{{$info['id']}}" data-url="{{url('/admin/ipBlacklist/'.$info['id'])}}">解禁</button>
                     </div>
                 </td>

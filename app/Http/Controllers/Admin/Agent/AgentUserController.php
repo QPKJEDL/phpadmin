@@ -60,7 +60,7 @@ class AgentUserController extends Controller
         $data['nnbets_fee']=json_encode($data['nnbets_fee']);
         $data['a89bets_fee']=json_encode($data['a89bets_fee']);
         $data['sgbets_fee']=json_encode($data['sgbets_fee']);
-
+        $data["ancestors"]=0;
         $count = Agent::insertGetId($data);
         if ($count){
             $this->insertUserRole($count,$roleId);
@@ -71,7 +71,7 @@ class AgentUserController extends Controller
 
     }
     /*
-     * 编辑s
+     * 编辑
      */
     public function update(StoreRequest $request){
         $id = $request->input('id');
