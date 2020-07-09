@@ -50,7 +50,7 @@ class AgentMenu extends Model
     {
         $data = AgentMenu::get()->toArray();
         foreach ($data as $key=>&$value){
-            $data[$key]['name'] = $datum['name'].'---'.$datum['mark'];
+            $data[$key]['name'] = $value['name'].'---'.$value['mark'];
             $roleMenu = AgentRoleMenu::getInfo($roleId,$value['id']);
             if ($roleMenu!=null){
                 $value['checked']=true;
