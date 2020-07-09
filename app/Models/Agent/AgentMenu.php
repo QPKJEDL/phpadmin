@@ -49,6 +49,7 @@ class AgentMenu extends Model
     public static function editTreeList($roleId)
     {
         $data = AgentMenu::get()->toArray();
+        dump($data);
         foreach ($data as $key=>&$value){
             $data[$key]['name'] = $value['name'].'---'.$value['mark'];
             $roleMenu = AgentRoleMenu::getInfo($roleId,$value['id']);
