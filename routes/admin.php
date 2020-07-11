@@ -145,6 +145,8 @@ Route::group(['namespace' => "Admin",'middleware' => ['auth', 'permission']], fu
         Route::resource('/agentMenu','AgentMenuController');
         Route::post('/agentRole/update','AgentRoleController@update');
 
+        Route::resource('/onAgent','OnAgentUserController');//线上代理列表
+
     });
 });
 
