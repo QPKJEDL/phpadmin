@@ -255,14 +255,14 @@
     <div class="layui-form-item">
         <label class="layui-form-label">是否主播：</label>
         <div class="layui-input-block">
-                <input type="radio" name="is_alive" value="0" title="否"
+                <input type="radio" name="is_alive" value="1" title="是"
                        @if(!isset($info['is_alive']))
                        checked
                        @elseif(isset($info['is_alive'])&&$info['is_alive'])
                        checked
                 @else
                         @endif>
-                <input type="radio" name="is_alive" value="1" title="是" {{isset($info['is_alive'])&&!$info['is_alive']?'checked':''}}>
+                <input type="radio" name="is_alive" value="0" title="否" {{isset($info['is_alive'])&&!$info['is_alive']?'checked':''}}>
             </div>
     </div>
     <div class="layui-form-item">
