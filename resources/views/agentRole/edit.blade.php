@@ -33,7 +33,7 @@
         window.onload=function(){
             var data= '<?php echo urlencode(json_encode($tree));?>';
             var list = eval(decodeURIComponent(data));
-            console.log(list);
+
             var setting = {
                 check:{
                     enable:true,

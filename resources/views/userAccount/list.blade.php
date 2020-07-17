@@ -19,7 +19,7 @@
             <col class="hidden-xs" width="200">
             <col class="hidden-xs" width="150">
             <col class="hidden-xs" width="150">
-            <col class="hidden-xs" width="200">
+            {{--<col class="hidden-xs" width="200">--}}
             <col class="hidden-xs" width="150">
             <col class="hidden-xs" width="100">
             <col class="hidden-xs" width="200">
@@ -33,7 +33,7 @@
             <th class="hidden-xs">登录时间</th>
             <th class="hidden-xs">登录ip</th>
             <th class="hidden-xs">服务器ip</th>
-            <th class="hidden-xs">登录地址</th>
+            {{--<th class="hidden-xs">登录地址</th>--}}
             <th class="hidden-xs">所在台桌</th>
             <th class="hidden-xs">登录端</th>
             <th class="hidden-xs">直属上级[账号]</th>
@@ -49,7 +49,7 @@
                 <td class="hidden-xs">{{$info['savetime']}}</td>
                 <td class="hidden-xs">{{$info['last_ip']}}</td>
                 <td class="hidden-xs">{{$info["server_ip"]}}</td>
-                <td class="hidden-xs">{{$info['logaddr']}}</td>
+                {{--<td class="hidden-xs">{{$info['logaddr']}}</td>--}}
                 <td class="hidden-xs">
                     @if($info['desk_name']=="")
                         未入台

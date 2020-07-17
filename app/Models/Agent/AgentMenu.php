@@ -17,7 +17,10 @@ class AgentMenu extends Model
     public static function tree($parent_id=0)
     {
         $data = AgentMenu::where('parent_id',$parent_id)->get();  //第一次做的时候get()后面加了toArray()，页面遍历数据时报错遍历的不是对象，去掉后可行
-
+        foreach ($data as $key=>$datum)
+        {
+            $data[$key]['name'] = $datum['name'].'---'.$datum['mark'];
+        }
         $arr = array();
         if (sizeof($data) !=0){
             foreach ($data as $k =>$datum) {
@@ -31,6 +34,7 @@ class AgentMenu extends Model
     public static function editTree($parent_id,$roleId)
     {
         $data = AgentMenu::where('parent_id',$parent_id)->get();
+        $data['name']=$data['name'].'----'.$data['mark'];
         $arr = array();
         if (sizeof($data) != 0){
             foreach ($data as $key=>&$datum){
@@ -49,6 +53,7 @@ class AgentMenu extends Model
     {
         $data = AgentMenu::get()->toArray();
         foreach ($data as $key=>&$value){
+            $data[$key]['name'] = $value['name'].'---'.$value['mark'];
             $roleMenu = AgentRoleMenu::getInfo($roleId,$value['id']);
             if ($roleMenu!=null){
                 $value['checked']=true;

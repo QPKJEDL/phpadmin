@@ -42,10 +42,10 @@ return [
 
         'mysql' => [
             'read' => [
-                'host' => ['129.211.114.135'],
+                'host' => ['101.32.22.231'],
             ],
             'write' => [
-                'host' => ['129.211.114.135'],
+                'host' => ['101.32.22.231'],
             ],
 
             'sticky'    => false,
@@ -60,7 +60,7 @@ return [
         ],
 
         'mysql2' => [
-            'host' => ['129.211.114.135'],
+            'host' => ['101.32.22.231'],
             'sticky'    => false,
             'driver'    => 'mysql',
             'database'  => 'rabbit',
@@ -104,7 +104,7 @@ return [
 
         'default' => [
 
-            'host' => "129.211.114.135",
+            'host' => "101.32.22.231",
             'password' => "lcf2954626",
             'port' => '6379',
             'database' => 0,
