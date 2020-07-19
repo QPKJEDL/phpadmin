@@ -24,7 +24,7 @@ class OnAgentUserController extends Controller
      */
     public function index(Request $request)
     {
-        $list=Agent::where('del_flag',0)->where('userType','=',2)->with('agentRoles')->get()->toArray();
+        $list=Agent::where('del_flag',0)->where('userType','=',1)->with('agentRoles')->get()->toArray();
         return view('onAgent.list',['list'=>$list]);
     }
 
@@ -52,7 +52,7 @@ class OnAgentUserController extends Controller
         unset($data['user_role']);
         if ($data['password']==$newPwd){
             $data['password']=bcrypt($data['password']);
-            $data['userType']=2;
+            $data['userType']=1;
             $data["ancestors"]=0;
             $data['limit']=json_encode($data['limit']);
             $count = Agent::insertGetId($data);
