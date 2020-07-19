@@ -15,7 +15,7 @@ class AgentUserController extends Controller
      * 列表
      */
     public function index(Request $request){
-        $list=Agent::where('del_flag',0)->where('userType','=',2)->with('agentRoles')->get()->toArray();
+        $list=Agent::where('del_flag',0)->where('userType','=',1)->with('agentRoles')->get()->toArray();
         return view('agent.list',['list'=>$list]);
     }
 
@@ -60,7 +60,6 @@ class AgentUserController extends Controller
         $data['nnbets_fee']=json_encode($data['nnbets_fee']);
         $data['a89bets_fee']=json_encode($data['a89bets_fee']);
         $data['sgbets_fee']=json_encode($data['sgbets_fee']);
-        $data['userType']=2;
         $data["ancestors"]=0;
         $count = Agent::insertGetId($data);
         if ($count){
