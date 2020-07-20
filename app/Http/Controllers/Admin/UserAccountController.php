@@ -29,7 +29,7 @@ class UserAccountController extends Controller
         //获取全部用户数据
         $data = $sql->leftJoin('agent_users','user.agent_id','=','agent_users.id')
                     ->leftJoin('desk','user.desk_id','=','desk.id')
-                    ->select('user.*','agent_users.id','agent_users.nickname','desk.id','desk.desk_name')
+                    ->select('user.*','agent_users.nickname','desk.desk_name')
                     ->where($map)->paginate(10)->appends($request->all());
         foreach ($data as $key=>$value){
             $data[$key]['savetime'] = date("Y-m-d H:i:s",$value['savetime']);
