@@ -9,14 +9,14 @@
         <div class="layui-form-item">
             <label class="layui-form-label">系统维护</label>
             <div class="layui-input-inline">
-                <input type="checkbox" name="sys" value="{{$system['id']}}" lay-skin="switch" lay-text="开启|关闭" lay-filter="sys" {{ $system['status'] == 0 ? 'checked' : '' }}>
+                <input type="checkbox" name="sys" value="{{$system['id']}}" lay-skin="switch" lay-text="开启|关闭" lay-filter="sys" {{ $system['status'] == 1 ? 'checked' : '' }}>
             </div>
             <div class="layui-form-mid layui-word-aux">点击系统开关</div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">充提开关</label>
             <div class="layui-input-inline">
-                <input type="checkbox" name="draw" value="{{$drawOpen['id']}}" lay-skin="switch" lay-text="开启|关闭" lay-filter="draw" {{ $drawOpen['status'] == 0 ? 'checked' : '' }}>
+                <input type="checkbox" name="draw" value="{{$drawOpen['id']}}" lay-skin="switch" lay-text="开启|关闭" lay-filter="draw" {{ $drawOpen['status'] == 1 ? 'checked' : '' }}>
             </div>
             <div class="layui-form-mid layui-word-aux">会员在线充提</div>
         </div>
@@ -38,9 +38,9 @@
                 var id=this.value,
                     status=obj.elem.checked;
                 if(status==false){
-                    var sys=1;
+                    var sys=0;
                 }else if(status==true){
-                    sys=0;
+                    sys=1;
                 }
                 $.ajax({
                     headers: {
@@ -73,9 +73,9 @@
                 var id=this.value,
                     status=obj.elem.checked;
                 if(status==false){
-                    var draw=1;
+                    var draw=0;
                 }else if(status==true){
-                    draw=0;
+                    draw=1;
                 }
                 $.ajax({
                     headers: {
