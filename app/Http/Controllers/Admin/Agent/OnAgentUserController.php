@@ -24,7 +24,7 @@ class OnAgentUserController extends Controller
      */
     public function index(Request $request)
     {
-        $list=Agent::where('del_flag',0)->with('agentRoles')->get()->toArray();
+        $list=Agent::where('del_flag',0)->where('userType','=',2)->with('agentRoles')->get()->toArray();
         return view('onAgent.list',['list'=>$list]);
     }
 
