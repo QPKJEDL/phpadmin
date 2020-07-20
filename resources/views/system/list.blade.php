@@ -1,34 +1,26 @@
-@section('title', '公告管理')
+@section('title', '系统开关')
 @section('header')
     <div class="layui-inline">
-        {{--<button class="layui-btn layui-btn-small layui-btn-normal addBtn" data-desc="添加游戏" data-url="{{url('/admin/game/0/edit')}}"><i class="layui-icon">&#xe654;</i></button>--}}
         <button class="layui-btn layui-btn-small layui-btn-warm freshBtn"><i class="layui-icon">&#x1002;</i></button>
     </div>
 @endsection
 @section('table')
     <form class="layui-form">
         <div class="layui-form-item">
-            <label class="layui-form-label">系统开关</label>
+            <label class="layui-form-label">系统维护</label>
             <div class="layui-input-inline">
-                @if($system==1)
-                <input type="checkbox" checked id="systemOpen" lay-skin="switch"  lay-filter="systemOpen" lay-text="正常|维护">
-                @else
-                <input type="checkbox" id="systemOpen" lay-skin="switch"  lay-filter="systemOpen" lay-text="正常|维护">
-                @endif
+                <input type="checkbox" name="sys" value="{{$system['id']}}" lay-skin="switch" lay-text="开启|关闭" lay-filter="sys" {{ $system['status'] == 0 ? 'checked' : '' }}>
             </div>
             <div class="layui-form-mid layui-word-aux">点击系统开关</div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">充提开关</label>
             <div class="layui-input-inline">
-                @if($drawOpen==1)
-                <input type="checkbox" checked name="close" lay-skin="switch" lay-filter="TopUp" lay-text="开启|关闭">
-                @else
-                <input type="checkbox" id="systemOpen" lay-skin="switch"  lay-filter="TopUp" lay-text="正常|维护">
-                @endif
+                <input type="checkbox" name="draw" value="{{$drawOpen['id']}}" lay-skin="switch" lay-text="开启|关闭" lay-filter="draw" {{ $drawOpen['status'] == 0 ? 'checked' : '' }}>
             </div>
             <div class="layui-form-mid layui-word-aux">会员在线充提</div>
         </div>
+        <input type="hidden" id="token" value="{{csrf_token()}}">
     </form>
 @endsection
 @section('js')
@@ -40,50 +32,74 @@
                 layer = layui.layer;
             laydate({istoday: true});
             form.render();
-            form.on('switch(systemOpen)', function(data) {
-                var check = this.checked;
-                var value = 0;
-                if(check==true){
-                    value = 1;
-                }else{
-                    value = 2;
+
+//系统维护
+            form.on('switch(sys)', function(obj){
+                var id=this.value,
+                    status=obj.elem.checked;
+                if(status==false){
+                    var sys=1;
+                }else if(status==true){
+                    sys=0;
                 }
                 $.ajax({
-                    headers:{
-                        'X-CSRF-TOKEN':$("input[name='_token']").val()
+                    headers: {
+                        'X-CSRF-TOKEN': $('#token').val()
                     },
                     url:"{{url('/admin/maintain')}}",
-                    type:"post",
                     data:{
-                        "checked":value
+                        id:id,
+                        sys:sys
                     },
-                    dataType:"json",
-                    success:function (res) {
-                        layer.msg(res.msg,{icon:6});
+                    type:'post',
+                    dataType:'json',
+                    success:function(res){
+                        if(res.status == 1){
+                            layer.msg(res.msg,{icon:6,time:1000},function () {
+                                location.reload();
+                            });
+
+                        }else{
+                            layer.msg(res.msg,{icon:5,time:1000});
+                        }
+                    },
+                    error : function(XMLHttpRequest, textStatus, errorThrown) {
+                        layer.msg('网络失败', {time: 1000});
                     }
                 });
             });
-
-            form.on('switch(TopUp)',function (data) {
-                var check = this.checked;
-                var value = 0;
-                if(check==true){
-                    value=1;
-                }else{
-                    value=2;
+            //提现开关
+            form.on('switch(draw)', function(obj){
+                var id=this.value,
+                    status=obj.elem.checked;
+                if(status==false){
+                    var draw=1;
+                }else if(status==true){
+                    draw=0;
                 }
                 $.ajax({
-                    headers:{
-                        'X-CSRF-TOKEN':$("input[name='_token']").val()
+                    headers: {
+                        'X-CSRF-TOKEN': $('#token').val()
                     },
                     url:"{{url('/admin/drawOpen')}}",
-                    type:"post",
                     data:{
-                        "checked":value
+                        id:id,
+                        draw:draw
                     },
-                    dataType:"json",
-                    success:function (res) {
-                        layer.msg(res.msg,{icon:6});
+                    type:'post',
+                    dataType:'json',
+                    success:function(res){
+                        if(res.status == 1){
+                            layer.msg(res.msg,{icon:6,time:1000},function () {
+                                location.reload();
+                            });
+
+                        }else{
+                            layer.msg(res.msg,{icon:5,time:1000});
+                        }
+                    },
+                    error : function(XMLHttpRequest, textStatus, errorThrown) {
+                        layer.msg('网络失败', {time: 1000});
                     }
                 });
             });

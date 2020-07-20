@@ -106,8 +106,8 @@ Route::group(['namespace' => "Admin",'middleware' => ['auth', 'permission']], fu
     Route::resource('/entrance',         'EntranceNoticeController');//入口公告
     Route::resource('/pay',             'PayController'); //第三方支付设置
     Route::resource('/system',           'SystemController');//系统开关
-    Route::post('/maintain',             'SystemController@maintain');//点击系统维护
-    Route::post('/drawOpen',            'SystemController@drawOpen');//提现开关
+    Route::post('/maintain',             'SystemController@sysSwitch');//点击系统维护
+    Route::post('/drawOpen',            'SystemController@drawSwitch');//提现开关
 
     //在线用户
     Route::resource('/userAccount', 'UserAccountController'); //游戏用户管理
