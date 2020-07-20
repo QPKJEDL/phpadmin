@@ -10,6 +10,9 @@
         <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo">搜索</button>
         <button id="res" class="layui-btn layui-btn-primary">重置</button>
     </div>
+    <div class="layui-inline" style="padding-left: 90px;">
+        <label>总在线数&nbsp;:&nbsp;</label>{{$on}}人
+    </div>
 @endsection
 @section('table')
     <table class="layui-table" lay-even lay-skin="nob">

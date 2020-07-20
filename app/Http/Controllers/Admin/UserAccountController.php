@@ -42,7 +42,8 @@ class UserAccountController extends Controller
 
 
         }
-        return view('userAccount.list',['list'=>$data,'input'=>$request->all()]);
+        $on=UserAccount::where("is_online",1)->count();
+        return view('userAccount.list',['list'=>$data,"on"=>$on,'input'=>$request->all()]);
     }
 
 
