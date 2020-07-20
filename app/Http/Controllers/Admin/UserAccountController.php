@@ -40,7 +40,8 @@ class UserAccountController extends Controller
             $data[$key]['dir_agent_nickname']=$dir_agent['nickname'];
 
         }
-        return view('userAccount.list',['list'=>$data,'input'=>$request->all()]);
+        $on=UserAccount::where("is_online",1)->count();
+        return view('userAccount.list',['list'=>$data,"on"=>$on,'input'=>$request->all()]);
     }
 
 
