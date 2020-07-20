@@ -40,7 +40,6 @@ class UserAccountController extends Controller
             $data[$key]['dir_agent_nickname']=$dir_agent['nickname'];
 
         }
-        dump($data);
         return view('userAccount.list',['list'=>$data,'input'=>$request->all()]);
     }
 
