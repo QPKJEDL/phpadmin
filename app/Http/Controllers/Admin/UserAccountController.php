@@ -34,14 +34,13 @@ class UserAccountController extends Controller
         foreach ($data as $key=>$value){
             $data[$key]['savetime'] = date("Y-m-d H:i:s",$value['savetime']);
             $data[$key]['server_ip']=GetHostByName($_SERVER['SERVER_NAME']);
-            //$data[$key]['logaddr']=iptoaddr($value['last_ip']);
             $data[$key]['par_agent_nickname']=$value['nickname'];
             $dir_agent=$this->get_direct_agent($value['agent_id']);
             $data[$key]['dir_agent_id']=$dir_agent['id'];
             $data[$key]['dir_agent_nickname']=$dir_agent['nickname'];
 
-
         }
+        dump($data);
         return view('userAccount.list',['list'=>$data,'input'=>$request->all()]);
     }
 

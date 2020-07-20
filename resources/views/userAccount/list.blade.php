@@ -29,7 +29,7 @@
         <thead>
         <tr>
             <th class="hidden-xs">序号</th>
-            <th class="hidden-xs">登录账号[昵称]1</th>
+            <th class="hidden-xs">登录账号[昵称]</th>
             <th class="hidden-xs">登录时间</th>
             <th class="hidden-xs">登录ip</th>
             <th class="hidden-xs">服务器ip</th>
