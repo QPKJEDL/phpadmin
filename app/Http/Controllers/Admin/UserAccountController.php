@@ -29,12 +29,12 @@ class UserAccountController extends Controller
         //获取全部用户数据
         $data = $sql->leftJoin('agent_users','user.agent_id','=','agent_users.id')
                     ->leftJoin('desk','user.desk_id','=','desk.id')
-                    ->select('user.*','agent_users.nickname','desk.desk_name')
+                    ->select('user.*','agent_users.id as aid','agent_users.nickname as anickname','desk.id as did','desk.desk_name')
                     ->where($map)->paginate(10)->appends($request->all());
         foreach ($data as $key=>$value){
             $data[$key]['savetime'] = date("Y-m-d H:i:s",$value['savetime']);
             $data[$key]['server_ip']=GetHostByName($_SERVER['SERVER_NAME']);
-            $data[$key]['par_agent_nickname']=$value['nickname'];
+            $data[$key]['par_agent_nickname']=$value['anickname'];
             $dir_agent=$this->get_direct_agent($value['agent_id']);
             $data[$key]['dir_agent_id']=$dir_agent['id'];
             $data[$key]['dir_agent_nickname']=$dir_agent['nickname'];
