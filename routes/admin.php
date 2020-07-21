@@ -113,7 +113,7 @@ Route::group(['namespace' => "Admin",'middleware' => ['auth', 'permission']], fu
     Route::resource('/userAccount', 'UserAccountController'); //游戏用户管理
     Route::post('/userAccountOffline',         'UserAccountController@offline');//封禁
 //    Route::post('/resetPwd',        'UserAccountController@resetPwd');//修改密码
-//    Route::post('/isLogin',         'UserAccountController@isLogin');//封禁
+    Route::post('/isOver',         'UserAccountController@isOver');//封禁
 
     //登录日志
     Route::resource('/agentloginlog',    'AgentLoginLogController');//代理登录日志

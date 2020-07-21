@@ -44,6 +44,34 @@ class UserAccountController extends Controller
         return view('userAccount.list',['list'=>$data,"on"=>$on,'input'=>$request->all()]);
     }
 
+    /*
+     * 封禁
+     */
+    public function isOver(StoreRequest $request){
+        $data=$request->all();
+        $id=$data['id'];
+        unset($data['_token']);
+        $over=$data['over'];
+        $msg="";
+        if($over==0){
+            $msg="开启";
+        }else if($over==1){
+            $msg="封禁";
+        }
+        $userdata=Redis::get('UserInfo_'.$id);
+        $userinfo=json_decode($userdata,true);
+        $token=$this->get_token();
+        $status=UserAccount::where("user_id",$id)->update(array("is_over"=>$over));
+        if($status){
+            $userinfo["Token"]=$token;
+            $new=json_encode($userinfo);
+            Redis::set("UserInfo_".$id,$new);
+            return ['msg'=>$msg."成功",'status'=>1];
+        }else{
+            return ['msg'=>$msg."失败！",'status'=>0];
+        }
+    }
+
 
     /**
      * 踢下线

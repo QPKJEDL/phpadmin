@@ -28,6 +28,7 @@
             <col class="hidden-xs" width="200">
             <col class="hidden-xs" width="200">
             <col class="hidden-xs" width="200">
+            <col class="hidden-xs" width="200">
         </colgroup>
         <thead>
         <tr>
@@ -41,6 +42,7 @@
             <th class="hidden-xs">登录端</th>
             <th class="hidden-xs">直属上级[账号]</th>
             <th class="hidden-xs">直属一级[账号]</th>
+            <th class="hidden-xs">封禁</th>
             <th class="hidden-xs" style="text-align: center">操作</th>
         </tr>
         </thead>
@@ -73,6 +75,9 @@
                 </td>
                 <td class="hidden-xs">{{$info['par_agent_nickname']}}[{{$info['agent_id']}}]</td>
                 <td class="hidden-xs">{{$info['dir_agent_nickname']}}[{{$info['dir_agent_id']}}]</td>
+                <td class="hidden-xs">
+                    <input type="checkbox" name="status" value="{{$info['user_id']}}" lay-skin="switch" lay-text="开启|封禁" lay-filter="over" {{ $info['is_over'] == 0 ? 'checked' : '' }}>
+                </td>
                 <td style="text-align: center">
                     <div class="layui-inline">
                         <button class="layui-btn layui-btn-small layui-btn-danger kick" data-id="{{$info['user_id']}}" data-status="1">踢下线</button>
@@ -133,6 +138,43 @@
                     layer.close(index);
                 });
             });
+
+            //封禁
+            form.on('switch(over)', function(obj){
+                var id=this.value,
+                    status=obj.elem.checked;
+                if(status==false){
+                    var over=1;
+                }else if(status==true){
+                    over=0;
+                }
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('#token').val()
+                    },
+                    url:"{{url('/admin/isOver')}}",
+                    data:{
+                        id:id,
+                        aswitch:aswitch
+                    },
+                    type:'post',
+                    dataType:'json',
+                    success:function(res){
+                        if(res.status == 1){
+                            layer.msg(res.msg,{icon:6,time:1000},function () {
+                                location.reload();
+                            });
+
+                        }else{
+                            layer.msg(res.msg,{icon:5,time:1000});
+                        }
+                    },
+                    error : function(XMLHttpRequest, textStatus, errorThrown) {
+                        layer.msg('网络失败', {time: 1000});
+                    }
+                });
+            });
+
         });
     </script>
 @endsection
