@@ -155,7 +155,7 @@
                     url:"{{url('/admin/isOver')}}",
                     data:{
                         id:id,
-                        aswitch:aswitch
+                        over:over
                     },
                     type:'post',
                     dataType:'json',
