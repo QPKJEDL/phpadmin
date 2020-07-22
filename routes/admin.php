@@ -148,6 +148,14 @@ Route::group(['namespace' => "Admin",'middleware' => ['auth', 'permission']], fu
         Route::resource('/onAgent','OnAgentUserController');//线上代理列表
 
     });
+
+    //财务管理
+    Route::group(['namespace'=>'Business','middleware'=>['auth','permission']],function (){
+        Route::resource('/busRole','BusinessRoleController');//角色
+        Route::post('/busRole/update','BusinessRoleController@update');//编辑保存
+
+        Route::resource('/busUser','BusinessUserController');//财务账号
+    });
 });
 
 Route::get('/phpinfo',function (Request $request){
