@@ -297,11 +297,11 @@
             form.verify({
                 user_name: function (value) {
                     if(value==null||value==''){
-                        return '请填写线上代理帐户';
+                        return '请填写线下代理帐户';
                     }
-                    var reg = new RegExp("^1\\d{7}$");
+                    var reg = new RegExp("^1\\d{5}$");
                     if(!reg.test(value)){
-                        return '7位数字';
+                        return '6位数字';
                     }
                 },
                 pwd:function(value){
