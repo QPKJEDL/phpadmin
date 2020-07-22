@@ -21,7 +21,7 @@ return [
 
     //agentRole
     'agentRole'                             => 'App\Models\Agent\AgentRole',
-    'agentRole_table'                            => 'agent_roles',
+    'agentRole_table'                       => 'admin_roles',
     'agentRole_user_table'                  => 'agent_role_user',
     'AgentRole_foreign_key'                 => 'role_id',
     'AgentUser_foreign_key'                 => 'user_id',
