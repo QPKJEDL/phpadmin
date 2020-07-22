@@ -20,7 +20,7 @@ class BusinessUserController extends BaseController
      */
     public function index()
     {
-        return view('business.user.list', ['list'=>Business::with('roles')->get()->toArray()]);
+        return view('business.user.list', ['list'=>Business::with('businessRoles')->get()->toArray()]);
     }
 
     /**
