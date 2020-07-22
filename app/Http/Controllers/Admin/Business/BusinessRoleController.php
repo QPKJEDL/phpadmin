@@ -29,7 +29,6 @@ class BusinessRoleController extends Controller
         {
             return view('business.role.edit', ['id'=>$id,'info'=>$info,'tree'=>BusinessMenu::editTreeList($id)]);
         }else{
-            dump(BusinessMenu::tree());
             return view('business.role.edit', ['id'=>$id,'info'=>$info,'tree'=>BusinessMenu::tree()]);
         }
     }
