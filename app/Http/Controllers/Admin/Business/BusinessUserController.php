@@ -45,6 +45,7 @@ class BusinessUserController extends BaseController
         unset($data['id']);
         unset($data['user_role']);
         unset($data['pwd_confirmation']);
+        $data['password']=bcrypt($data['password']);
         $userId = Business::insertGetId($data);
         if ($userId){
             BusinessRoleUser::insert(['user_id'=>$userId,'role_id'=>$roleId]);
