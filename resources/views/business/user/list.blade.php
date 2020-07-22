@@ -29,7 +29,7 @@
         @foreach($list as $info)
             <tr>
                 <td class="hidden-xs">{{$info['id']}}</td>
-                <td class="hidden-xs">{{$info['roles'][0]['display_name'] or '已删除'}}</td>
+                <td class="hidden-xs">{{$info['business_roles'][0]['display_name'] or '已删除'}}</td>
                 <td class="hidden-xs">{{$info['username']}}</td>
                 <td>{{$info['email']}}</td>
                 <td class="hidden-xs">{{$info['mobile']}}</td>

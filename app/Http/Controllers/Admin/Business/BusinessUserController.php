@@ -10,8 +10,10 @@ use App\Http\Requests\StoreRequest;
 use App\Models\Admin;
 use App\Models\Business\Business;
 use App\Models\Business\BusinessRole;
+use App\Models\Business\BusinessRoleUser;
 use App\Models\Log;
 use App\Service\DataService;
+use Illuminate\Support\Facades\DB;
 
 class BusinessUserController extends BaseController
 {
@@ -20,7 +22,8 @@ class BusinessUserController extends BaseController
      */
     public function index()
     {
-        return view('business.user.list', ['list'=>Business::with('businessRoles')->get()->toArray()]);
+        $data = Business::with('businessRoles')->get()->toArray();
+        return view('business.user.list', ['list'=>$data]);
     }
 
     /**
@@ -36,11 +39,19 @@ class BusinessUserController extends BaseController
      * 用户增加保存
      */
     public function store(StoreRequest $request){
-        $model = new Business();
-        $user = DataService::handleDate($model,$request->all(),'users-add_or_update');
-        if($user['status']==1)Log::addLogs(trans('fzs.users.handle_user').trans('fzs.common.success'),'/users/story');
-        else Log::addLogs(trans('fzs.users.handle_user').trans('fzs.common.fail'),'/users/destroy');
-        return $user;
+        $data = $request->all();
+        $roleId = $data['user_role'];
+        unset($data['_token']);
+        unset($data['id']);
+        unset($data['user_role']);
+        unset($data['pwd_confirmation']);
+        $userId = Business::insertGetId($data);
+        if ($userId){
+            BusinessRoleUser::insert(['user_id'=>$userId,'role_id'=>$roleId]);
+            return ['msg'=>'操作成功','status'=>1];
+        }else{
+            return ['msg'=>'操作失败','status'=>0];
+        }
     }
     /**
      *用户删除

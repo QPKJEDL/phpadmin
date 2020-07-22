@@ -3,7 +3,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">用户名：</label>
         <div class="layui-input-block">
-            <input type="text" value="{{$info['username'] or ''}}" name="user_name" required lay-verify="user_name" placeholder="用户名必须2到12位字母" autocomplete="off" class="layui-input">
+            <input type="text" value="{{$info['username'] or ''}}" name="username" required lay-verify="user_name" placeholder="用户名必须2到12位字母" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
@@ -35,7 +35,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">手机号码：</label>
         <div class="layui-input-block">
-            <input type="number" value="{{$info['mobile'] or ''}}" name="tel" required lay-verify="required|phone" placeholder="请输入手机号码" autocomplete="off" class="layui-input">
+            <input type="number" value="{{$info['mobile'] or ''}}" name="mobile" required lay-verify="required|phone" placeholder="请输入手机号码" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
@@ -54,7 +54,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">密码：</label>
         <div class="layui-input-block">
-            <input type="password" name="pwd" lay-verify="pwd" placeholder="请输入6-12位数字加字母密码" autocomplete="off" class="layui-input">
+            <input type="password" name="password" lay-verify="pwd" placeholder="请输入6-12位数字加字母密码" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
@@ -80,14 +80,14 @@
                     }
                 },
                 pwd_confirmation: function(value) {
-                    if($("input[name='pwd']").val() && $("input[name='pwd']").val() != value) {
+                    if($("input[name='password']").val() && $("input[name='password']").val() != value) {
                         return '两次输入密码不一致';
                     }
                 },
             });
             form.on('submit(formDemo)', function(data) {
                 $.ajax({
-                    url:"{{url('/admin/users')}}",
+                    url:"{{url('/admin/busUser')}}",
                     data:$('form').serialize(),
                     type:'post',
                     dataType:'json',

@@ -54,7 +54,7 @@ trait AdminUsersTrait
     public function businessRoles()
     {
         return $this->belongsToMany(Config::get('admin.businessRole'), Config::get('admin.businessRole_user_table'),
-            Config::get('admin.BusinessUser_foreign_key'), Config::get('admin.BusinessRole_foreign_key'));
+            Config::get('admin.businessUser_foreign_key'), Config::get('admin.businessRole_foreign_key'));
     }
 
     /**
