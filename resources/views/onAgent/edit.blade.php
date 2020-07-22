@@ -128,6 +128,35 @@
                 ,layer = layui.layer
                 ,$ = layui.jquery;
             form.render();
+            form.verify({
+                user_name: function (value) {
+                    if(value==null||value==''){
+                        return '请填写线下代理帐户';
+                    }
+                    var reg = new RegExp("^1\\d{5}$");
+                    if(!reg.test(value)){
+                        return '6位数字';
+                    }
+                },
+                pwd:function(value){
+                    if(value&&!/^(?!([a-zA-Z]+|\d+)$)[a-zA-Z\d]{6,12}$/.test(value)){
+                        return '密码必须6到12位数字加字母';
+                    }
+                },
+                pwd_confirmation: function(value) {
+                    if($("input[name='pwd']").val() && $("input[name='pwd']").val() != value) {
+                        return '两次输入密码不一致';
+                    }
+                },
+                proportion:function (value) {
+                    if (value<=0){
+                        return '占比必填'
+                    }
+                }
+            });
+
+
+
             var id = $("input[name='id']").val();
             var index = parent.layer.getFrameIndex(window.name);
             if(id==0){

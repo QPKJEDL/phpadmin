@@ -296,11 +296,12 @@
             var layer = layui.layer;
             form.verify({
                 user_name: function (value) {
-                    if(value.length<5){
-                        return '长度不能小于5';
+                    if(value==null||value==''){
+                        return '请填写线上代理帐户';
                     }
-                    if(value.length>12){
-                        return '长度不能大于10';
+                    var reg = new RegExp("^1\\d{7}$");
+                    if(!reg.test(value)){
+                        return '7位数字';
                     }
                 },
                 pwd:function(value){
