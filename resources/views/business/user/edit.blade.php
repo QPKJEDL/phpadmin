@@ -7,6 +7,12 @@
         </div>
     </div>
     <div class="layui-form-item">
+        <label class="layui-form-label">昵称：</label>
+        <div class="layui-input-block">
+            <input type="text" value="{{$info['nickname'] or ''}}" name="nickname" required lay-verify="nickname" placeholder="昵称" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
         <label class="layui-form-label">邮箱：</label>
         <div class="layui-input-block">
             <input type="text" value="{{$info['email'] or ''}}" name="email" required lay-verify="required|email" placeholder="请输入正确格式邮箱" autocomplete="off" class="layui-input">
@@ -74,6 +80,11 @@
             var layer = layui.layer;
             form.verify({
                 user_name: [/^[0-9a-zA-Z]{2,12}$/, '用户名必须2到12位字母'],
+                nickname:function(value){
+                  if(value.length==0){
+                      return '昵称不能为空'
+                  }
+                },
                 pwd:function(value){
                     if(value&&!/^(?!([a-zA-Z]+|\d+)$)[a-zA-Z\d]{6,12}$/.test(value)){
                         return '密码必须6到12位数字加字母';
