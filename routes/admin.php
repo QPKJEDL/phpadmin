@@ -95,7 +95,7 @@ Route::group(['namespace' => "Admin",'middleware' => ['auth', 'permission']], fu
     Route::resource('/userBlack',       'UserBlackController');//会员黑名单
     Route::post('/userBlackUpdate',       'UserBlackController@update');//修改会员黑名单
     Route::resource('/forbidden',       'ForbiddenController');//禁言名单
-    Route::post('/forbiddenUpdate',    'ForbiddenController@update');//修改禁言名单
+    Route::post('/forbiddenOpen',    'ForbiddenController@open');//禁言解禁
 
     //全局设定
     Route::resource('/camera',          'CameraController');//摄像头管理展示

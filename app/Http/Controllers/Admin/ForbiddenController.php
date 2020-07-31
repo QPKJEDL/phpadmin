@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreRequest;
 use App\Models\UserAccount;
+use Illuminate\Support\Facades\Redis;
 class ForbiddenController extends Controller
 {
     /*
@@ -13,18 +14,11 @@ class ForbiddenController extends Controller
     public function index(Request $request)
     {
         $map = array();
-        if (true==$request->has('user_account')){
-            $map['user_account']=$request->input('user_account');
+        if (true==$request->has('account')){
+            $map['account']=$request->input('account');
         }
         $map["is_talk"]=1;
         $data = UserAccount::where($map)->paginate(10)->appends($request->all());
-        foreach ($data as $key=>$value){
-            $data[$key]['start_date'] = date("Y-m-d",$value['start_date']);
-            $data[$key]['end_date'] = date("Y-m-d",$value['end_date']);
-            if ($data[$key]['update_time']!='' || $data[$key]['update_time']!=null){
-                $data[$key]['update_time'] = date("Y-m-d H:i:s",$value['update_time']);
-            }
-        }
         return view('forbidden.list',['list'=>$data,'input'=>$request->all()]);
     }
 
@@ -102,13 +96,20 @@ class ForbiddenController extends Controller
     /*
      * 删除
      */
-    public function destroy($id)
+    public function open(StoreRequest $request)
     {
+        $data = $request->all();
+        $id = $data['id'];
         $count = UserAccount::where('user_id','=',$id)->update(array("is_talk"=>0));
+        $userdata=Redis::get('UserInfo_'.$id);
+        $userinfo=json_decode($userdata,true);
         if ($count){
-            return ['msg'=>'操作成功！','status'=>1];
+            $userinfo["Talk"]=0;
+            $new=json_encode($userinfo);
+            Redis::set("UserInfo_".$id,$new);
+            return ['msg'=>'解禁成功！','status'=>1];
         }else{
-            return ['msg'=>'操作失败！','status'=>0];
+            return ['msg'=>'解禁失败！','status'=>0];
         }
     }
 

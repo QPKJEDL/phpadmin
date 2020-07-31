@@ -5,7 +5,7 @@
         <button class="layui-btn layui-btn-small layui-btn-warm freshBtn"><i class="layui-icon">&#x1002;</i></button>
     </div>
     <div class="layui-inline">
-        <input type="text"  value="{{ $input['user_account'] or '' }}" name="user_account" placeholder="会员账号" autocomplete="off" class="layui-input">
+        <input type="text"  value="{{ $input['account'] or '' }}" name="account" placeholder="会员账号" autocomplete="off" class="layui-input">
     </div>
     <div class="layui-inline">
         <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo">搜索</button>
@@ -35,7 +35,7 @@
                 <td>
                     <div class="layui-inline">
                         {{--<button class="layui-btn layui-btn-small layui-btn-normal edit-btn" data-id="{{$info['id']}}" data-desc="修改配置" data-url="{{url('/admin/forbidden/'. $info['id'] .'/edit')}}">编辑</button>--}}
-                        <button class="layui-btn layui-btn-small layui-btn-danger del-btn" data-id="{{$info['id']}}" data-url="{{url('/admin/forbidden/'.$info['user_id'])}}">解禁</button>
+                        <button class="layui-btn layui-btn-small layui-btn-danger del-btn open_over" data-id="{{$info['user_id']}}" >解禁</button>
                     </div>
                 </td>
             </tr>
@@ -62,11 +62,39 @@
             form.render();
             //搜索
             form.on('submit(formDemo)', function(data) {
-               
             });
             //重置
             $("#reset").click(function () {
-                $("input[name='user_account']").val('');
+                $("input[name='account']").val('');
+            });
+            //解禁
+            $(".open_over").click(function () {
+                var id = $(this).attr('data-id');
+                layer.confirm('确定要解禁吗？',function (index) {
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $("#token").val()
+                        },
+                        url:"{{url('/admin/forbiddenOpen')}}",
+                        type:'post',
+                        dataType:"json",
+                        data:{
+                            'id':id,
+                        },
+                        success:function (res) {
+                            if(res.status == 1){
+                                layer.msg(res.msg,{icon:6},function () {
+                                    /*parent.layer.close(index);
+                                    window.parent.frames[1].location.reload();*/
+                                    window.location.reload();
+                                });
+
+                            }else{
+                                layer.msg(res.msg,{shift: 6,icon:5});
+                            }
+                        }
+                    });
+                });
             });
         });
     </script>
