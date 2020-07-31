@@ -45,13 +45,13 @@
                 <td class="hidden-xs">{{$info['created_at']}}</td>
                 <td>
                     <div class="layui-inline">
-                        <button class="layui-btn layui-btn-small layui-btn-normal edit-btn" data-id="{{$info['id']}}" data-desc="修改代理" data-url="{{url('/admin/agent/'. $info['id'] .'/edit')}}">编辑</button>
+                        <button class="layui-btn layui-btn-small layui-btn-normal edit-btn" data-id="{{$info['id']}}" data-desc="修改代理" data-url="{{url('/admin/onAgent/'. $info['id'] .'/edit')}}">编辑</button>
                         @if($info['status']==0)
                             <button class="layui-btn layui-btn-small layui-btn-warm stop" data-id="{{$info['id']}}" data-desc="代理停用">停用</button>
                         @elseif($info['status']==1)
                             <button class="layui-btn layui-btn-small layui-btn start" data-id="{{$info['id']}}" data-desc="代理启用">启用</button>
                         @endif
-                        <button class="layui-btn layui-btn-small layui-btn-danger del-btn" data-id="{{$info['id']}}" data-url="{{url('/admin/agent/'.$info['id'])}}">删除</button>
+                        <button class="layui-btn layui-btn-small layui-btn-danger del-btn" data-id="{{$info['id']}}" data-url="{{url('/admin/onAgent/'.$info['id'])}}">删除</button>
                     </div>
                 </td>
             </tr>

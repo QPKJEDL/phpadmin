@@ -51,6 +51,12 @@ trait AdminUsersTrait
             Config::get('admin.AgentUser_foreign_key'), Config::get('admin.AgentRole_foreign_key'));
     }
 
+    public function businessRoles()
+    {
+        return $this->belongsToMany(Config::get('admin.businessRole'), Config::get('admin.businessRole_user_table'),
+            Config::get('admin.businessUser_foreign_key'), Config::get('admin.businessRole_foreign_key'));
+    }
+
     /**
      * 当删除的时候,把用户关系也删除
      *

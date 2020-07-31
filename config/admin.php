@@ -21,10 +21,17 @@ return [
 
     //agentRole
     'agentRole'                             => 'App\Models\Agent\AgentRole',
-    'agentRole_table'                            => 'admin_roles',
+    'agentRole_table'                            => 'agent_roles',
     'agentRole_user_table'                  => 'agent_role_user',
     'AgentRole_foreign_key'                 => 'role_id',
     'AgentUser_foreign_key'                 => 'user_id',
+
+    //businessRole
+    'businessRole'                          => 'App\Models\Business\BusinessRole',
+    'businessRole_table'                       => 'business_roles',
+    'businessRole_user_table'                  => 'business_role_user',
+    'businessRole_foreign_key'                 => 'role_id',
+    'businessUser_foreign_key'                 => 'user_id',
 
     //permission
     'permission'                            => 'App\Models\Permission',
