@@ -73,9 +73,9 @@ class BusinessRoleController extends Controller
         $data['updated_at']=date('Y-m-d H:i:s',time());
         $count = BusinessRole::where('id',$id)->update($data);
         if ($count!==false){
-            if ($menuData!=null){
+            //if ($menuData!=null){
                 $this->deleteAgentRoleMenu($id);
-            }
+            //}
             $this->insertAgentRole($menuData,$id);
             return ['msg'=>'操作成功','status'=>1];
         }else{
