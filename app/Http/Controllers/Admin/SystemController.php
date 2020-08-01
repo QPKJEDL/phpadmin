@@ -36,9 +36,9 @@ class SystemController extends Controller
         $sys=$data['sys'];
         $msg="";
         if($sys==0){
-            $msg="系统维护开启";
-        }else if($sys==1){
             $msg="系统维护关闭";
+        }else if($sys==1){
+            $msg="系统维护开启";
         }
         $status=Sysset::where("id",$id)->update(array("status"=>$sys));
         if($status){
