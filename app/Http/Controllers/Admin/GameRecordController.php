@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Mockery\Exception;
 
 class GameRecordController extends Controller
 {
@@ -195,8 +196,12 @@ class GameRecordController extends Controller
             insertDeskLogOperaResultType($recordInfo['desk_id'], $recordInfo['record_sn'], $recordInfo['boot_num'], $recordInfo['pave_num'], $bootTime, $recordInfo['winner'], $result);
             $lock = $this->redisLock($recordInfo['record_sn']);
             if($lock){
-                $this->updateGameRecord($request->input('time'),$recordInfo);
-                return ['msg' => '修改成功', 'status' => 1];
+                try {
+                    $this->updateGameRecord($request->input('time'),$recordInfo);
+                    return ['msg' => '修改成功', 'status' => 1];
+                }catch (Exception $exception){
+                    return ['msg'=>'操作失败','status'=>0];
+                }
             }else{
                 return ['msg' => '请忽频繁提交！', 'status' => 0];
             }
@@ -455,24 +460,29 @@ class GameRecordController extends Controller
         }
         //开启事务
         DB::beginTransaction();
-        //退钱
-        $this->refundMoney($userOrderData);
-        //判断游戏类型
-        if ($recordInfo['type']==1){//百家乐
-            $this->getBaccarat($recordInfo,$userOrderData);
-            DB::commit();
-        }else if ($recordInfo['type']==2){//龙虎
-            $this->dragonAndTiger($recordInfo,$userOrderData);
-            DB::commit();
-        }else if ($recordInfo['type']==3){//牛牛
-            //$this->getNiuNiuSettlement($recordInfo,$userOrderData);
-        }else if ($recordInfo['type']==4){//三公
+        try {
+            //退钱
+            $this->refundMoney($userOrderData);
+            //判断游戏类型
+            if ($recordInfo['type']==1){//百家乐
+                $this->getBaccarat($recordInfo,$userOrderData);
+                DB::commit();
+            }else if ($recordInfo['type']==2){//龙虎
+                $this->dragonAndTiger($recordInfo,$userOrderData);
+                DB::commit();
+            }else if ($recordInfo['type']==3){//牛牛
+                //$this->getNiuNiuSettlement($recordInfo,$userOrderData);
+            }else if ($recordInfo['type']==4){//三公
 
-        }else{ //A89
+            }else{ //A89
 
+            }
+            //解锁
+            $this->unRedisLock($recordInfo['record_sn']);
+        }catch (Exception $exception){
+            //解锁
+            $this->unRedisLock($recordInfo['record_sn']);
         }
-        //解锁
-        $this->unRedisLock($recordInfo['record_sn']);
     }
 
     /**
