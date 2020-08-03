@@ -93,6 +93,82 @@ class GameRecordController extends Controller
         return view('gameRecord.list', ['list' => $data, 'input' => $request->all(), 'desk' => $deskArr, 'min' => config('admin.min_date')]);
     }
 
+    public function voidGameRecord($record_sn)
+    {
+        $tableName = $this->getGameRecordTableName($record_sn);
+        $game = new GameRecord();
+        $game->setTable('game_record_'.$tableName);
+        $recordInfo = $game->where('record_sn','=',$record_sn)->first();
+        $order = new Order();
+        $order->setTable('order_'.$tableName);
+        $bool = $this->redisLock($record_sn);
+        if (!$bool){
+            return ['msg'=>'该局游戏不能被操作，正在修改结果或者已经提交','status'=>0];
+        }
+        $bool = $this->ValidationTime($recordInfo);
+        //根据游戏编号获取到用户下注记录
+        $userOrderData = $order->where('record_sn','=',$recordInfo['record_sn'])->where("status",'=',1)->get();
+        if ($bool==true){
+            //获取明天的表名
+            $tomorrow = $this->getTomorrowTableName($tableName);
+            $order->setTable("order_".$tomorrow);
+            //获取此局游戏下注记录
+            $data = $order->where('record_sn','=',$recordInfo['record_sn'])->where("status",'=',1)->get();
+            $userOrderData = array_merge($userOrderData,$data);
+        }
+        DB::beginTransaction();
+        try {
+            foreach ($userOrderData as $key=>$datum)
+            {
+                $balance = $this->getUserBalanceByUserId($datum['user_id']);
+                //当前的get_money 小于0加 大于0减掉
+                if ($datum['get_money']>0)
+                {
+                    $count = $this->cutBackUserBalance($datum['user_id'],$datum['get_money']);
+                    if (!$count)
+                    {
+                        DB::rollBack();
+                        $this->unRedisLock($record_sn);
+                        return ['msg'=>'操作失败','status'=>0];
+                    }
+                    $num = $this->insertUserFlow($userOrderData[$key]['user_id'],$userOrderData[$key]['order_sn'],-$userOrderData[$key]['get_money'],$balance,$balance - $datum['get_money'],$userOrderData[$key]['game_type'],"作废");
+                    if (!$num)
+                    {
+                        DB::rollBack();
+                        $this->unRedisLock($record_sn);
+                        return ['msg'=>'操作失败','status'=>0];
+                    }
+                    continue;
+                }
+                else
+                {
+                    $count = $this->getUserBalanceByUserId($datum['user_id']);
+                    if (!$count)
+                    {
+                        DB::rollBack();
+                        $this->unRedisLock($record_sn);
+                        return ['msg'=>'操作失败','status'=>0];
+                    }
+                    $num = $this->insertUserFlow($userOrderData[$key]['user_id'],$userOrderData[$key]['order_sn'],-$userOrderData[$key]['get_money'],$balance,$balance + $datum['get_money'],$userOrderData[$key]['game_type'],"作废");
+                    if (!$num)
+                    {
+                        DB::rollBack();
+                        $this->unRedisLock($record_sn);
+                        return ['msg'=>'操作失败','status'=>0];
+                    }
+                    continue;
+                }
+            }
+            DB::commit();
+            $this->unRedisLock($record_sn);
+            return ['msg'=>'操作成功','status'=>1];
+        }catch (Exception $e){
+            DB::rollBack();
+            $this->unRedisLock($record_sn);
+            return ['msg'=>'请稍后再试','status'=>0];
+        }
+    }
+
     /**
      * 编辑页
      * @param StoreRequest $request

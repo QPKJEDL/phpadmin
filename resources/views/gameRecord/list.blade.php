@@ -128,6 +128,9 @@
                         @if($info['type']==1 || $info['type']==2)
                             <button class="layui-btn layui-btn-small layui-btn-danger updateGameResult" data-id="{{$info['id']}}" data-time="{{$info['creatime']}}">修改游戏结果</button>
                         @endif
+                        @if($info['status']==1)
+                            <button class="layui-btn layui-btn-small layui-btn-danger void" data-id="{{$info['record_sn']}}" data-time="{{$info['creatime']}}">作废</button>
+                        @endif
                     </div>
                 </td>
             </tr>
