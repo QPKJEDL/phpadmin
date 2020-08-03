@@ -93,9 +93,14 @@ class GameRecordController extends Controller
         return view('gameRecord.list', ['list' => $data, 'input' => $request->all(), 'desk' => $deskArr, 'min' => config('admin.min_date')]);
     }
 
+    /**
+     * 作废
+     * @param $record_sn
+     * @return array
+     */
     public function voidGameRecord($record_sn)
     {
-        $tableName = $this->getGameRecordTableName($record_sn);
+        $tableName = $this->getRecordTableNameByRecordSn($record_sn);
         $game = new GameRecord();
         $game->setTable('game_record_'.$tableName);
         $recordInfo = $game->where('record_sn','=',$record_sn)->first();
@@ -118,6 +123,7 @@ class GameRecordController extends Controller
         }
         DB::beginTransaction();
         try {
+            $result = $game->where('record_sn','=',$record_sn)->update(['status'=>2]);
             foreach ($userOrderData as $key=>$datum)
             {
                 $balance = $this->getUserBalanceByUserId($datum['user_id']);
@@ -828,6 +834,11 @@ class GameRecordController extends Controller
     public function getOrderTableNameByOrderSn($orderSn)
     {
         return substr($orderSn,1,8);
+    }
+
+    public function getRecordTableNameByRecordSn($record)
+    {
+        return substr($record,0,8);
     }
 
     /**

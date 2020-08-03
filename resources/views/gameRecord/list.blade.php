@@ -198,6 +198,30 @@
                     })
                 });
             });
+            $(".void").click(function () {
+                var id = $(this).attr('data-id');
+                var url = window.location.protocol+"//"+window.location.host+'/admin/voidGameRecord/'+id;
+                layer.prompt({title: '请输入密码', formType: 1}, function(pass, index){
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('input[name="_token"]').val()
+                        },
+                        url:url,
+                        type:"get",
+                        dataType: 'json',
+                        data:null,
+                        success:function (res) {
+                            if(res.status == 1){
+                                layer.msg(res.msg,{icon:6});
+                                setTimeout('parent.layer.closeAll()',2000);
+                                window.location.reload();
+                            }else{
+                                layer.msg(res.msg,{shift: 6,icon:5});
+                            }
+                        }
+                    });
+                });
+            });
             form.on('submit(formDemo)', function(data) {                
             });
             

@@ -77,6 +77,7 @@ Route::group(['namespace' => "Admin",'middleware' => ['auth', 'permission']], fu
     Route::post('/changStatus',         'DeskController@changStatus');//停用台桌->启用
 
     Route::resource('/gameRecord',      'GameRecordController'); //台桌结果
+    Route::get('/voidGameRecord/{record_sn}'  ,'GameRecordController@voidGameRecord');//作废
     Route::post('/checkUpdateResultPassword','GameRecordController@checkUpdateResultPassword'); //修改游戏结果的密码效验
     Route::get('/edit','GameRecordController@edit');
     Route::post('/updateDragonAndTigerResult','GameRecordController@updateDragonAndTigerResult');//修改龙虎游戏结果
