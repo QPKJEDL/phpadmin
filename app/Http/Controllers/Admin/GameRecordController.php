@@ -10,6 +10,7 @@ use App\Models\Billflow;
 use App\Models\Desk;
 use App\Models\GameLabel;
 use App\Models\GameRecord;
+use App\Models\HqUser;
 use App\Models\Order;
 use App\Models\UserAccount;
 use App\Models\UserMoney;
@@ -39,7 +40,12 @@ class GameRecordController extends Controller
             $map['pave_num'] = $request->input('pave_num');
         }
         $gameRecord = new GameRecord();
-        $gameRecord->setTable('game_record_' . date('Ymd'));
+        if (true==$request->has('create_time')){
+            $tableName = date('Ymd',strtotime($request->input('create_time')));
+        }else{
+            $tableName = date('Ymd',time());
+        }
+        $gameRecord->setTable('game_record_' .$tableName);
         $sql = $gameRecord->where($map);
         if (true == $request->has('create_time')) {
             $time = strtotime($request->input('create_time'));
@@ -68,9 +74,15 @@ class GameRecordController extends Controller
                     $data[$key]['afterResult'] = $this->getFullParseJson($data[$key]['update_result_before']);
                 }
             } else if ($data[$key]['type'] == 4) {
-
+                $data[$key]['result']=$this->getSanGongResult($data[$key]['winner']);
+                if ($data[$key]['update_result_before'] != '') {
+                    $data[$key]['afterResult'] = $this->getSanGongResult($data[$key]['update_result_before']);
+                }
             } else {
-
+                $data[$key]['result']=$this->getA89Result($data[$key]['winner']);
+                if ($data[$key]['update_result_before'] != '') {
+                    $data[$key]['afterResult']=$this->getA89Result($data[$key]['update_result_before']);
+                }
             }
             if ($data[$key]['update_time'] != '') {
                 $data[$key]['update_time'] = date("Y-m-d H:i:s", $value['update_time']);
@@ -184,7 +196,7 @@ class GameRecordController extends Controller
             $lock = $this->redisLock($recordInfo['record_sn']);
             if($lock){
                 $this->updateGameRecord($request->input('time'),$recordInfo);
-                return ['msg' => '修改成功1', 'status' => 1];
+                return ['msg' => '修改成功', 'status' => 1];
             }else{
                 return ['msg' => '请忽频繁提交！', 'status' => 0];
             }
@@ -268,6 +280,7 @@ class GameRecordController extends Controller
         return $arr;
     }
 
+
     /**
      * 判断龙虎结果
      * @param $winner
@@ -317,6 +330,86 @@ class GameRecordController extends Controller
             $arr['x3result'] = "闲3";
         } else {
             $arr['x4result'] = "";
+        }
+        return $arr;
+    }
+
+    /**
+     * 三公
+     * @param $jsonStr
+     * @return array
+     */
+    public function getSanGongResult($jsonStr){
+        $arr = array();
+        //解析json
+        $data = json_decode($jsonStr,true);
+        //{"bankernum":"9点","x1num":"小三公","x1result":"win","x2num":"混三公","x2result":"win","x3num":"大三公","x3result":"win","x4num":"0点","x4result":"", "x5num":"1点", "x5result":"", "x6num":"9点", "x6result":""}
+        //判断庄是否通吃
+        if ($data['x1result']=='' && $data['x2result']=="" && $data['x3result']=="" && $data['x4result']=="" && $data['x5result']=="" && $data['x6result']==""){
+            $arr['bankernum'] = "庄";
+        }else{
+            $arr['bankernum'] = "";
+        }
+        if ($data['x1result'] == "win") {
+            $arr['x1result'] = "闲1";
+        } else {
+            $arr['x1result'] = "";
+        }
+        if ($data['x2result'] == "win") {
+            $arr['x2result'] = "闲2";
+        } else {
+            $arr['x2result'] = "";
+        }
+        if ($data['x3result'] == "win") {
+            $arr['x3result'] = "闲3";
+        } else {
+            $arr['x3result'] = "";
+        }
+        if ($data['x4result'] == "win") {
+            $arr['x4result'] = "闲4";
+        } else {
+            $arr['x4result'] = "";
+        }
+        if ($data['x5result'] == "win") {
+            $arr['x5result'] = "闲5";
+        } else {
+            $arr['x5result'] = "";
+        }
+        if ($data['x6result'] == "win") {
+            $arr['x6result'] = "闲6";
+        } else {
+            $arr['x6result'] = "";
+        }
+        return $arr;
+    }
+
+    /**
+     * A89
+     */
+    public function getA89Result($jsonStr){
+        $data = json_decode($jsonStr,true);
+        //{"BankerNum":"5点","FanNum":"0点","Fanresult":"","ShunNum":"8点","Shunresult":"win","TianNum":"5点","Tianresult":"win"}
+        //判断庄是否通知
+        $arr = array();
+        if ($data['Fanresult']=="" && $data['Shunresult']=="" && $data['Tianresult']==""){
+            $arr['bankernum'] = "庄";
+        }else{
+            $arr['bankernum'] = "";
+        }
+        if ($data['Fanresult'] == "win") {
+            $arr['Fanresult'] = "反门";
+        } else {
+            $arr['Fanresult'] = "";
+        }
+        if ($data['Shunresult'] == "win") {
+            $arr['Shunresult'] = "顺门";
+        } else {
+            $arr['Shunresult'] = "";
+        }
+        if ($data['Tianresult']=="win"){
+            $arr['Tianresult'] = "天门";
+        }else{
+            $arr['Tianresult'] = "";
         }
         return $arr;
     }
@@ -372,7 +465,7 @@ class GameRecordController extends Controller
             $this->dragonAndTiger($recordInfo,$userOrderData);
             DB::commit();
         }else if ($recordInfo['type']==3){//牛牛
-            $this->getNiuNiuSettlement($recordInfo,$userOrderData);
+            //$this->getNiuNiuSettlement($recordInfo,$userOrderData);
         }else if ($recordInfo['type']==4){//三公
 
         }else{ //A89
@@ -405,8 +498,7 @@ class GameRecordController extends Controller
             if ($userOrderData[$key]['get_money']>0){
                 $count = DB::table("user_account")->where('user_id',$userOrderData[$key]['user_id'])->decrement('balance',$userOrderData[$key]['get_money']);
                 if ($count){
-                    $after = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                    $num = $this->insertUserFlow($userOrderData[$key]['user_id'],$userOrderData[$key]['order_sn'],-$userOrderData[$key]['get_money'],$before,$after,$userOrderData[$key]['game_type'],"修改游戏结果赢得扣输得添");
+                    $num = $this->insertUserFlow($userOrderData[$key]['user_id'],$userOrderData[$key]['order_sn'],-$userOrderData[$key]['get_money'],$before,$before - $userOrderData[$key]['get_money'],$userOrderData[$key]['game_type'],"修改游戏结果赢得扣输得添");
                     if ($num==0){
                         DB::rollback();
                     }
@@ -416,8 +508,7 @@ class GameRecordController extends Controller
             }else{
                $count =  DB::table("user_account")->where('user_id',$userOrderData[$key]['user_id'])->increment('balance',abs($userOrderData[$key]['get_money']));
                if ($count){
-                   $after = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                   $num = $this->insertUserFlow($userOrderData[$key]['user_id'],$userOrderData[$key]['order_sn'],abs($userOrderData[$key]['get_money']),$before,$after,$userOrderData[$key]['game_type'],"修改游戏结果赢得扣输得添");
+                   $num = $this->insertUserFlow($userOrderData[$key]['user_id'],$userOrderData[$key]['order_sn'],abs($userOrderData[$key]['get_money']),$before,$before + abs($userOrderData[$key]['get_money']),$userOrderData[$key]['game_type'],"修改游戏结果赢得扣输得添");
                    if ($num==0){
                        DB::rollback();
                    }
@@ -435,7 +526,7 @@ class GameRecordController extends Controller
      */
     public function getUserBalanceByUserId($userId)
     {
-        $data = UserMoney::where('user_id',$userId)->first();
+        $data = UserMoney::where('user_id',$userId)->lockForUpdate()->first();
         return $data['balance'];
     }
 
@@ -454,129 +545,135 @@ class GameRecordController extends Controller
                 $json = $userOrderData[$key]['bet_money'];
                 //把下注金额转json格式
                 $arr = json_decode($json,true);
+                $before = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
+                $money = 0;
                 //扣除不等于游戏结果的钱
                 if ($arr['tie'] > 0){
-                    $before = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                    $count =  DB::table("user_account")->where('user_id',$userOrderData[$key]['user_id'])->decrement('balance',(int)$arr['tie']);
-                    if ($count){
-                        $after = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                        $num = $this->insertUserFlow($userOrderData[$key]['user_id'],$userOrderData[$key]['order_sn'],-(int)$arr['tie'],$before,$after,$userOrderData[$key]['game_type'],"修改游戏结果重新计算");
-                        if ($num==0){
-                            DB::rollback();
-                        }
-                    }else{
-                        DB::rollback();
-                    }
+                    $money = $money - $arr['tie'];
                 }
                 if ($arr['tiger'] > 0){
-                    $before = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                    $count = DB::table('user_account')->where('user_id',$userOrderData[$key]['user_id'])->decrement('balance',(int)$arr['tiger']);
-                    if ($count){
-                        $after = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                        $num = $this->insertUserFlow($userOrderData[$key]['user_id'],$userOrderData[$key]['order_sn'],-(int)$arr['tiger'],$before,$after,$userOrderData[$key]['game_type'],"修改游戏结果重新计算");
-                        if ($num==0){
-                            DB::rollback();
-                        }
-                    }else{
-                        DB::rollback();
-                    }
+                    $money = $money - $arr['tiger'];
                 }
                 if ($arr['dragon'] > 0){
-                    $before = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                    $count =  DB::table('user_account')->where('user_id',$userOrderData[$key]['user_id'])->increment('balance',($arr['dragon']/100 * 97));
-                    if($count){
-                        $after = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                        $num = $this->insertUserFlow($userOrderData[$key]['user_id'],$userOrderData[$key]['order_sn'],((int)$arr['dragon'] * 0.97),$before,$after,$userOrderData[$key]['game_type'],"修改游戏结果重新计算");
-                        if ($num==0){
-                            DB::rollback();
-                        }
-                    }else{
-                        DB::rollback();
+                    $userInfo = HqUser::getUserInfoByUserId($value['user_id']);
+                    $userInfo['lhbets_fee']=json_decode($userInfo['lhbets_fee'],true);
+                    $money = $money + $arr['dragon'] * ($userInfo['lhbets_fee']['dragon']/100);
+                }
+                if ($money>0){
+                    $count = $this->addUserBalacne($userOrderData[$key]['user_id'],$money);
+                    if (!$count){
+                        DB::rollBack();
                     }
+                    $num = $this->insertUserFlow($userOrderData[$key]['user_id'],$userOrderData[$key]['order_sn'],$money,$before,$before + $money,$userOrderData[$key]['game_type'],"游戏结果重新计算");
+                    if (!$num){
+                        DB::rollBack();
+                    }
+                }else if ($money<0){
+                    $count = $this->cutBackUserBalance($userOrderData[$key]['user_id'],abs($money));
+                    if (!$count){
+                        DB::rollBack();
+                    }
+                    $num = $this->insertUserFlow($userOrderData[$key]['user_id'],$userOrderData[$key]['order_sn'],$money,$before,$before - $money,$userOrderData[$key]['game_type'],"游戏结果重新计算");
+                    if (!$num){
+                        DB::rollBack();
+                    }
+                }
+                $tableName = $this->getOrderTableNameByOrderSn($value['order_sn']);
+                $order = new Order();
+                $order->setTable('order_'.$tableName);
+                $update = $order->where('order_sn','=',$value['order_sn'])->update(['get_money'=>$money]);
+                if (!$update){
+                    DB::rollBack();
                 }
             }
         }else if($result==4){//虎
             foreach ($userOrderData as $key=>$value){
                 $json = $userOrderData[$key]['bet_money'];
+                //把下注金额转json格式
                 $arr = json_decode($json,true);
+                $before = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
+                $money = 0;
                 if ($arr['dragon'] > 0){
-                    $before = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                    $count =  DB::table('user_account')->where('user_id',$userOrderData[$key]['user_id'])->decrement('balance',(int)$arr['dragon']);
-                    if ($count){
-                        $after = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                        $num = $this->insertUserFlow($userOrderData[$key]['user_id'],$userOrderData[$key]['order_sn'],-(int)$arr['dragon'],$before,$after,$userOrderData[$key]['game_type'],"修改游戏结果重新计算");
-                        if ($num==0){
-                            DB::rollback();
-                        }
-                    }
+                    $money = $money - $arr['dragon'];
                 }
                 if ($arr['tie'] > 0){
-                    $before = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                    $count = DB::table('user_account')->where('user_id',$userOrderData[$key]['user_id'])->decrement('balance',(int)$arr['tie']);
-                    if ($count){
-                        $after = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                        $num = $this->insertUserFlow($userOrderData[$key]['user_id'],$userOrderData[$key]['order_sn'],-(int)$arr['tie'],$before,$after,$userOrderData[$key]['game_type'],"修改游戏结果重新计算");
-                        if ($num==0){
-                            DB::rollback();
-                        }
-                    }
+                    $money = $money - $arr['tie'];
                 }
                 if ($arr['tiger'] > 0){
-                    $before = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                    $count = DB::table('user_account')->where('user_id',$userOrderData[$key]['user_id'])->increment('balance',((int)$arr['tiger'] * 0.97));
-                    if ($count){
-                        $after = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                        $num = $this->insertUserFlow($userOrderData[$key]['user_id'],$userOrderData[$key]['order_sn'],((int)$arr['tiger'] * 0.97),$before,$after,$userOrderData[$key]['game_type'],"修改游戏结果重新计算");
-                        if ($num==0){
-                            DB::rollback();
-                        }
-                    }else{
-                        DB::rollback();
+                    $userInfo = HqUser::getUserInfoByUserId($value['user_id']);
+                    $userInfo['lhbets_fee']=json_decode($userInfo['lhbets_fee'],true);
+                    $money = $money + $arr['tiger'] * ($userInfo['lhbets_fee']['tiger']/100);
+                }
+                if ($money>0){
+                    $count = $this->addUserBalacne($userOrderData[$key]['user_id'],$money);
+                    if (!$count){
+                        DB::rollBack();
                     }
+                    $num = $this->insertUserFlow($userOrderData[$key]['user_id'],$userOrderData[$key]['order_sn'],$money,$before,$before + $money,$userOrderData[$key]['game_type'],"游戏结果重新计算");
+                    if (!$num){
+                        DB::rollBack();
+                    }
+                }else if ($money<0){
+                    $count = $this->cutBackUserBalance($userOrderData[$key]['user_id'],abs($money));
+                    if (!$count){
+                        DB::rollBack();
+                    }
+                    $num = $this->insertUserFlow($userOrderData[$key]['user_id'],$userOrderData[$key]['order_sn'],$money,$before,$before - $money,$userOrderData[$key]['game_type'],"游戏结果重新计算");
+                    if (!$num){
+                        DB::rollBack();
+                    }
+                }
+                $tableName = $this->getOrderTableNameByOrderSn($value['order_sn']);
+                $order = new Order();
+                $order->setTable('order_'.$tableName);
+                $update = $order->where('order_sn','=',$value['order_sn'])->update(['get_money'=>$money]);
+                if (!$update){
+                    DB::rollBack();
                 }
             }
         }else{//和
             foreach ($userOrderData as $key=>$value){
                 $json = $userOrderData[$key]['bet_money'];
+                //把下注金额转json格式
                 $arr = json_decode($json,true);
+                $before = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
+                $money = 0;
                 if ($arr['dragon']>0){
-                    $before = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                    $count =  DB::table('user_account')->where('user_id',$userOrderData[$key]['user_id'])->increment('balance',(int)$arr['dragon']);
-                    if ($count){
-                        $after = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                        $num = $this->insertUserFlow($userOrderData[$key]['user_id'],$userOrderData[$key]['order_sn'],(int)$arr['dragon'],$before,$after,$userOrderData[$key]['game_type'],"修改游戏结果重新计算");
-                        if ($num==0){
-                            DB::rollback();
-                        }
-                    }else{
-                        DB::rollback();
-                    }
+                    $money = $money - $arr['dragon'];
                 }
                 if ($arr['tiger'] > 0){
-                    $before = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                    $count = DB::table('user_account')->where('user_id',$userOrderData[$key]['user_id'])->increment('balance',(int)$arr['tiger']);
-                    if ($count){
-                        $after = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                        $num = $this->insertUserFlow($userOrderData[$key]['user_id'],$userOrderData[$key]['order_sn'],(int)$arr['dragon'],$before,$after,$userOrderData[$key]['game_type'],"修改游戏结果重新计算");
-                        if ($num==0){
-                            DB::rollback();
-                        }
-                    }else{
-                        DB::rollback();
-                    }
+                    $money = $money - $arr['tiger'];
                 }
                 if ($arr['tie'] > 0){
-                    $before = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                    $count = DB::table('user_account')->where('user_id',$userOrderData[$key]['user_id'])->increment('balance',((int)$arr['tie'] * 8));
-                    if ($count){
-                        $after = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                        $num = $this->insertUserFlow($userOrderData[$key]['user_id'],$userOrderData[$key]['order_sn'],((int)$arr['tie'] * 8),$before,$after,$userOrderData[$key]['game_type'],"修改游戏结果重新计算");
-                        if ($num==0){
-                            DB::rollback();
-                        }
-                    }else{
-                        DB::rollback();
+                    $userInfo = HqUser::getUserInfoByUserId($value['user_id']);
+                    $userInfo['lhbets_fee']=json_decode($userInfo['lhbets_fee'],true);
+                    $money = $money + $arr['tie'] * ($userInfo['lhbets_fee']['tie']);
+                }
+                if ($money>0){
+                    $count = $this->addUserBalacne($userOrderData[$key]['user_id'],$money);
+                    if (!$count){
+                        DB::rollBack();
                     }
+                    $num = $this->insertUserFlow($userOrderData[$key]['user_id'],$userOrderData[$key]['order_sn'],$money,$before,$before + $money,$userOrderData[$key]['game_type'],"游戏结果重新计算");
+                    if (!$num){
+                        DB::rollBack();
+                    }
+                }else if ($money<0){
+                    $count = $this->cutBackUserBalance($userOrderData[$key]['user_id'],abs($money));
+                    if (!$count){
+                        DB::rollBack();
+                    }
+                    $num = $this->insertUserFlow($userOrderData[$key]['user_id'],$userOrderData[$key]['order_sn'],$money,$before,$before - $money,$userOrderData[$key]['game_type'],"游戏结果重新计算");
+                    if (!$num){
+                        DB::rollBack();
+                    }
+                }
+                $tableName = $this->getOrderTableNameByOrderSn($value['order_sn']);
+                $order = new Order();
+                $order->setTable('order_'.$tableName);
+                $update = $order->where('order_sn','=',$value['order_sn'])->update(['get_money'=>$money]);
+                if (!$update){
+                    DB::rollBack();
                 }
             }
         }
@@ -642,6 +739,11 @@ class GameRecordController extends Controller
         return date('Ymd',time());
     }
 
+    public function getOrderTableNameByOrderSn($orderSn)
+    {
+        return substr($orderSn,1,8);
+    }
+
     /**
      * 重新计算百家乐游戏结果
      * @param $recordInfo
@@ -657,46 +759,58 @@ class GameRecordController extends Controller
                 //{"banker":2000,"bankerPair":2000,"player":2000,"playerPair":2000,"tie":2000}
                 $json = $userOrderData[$key]['bet_money'];
                 $data = json_decode($json,true);
+                //获取当前用户的赔率
+                $userInfo = HqUser::getUserInfoByUserId($value['user_id']);
+                $userInfo['bjlbets_fee']=json_decode($userInfo['bjlbets_fee'],true);
+                $money = 0;
+                //获取当前的金额
+                $before = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
                 if ($data['banker'] > 0){ //庄赔率为0.95
-                    //获取当前的金额
-                    $before = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                    $count = $this->addUserBalacne($userOrderData[$key]['user_id'],($data['banker']/100 * 95));
-                    if ($count){
-                        $after = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                        $num = $this->insertUserFlow($userOrderData[$key]['user_id'],$userOrderData[$key]['order_sn'],((int)$data['banker']/100 * 95),$before,$after,$userOrderData[$key]['game_type'],"游戏结果重新计算");
-                        if ($num==0){
-                            DB::rollback();
-                        }
-                    }else{
-                        DB::rollback();
-                    }
+                    $money = $money + $data['banker'] * ($userInfo['bjlbets_fee']['banker']/100);
                 }
                 //扣钱
                 if ($data['player'] > 0){//闲
-                    $before = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                    $count = $this->cutBackUserBalance($userOrderData[$key]['user_id'],$data['player']);
-                    if ($count){
-                        $after = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                        $num = $this->insertUserFlow($userOrderData[$key]['user_id'],$userOrderData[$key]['order_sn'],-$data['player'],$before,$after,$userOrderData[$key]['game_type'],"游戏结果重新计算");
-                        if ($num==0){
-                            DB::rollback();
-                        }
-                    }else{
-                        DB::rollback();
-                    }
+                    $money = $money - $data['player'];
                 }
                 if ($data['tie'] > 0){
-                    $before = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                    $count = $this->cutBackUserBalance($userOrderData[$key]['user_id'],$data['tie']);
-                    if ($count){
-                        $after = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                        $num = $this->insertUserFlow($userOrderData[$key]['user_id'],$userOrderData[$key]['order_sn'],-$data['tie'],$before,$after,$userOrderData[$key]['game_type'],"游戏结果重新计算");
-                        if ($num==0){
-                            DB::rollback();
-                        }
-                    }else{
-                        DB::rollback();
+                    $money = $money - $data['tie'];
+                }
+                //判断是否闲对
+                if ($arr['playerPair']=="5"){
+                    if ($data['playerPair']>0){
+                        $money = $money + $data['playerPair'] * ($userInfo['bjlbets_fee']['playerPair']/100);
                     }
+                }
+                if ($arr['bankerPair']=="2"){
+                    if ($data['bankerPair']>0){
+                        $money = $money + $data['bankerPair'] * ($userInfo['bjlbets_fee']['bankerPair']/100);
+                    }
+                }
+                if ($money>0){
+                    $count = $this->addUserBalacne($userOrderData[$key]['user_id'],$money);
+                    if (!$count){
+                        DB::rollBack();
+                    }
+                    $num = $this->insertUserFlow($userOrderData[$key]['user_id'],$userOrderData[$key]['order_sn'],$money,$before,$before + $money,$userOrderData[$key]['game_type'],"游戏结果重新计算");
+                    if (!$num){
+                        DB::rollBack();
+                    }
+                }else if ($money<0){
+                    $count = $this->cutBackUserBalance($userOrderData[$key]['user_id'],abs($money));
+                    if (!$count){
+                        DB::rollBack();
+                    }
+                    $num = $this->insertUserFlow($userOrderData[$key]['user_id'],$userOrderData[$key]['order_sn'],$money,$before,$before - $money,$userOrderData[$key]['game_type'],"游戏结果重新计算");
+                    if (!$num){
+                        DB::rollBack();
+                    }
+                }
+                $tableName = $this->getOrderTableNameByOrderSn($value['order_sn']);
+                $order = new Order();
+                $order->setTable('order_'.$tableName);
+                $update = $order->where('order_sn','=',$value['order_sn'])->update(['get_money'=>$money]);
+                if (!$update){
+                    DB::rollBack();
                 }
             }
         }else if ($arr['game']==4){//闲
@@ -704,45 +818,45 @@ class GameRecordController extends Controller
                 //{"banker":2000,"bankerPair":2000,"player":2000,"playerPair":2000,"tie":2000}
                 $json = $userOrderData[$key]['bet_money'];
                 $data = json_decode($json,true);
+                $before = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
+                $money = 0;
                 if ($data['player'] > 0){
-                    $before = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                    $count = $this->addUserBalacne($userOrderData[$key]['user_id'],(int)$data['player']);
-                    if ($count){
-                        $after = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                        $num = $this->insertUserFlow($userOrderData[$key]['user_id'],$userOrderData[$key]['order_sn'],(int)$data['player'],$before,$after,$userOrderData[$key]['game_type'],"游戏结果重新计算");
-                        if ($num==0){
-                            DB::rollback();
-                        }
-                    }else{
-                        DB::rollback();
-                    }
+                    //获取当前用户的赔率
+                    $userInfo = HqUser::getUserInfoByUserId($value['user_id']);
+                    $money = $money + $data['player'] * ($userInfo['bjlbets_fee']['player']/100);
                 }
                 //扣钱
                 if ($data['banker'] > 0){
-                    $before = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                    $count = $this->cutBackUserBalance($userOrderData[$key]['user_id'],(int)$data['banker']);
-                    if ($count){
-                        $after = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                        $num = $this->insertUserFlow($userOrderData[$key]['user_id'],$userOrderData[$key]['order_sn'],-(int)$data['banker'],$before,$after,$userOrderData[$key]['game_type'],"游戏结果重新计算");
-                        if ($num==0){
-                            DB::rollback();
-                        }
-                    }else{
-                        DB::rollback();
-                    }
+                    $money = $money - $data['banker'];
                 }
                 if ($data['tie'] > 0){
-                    $before = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                    $count = $this->cutBackUserBalance($userOrderData[$key]['user_id'],(int)$data['tie']);
-                    if ($count){
-                        $after = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                        $num = $this->insertUserFlow($userOrderData[$key]['user_id'],$userOrderData[$key]['order_sn'],-(int)$data['tie'],$before,$after,$userOrderData[$key]['game_type'],"游戏结果重新计算");
-                        if ($num==0){
-                            DB::rollback();
-                        }
-                    }else{
-                        DB::rollback();
+                    $money = $money - $data['tie'];
+                }
+                if ($money>0){
+                    $count = $this->addUserBalacne($userOrderData[$key]['user_id'],$money);
+                    if (!$count){
+                        DB::rollBack();
                     }
+                    $num = $this->insertUserFlow($userOrderData[$key]['user_id'],$userOrderData[$key]['order_sn'],$money,$before,$before + $money,$userOrderData[$key]['game_type'],"游戏结果重新计算");
+                    if (!$num){
+                        DB::rollBack();
+                    }
+                }else if ($money<0){
+                    $count = $this->cutBackUserBalance($userOrderData[$key]['user_id'],abs($money));
+                    if (!$count){
+                        DB::rollBack();
+                    }
+                    $num = $this->insertUserFlow($userOrderData[$key]['user_id'],$userOrderData[$key]['order_sn'],$money,$before,$before - $money,$userOrderData[$key]['game_type'],"游戏结果重新计算");
+                    if (!$num){
+                        DB::rollBack();
+                    }
+                }
+                $tableName = $this->getOrderTableNameByOrderSn($value['order_sn']);
+                $order = new Order();
+                $order->setTable('order_'.$tableName);
+                $update = $order->where('order_sn','=',$value['order_sn'])->update(['get_money'=>$money]);
+                if (!$update){
+                    DB::rollBack();
                 }
             }
         }else{//和
@@ -750,124 +864,45 @@ class GameRecordController extends Controller
                 //{"banker":2000,"bankerPair":2000,"player":2000,"playerPair":2000,"tie":2000}
                 $json = $userOrderData[$key]['bet_money'];
                 $data = json_decode($json,true);
+                $before = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
+                $money = 0;
                 if ($data['tie'] > 0){ //和 赔率 8 倍
-                    $before = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                    $count = $this->addUserBalacne($userOrderData[$key]['user_id'],((int)$data['tie'] * 8));
-                    if ($count){
-                        $after = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                        $num = $this->insertUserFlow($userOrderData[$key]['user_id'],$userOrderData[$key]['order_sn'],((int)$data['tie'] * 8),$before,$after,$userOrderData[$key]['game_type'],"游戏结果重新计算");
-                        if ($num==0){
-                            DB::rollback();
-                        }
-                    }else{
-                        DB::rollback();
-                    }
+                    //获取当前用户的赔率
+                    $userInfo = HqUser::getUserInfoByUserId($value['user_id']);
+                    $money = $money + $data['tie'] * ($userInfo['bjlbets_fee']['tie']/100);
                 }
                 //扣钱
                 if ($data['banker'] > 0){
-                    $before = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                    $count = $this->cutBackUserBalance($userOrderData[$key]['user_id'],(int)$data['banker']);
-                    if ($count){
-                        $after = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                        $num = $this->insertUserFlow($userOrderData[$key]['user_id'],$userOrderData[$key]['order_sn'],-(int)$data['banker'],$before,$after,$userOrderData[$key]['game_type'],"游戏结果重新计算");
-                        if ($num==0){
-                            DB::rollback();
-                        }
-                    }else{
-                        DB::rollback();
-                    }
+                    $money = $money - $data['banker'];
                 }
                 if ($data['player'] > 0){
-                    $before = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                    $count = $this->cutBackUserBalance($userOrderData[$key]['user_id'],(int)$data['player']);
-                    if ($count){
-                        $after = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                        $num = $this->insertUserFlow($userOrderData[$key]['user_id'],$userOrderData[$key]['order_sn'],-(int)$data['player'],$before,$after,$userOrderData[$key]['game_type'],"游戏结果重新计算");
-                        if ($num==0){
-                            DB::rollback();
-                        }
-                    }else{
-                        DB::rollback();
+                    $money = $money - $data['player'];
+                }
+                if ($money>0){
+                    $count = $this->addUserBalacne($userOrderData[$key]['user_id'],$money);
+                    if (!$count){
+                        DB::rollBack();
+                    }
+                    $num = $this->insertUserFlow($userOrderData[$key]['user_id'],$userOrderData[$key]['order_sn'],$money,$before,$before + $money,$userOrderData[$key]['game_type'],"游戏结果重新计算");
+                    if (!$num){
+                        DB::rollBack();
+                    }
+                }else if ($money<0){
+                    $count = $this->cutBackUserBalance($userOrderData[$key]['user_id'],abs($money));
+                    if (!$count){
+                        DB::rollBack();
+                    }
+                    $num = $this->insertUserFlow($userOrderData[$key]['user_id'],$userOrderData[$key]['order_sn'],$money,$before,$before - $money,$userOrderData[$key]['game_type'],"游戏结果重新计算");
+                    if (!$num){
+                        DB::rollBack();
                     }
                 }
-            }
-        }
-        //计算庄对闲对
-        if (!empty($arr['playerPair'])){
-            foreach ($userOrderData as $key=>$value){
-                //{"banker":2000,"bankerPair":2000,"player":2000,"playerPair":2000,"tie":2000}
-                $json = $userOrderData[$key]['bet_money'];
-                $data = json_decode($json,true);
-                if ($data['playerPair'] > 0){
-                    $before = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                    $count = $this->addUserBalacne($userOrderData[$key]['user_id'],($arr['playerPair'] * 11));
-                    if ($count){
-                        $after = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                        $num = $this->insertUserFlow($userOrderData[$key]['user_id'],$userOrderData[$key]['order_sn'],($arr['playerPair'] * 11),$before,$after,$userOrderData[$key]['game_type'],"游戏结果重新计算");
-                        if ($num==0){
-                            DB::rollback();
-                        }
-                    }else{
-                        DB::rollback();
-                    }
-                }
-            }
-        }else{
-            foreach ($userOrderData as $key=>$value){
-                //{"banker":2000,"bankerPair":2000,"player":2000,"playerPair":2000,"tie":2000}
-                $json = $userOrderData[$key]['bet_money'];
-                $data = json_decode($json,true);
-                if ($data['playerPair'] > 0){
-                    $before = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                    $count = $this->cutBackUserBalance($userOrderData[$key]['user_id'],(int)$data['playerPair']);
-                    if ($count){
-                        $after = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                        $num = $this->insertUserFlow($userOrderData[$key]['user_id'],$userOrderData[$key]['order_sn'],-(int)$data['playerPair'],$before,$after,$userOrderData[$key]['game_type'],"游戏结果重新计算");
-                        if ($num==0){
-                            DB::rollback();
-                        }
-                    }else{
-                        DB::rollback();
-                    }
-                }
-            }
-        }
-        if (!empty($arr['bankerPair'])){
-            foreach ($userOrderData as $key=>$value){
-                //{"banker":2000,"bankerPair":2000,"player":2000,"playerPair":2000,"tie":2000}
-                $json = $userOrderData[$key]['bet_money'];
-                $data = json_decode($json,true);
-                if ($data['bankerPair'] > 0){
-                    $before = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                    $count = $this->addUserBalacne($userOrderData[$key]['user_id'],($data['bankerPair'] * 11));
-                    if ($count){
-                        $after = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                        $num = $this->insertUserFlow($userOrderData[$key]['user_id'],$userOrderData[$key]['order_sn'],($data['bankerPair'] * 11),$before,$after,$userOrderData[$key]['game_type'],"游戏结果重新计算");
-                        if ($num==0){
-                            DB::rollback();
-                        }
-                    }else{
-                        DB::rollback();
-                    }
-                }
-            }
-        }else{
-            foreach ($userOrderData as $key=>$value){
-                //{"banker":2000,"bankerPair":2000,"player":2000,"playerPair":2000,"tie":2000}
-                $json = $userOrderData[$key]['bet_money'];
-                $data = json_decode($json,true);
-                if ($data['bankerPair'] > 0){
-                    $before = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                    $count = $this->cutBackUserBalance($userOrderData[$key]['user_id'],(int)$data['bankerPair']);
-                    if ($count){
-                        $after = $this->getUserBalanceByUserId($userOrderData[$key]['user_id']);
-                        $num = $this->insertUserFlow($userOrderData[$key]['user_id'],$userOrderData[$key]['order_sn'],-(int)$data['bankerPair'],$before,$after,$userOrderData[$key]['game_type'],"游戏结果重新计算");
-                        if ($num==0){
-                            DB::rollback();
-                        }
-                    }else{
-                        DB::rollback();
-                    }
+                $tableName = $this->getOrderTableNameByOrderSn($value['order_sn']);
+                $order = new Order();
+                $order->setTable('order_'.$tableName);
+                $update = $order->where('order_sn','=',$value['order_sn'])->update(['get_money'=>$money]);
+                if (!$update){
+                    DB::rollBack();
                 }
             }
         }
