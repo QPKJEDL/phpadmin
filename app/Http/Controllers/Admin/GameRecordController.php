@@ -123,9 +123,24 @@ class GameRecordController extends Controller
         }
         DB::beginTransaction();
         try {
-            $result = $game->where('record_sn','=',$record_sn)->update(['status'=>2]);
+            $result = $game->where('record_sn','=',$record_sn)->update(['status'=>2,'winner'=>0]);
+            if (!$result)
+            {
+                DB::rollBack();
+                $this->unRedisLock($record_sn);
+                return ['msg'=>'操作失败','status'=>0];
+            }
             foreach ($userOrderData as $key=>$datum)
             {
+                $tN = $this->getOrderTableNameByOrderSn($datum['order_sn']);
+                $o = new Order();
+                $o->setTable('order_'.$tN);
+                $a = $o->where('order_sn','=',$datum['order_sn'])->update(['status'=>3]);
+                if (!$a){
+                    DB::rollBack();
+                    $this->unRedisLock($record_sn);
+                    return ['msg'=>'操作失败','status'=>0];
+                }
                 $balance = $this->getUserBalanceByUserId($datum['user_id']);
                 //当前的get_money 小于0加 大于0减掉
                 if ($datum['get_money']>0)
@@ -819,7 +834,7 @@ class GameRecordController extends Controller
         $tableName = $this->getToDayDate();
         $bill = new Billflow();
         $bill->setTable('user_billflow_'.$tableName);
-        $count = $bill->insert(['user_id'=>$userId,'order_sn'=>$orderSn,'score'=>$score,'bet_before'=>$betBefore,'bet_after'=>$betAfter,'status'=>4,'game_type'=>$gameType,'remark'=>$remark,'creatime'=>time()]);
+        $count = $bill->insert(['user_id'=>$userId,'order_sn'=>$orderSn,'score'=>$score,'bet_before'=>$betBefore,'bet_after'=>$betAfter,'status'=>2,'game_type'=>$gameType,'remark'=>$remark,'creatime'=>time()]);
         return $count;
     }
 
