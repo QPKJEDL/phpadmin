@@ -80,26 +80,57 @@
                         @else
                             {{$info['result']['bankernum']}}
                         @endif
+                    @elseif($info['type']==4)
+                        @if($info['result']['bankernum']=="")
+                            {{$info['result']['x1result']}}&nbsp;{{$info['result']['x2result']}}&nbsp;{{$info['result']['x3result']}}
+                            {{$info['result']['x4result']}}&nbsp;{{$info['result']['x5result']}}&nbsp;{{$info['result']['x6result']}}
+                        @else
+                            {{$info['result']['bankernum']}}
+                        @endif
+                    @elseif($info['type']==5)
+                        @if($info['result']['bankernum']=="")
+                            {{$info['result']['Fanresult']}} {{$info['result']['Shunresult']}} {{$info['result']['Tianresult']}}
+                        @else
+                            {{$info['result']['bankernum']}}
+                        @endif
                     @endif
                 </td>
                 <td class="hidden-xs">
-                    @if($info['type']==1)
-                        {{$info['afterResult']['game']}}&nbsp;{{$info['afterResult']['playerPair']}} {{$info['afterResult']['bankerPair']}}
-                    @elseif($info['type']==2)
-                        {{$info['afterResult']}}
-                    @elseif($info['type']==3)
-                        @if($info['afterResult']['bankernum']=="")
-                            {{$info['afterResult']['x1result']}}&nbsp;{{$info['afterResult']['x2result']}}&nbsp;{{$info['afterResult']['x3result']}}
-                        @else
-                            {{$info['afterResult']['bankernum']}}
+                        @if($info['type']==1)
+                            {{$info['afterResult']['game']}}&nbsp;{{$info['afterResult']['playerPair']}} {{$info['afterResult']['bankerPair']}}
+                        @elseif($info['type']==2)
+                            {{$info['afterResult']}}
+                        @elseif($info['type']==3)
+                            @if($info['afterResult']['bankernum']=="")
+                                {{$info['afterResult']['x1result']}}&nbsp;{{$info['afterResult']['x2result']}}&nbsp;{{$info['afterResult']['x3result']}}
+                            @else
+                                {{$info['afterResult']['bankernum']}}
+                            @endif
+                        @elseif($info['type']==4)
+                            @if($info['afterResult']['bankernum']=="")
+                                {{$info['afterResult']['x1result']}}&nbsp;{{$info['afterResult']['x2result']}}&nbsp;{{$info['afterResult']['x3result']}}
+                                {{$info['afterResult']['x4result']}}&nbsp;{{$info['afterResult']['x5result']}}&nbsp;{{$info['afterResult']['x6result']}}
+                            @else
+                                {{$info['afterResult']['bankernum']}}
+                            @endif
+                        @elseif($info['type']==5)
+                            @if($info['afterResult']['bankernum']=="")
+                                {{$info['afterResult']['Fanresult']}} {{$info['afterResult']['Shunresult']}} {{$info['afterResult']['Tianresult']}}
+                            @else
+                                {{$info['afterResult']['bankernum']}}
+                            @endif
                         @endif
-                    @endif
                 </td>
                 <td class="hidden-xs">{{$info['update_time']}}</td>
                 <td class="hidden-xs">{{$info['update_by']}}</td>
                 <td>
                     <div class="layui-inline">
-                        <button class="layui-btn layui-btn-small layui-btn-danger updateGameResult" data-id="{{$info['id']}}" data-time="{{$info['creatime']}}">修改游戏结果</button>
+                        @if($info['type']==1 || $info['type']==2)
+                            <button class="layui-btn layui-btn-small layui-btn-danger updateGameResult" data-id="{{$info['id']}}" data-time="{{$info['creatime']}}">修改游戏结果</button>
+                        @endif
+                        @if($info['status']==1)
+                            <button class="layui-btn layui-btn-small layui-btn-danger void" data-id="{{$info['record_sn']}}" data-time="{{$info['creatime']}}">作废</button>
+                        @endif
                     </div>
                 </td>
             </tr>
@@ -165,6 +196,30 @@
                             }
                         }
                     })
+                });
+            });
+            $(".void").click(function () {
+                var id = $(this).attr('data-id');
+                var url = window.location.protocol+"//"+window.location.host+'/admin/voidGameRecord/'+id;
+                layer.prompt({title: '请输入密码', formType: 1}, function(pass, index){
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('input[name="_token"]').val()
+                        },
+                        url:url,
+                        type:"get",
+                        dataType: 'json',
+                        data:null,
+                        success:function (res) {
+                            if(res.status == 1){
+                                layer.msg(res.msg,{icon:6});
+                                setTimeout('parent.layer.closeAll()',2000);
+                                window.location.reload();
+                            }else{
+                                layer.msg(res.msg,{shift: 6,icon:5});
+                            }
+                        }
+                    });
                 });
             });
             form.on('submit(formDemo)', function(data) {                

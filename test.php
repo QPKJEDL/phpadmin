@@ -1,9 +1,3 @@
 <?php
-
-$str = '["1","2","3"]';
-
-$data = json_decode($str,true);
-print_r($data);
-foreach ($data as $k=>$v){
-    var_dump($v);
-}
+$str = "202008030901551101";
+print_r(substr($str,0,8));
