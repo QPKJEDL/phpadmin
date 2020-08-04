@@ -4,7 +4,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">key：</label>
             <div class="layui-input-block">
-                <input type="text" value="{{$info['key'] or ''}}" name="key" placeholder="请填写key值" autocomplete="off" class="layui-input">
+                <input type="text" value="{{$info['key'] or ''}}" name="key" placeholder="请填写key值" autocomplete="off" class="layui-input" @if($info['id']==7) readonly @endif>
             </div>
         </div>
         <div class="layui-form-item">
