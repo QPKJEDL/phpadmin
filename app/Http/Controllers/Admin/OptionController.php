@@ -36,10 +36,8 @@ class OptionController extends Controller
         foreach ($data as $key =>$value){
             $data[$key]['creatime']=date("Y-m-d H:i:s",$value["creatime"]);
         }
-        $id='';
-        $request->offsetSet('user_id',$id);
         $min=config('admin.min_date');
-        return view('options.list',['pager'=>$data,'min'=>$min,'id'=>$id,'input'=>$request->all()]);
+        return view('options.list',['pager'=>$data,'min'=>$min,'input'=>$request->all()]);
     }
 
 
