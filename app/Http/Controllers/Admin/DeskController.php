@@ -159,6 +159,7 @@ class DeskController extends Controller
             $deskData["PairMaxLimit"]=$max_pair_limit["c"]/100;
             $deskData["LeftPlay"]=$data["left_play"];
             $deskData["RightPlay"]=$data["right_play"];
+            $deskData["AllScene"]=$data["all_scene1"];
             Redis::set("desk_info_".$count,json_encode($deskData));
            return ["msg"=>"保存成功！","status"=>1];
         }else{
@@ -226,6 +227,7 @@ class DeskController extends Controller
                 $deskData["PairMaxLimit"]=$max_pair_limit["c"]/100;
                 $deskData["LeftPlay"]=$data["left_play"];
                 $deskData["RightPlay"]=$data["right_play"];
+                $deskData["AllScene"]=$data["all_scene1"];
                 Redis::set("desk_info_".$id,json_encode($deskData));
                 insertDeskLogOperaType($id,'修改了台桌信息');
                 return ['msg'=>'修改成功！','status'=>1];
@@ -249,6 +251,7 @@ class DeskController extends Controller
                 $deskData["PairMaxLimit"]=$max_pair_limit["c"]/100;
                 $deskData["LeftPlay"]=$data["left_play"];
                 $deskData["RightPlay"]=$data["right_play"];
+                $deskData["AllScene"]=$data["all_scene1"];
                 Redis::set("desk_info_".$id,json_encode($deskData));
                 insertDeskLogOperaType($id,'修改了台桌信息');
                 return ['msg'=>'修改成功！','status'=>1];
