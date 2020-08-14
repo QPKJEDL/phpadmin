@@ -22,7 +22,7 @@
         </colgroup>
         <thead>
         <tr>
-            <th class="hidden-xs">序号1</th>
+            <th class="hidden-xs">序号</th>
             <th class="hidden-xs">账号</th>
             <th class="hidden-xs">操作</th>
         </tr>
@@ -35,7 +35,7 @@
                 <td>
                     <div class="layui-inline">
                         {{--<button class="layui-btn layui-btn-small layui-btn-normal edit-btn" data-id="{{$info['id']}}" data-desc="修改配置" data-url="{{url('/admin/forbidden/'. $info['id'] .'/edit')}}">编辑</button>--}}
-                        <button class="layui-btn layui-btn-small layui-btn-danger del-btn open_over" data-id="{{$info['user_id']}}" >解禁</button>
+                        <button class="layui-btn layui-btn-small layui-btn-danger open_over" data-id="{{$info['user_id']}}" >解禁</button>
                     </div>
                 </td>
             </tr>
