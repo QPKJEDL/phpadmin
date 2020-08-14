@@ -22,7 +22,7 @@
         </colgroup>
         <thead>
         <tr>
-            <th class="hidden-xs">序号</th>
+            <th class="hidden-xs">序号1</th>
             <th class="hidden-xs">账号</th>
             <th class="hidden-xs">操作</th>
         </tr>
