@@ -43,6 +43,7 @@
         @if(!$list[0])
             <tr><td colspan="9" style="text-align: center;color: orangered;">暂无数据</td></tr>
         @endif
+        <input type="hidden" id="id" value="{{$info['id']}}">
         </tbody>
     </table>
     <div class="page-wrap">
