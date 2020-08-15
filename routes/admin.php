@@ -52,6 +52,10 @@ Route::group(['namespace' => "Admin",'middleware' => ['auth', 'permission']], fu
     Route::resource('/roles',           'RoleController');
     Route::resource('/permissions',     'PermissionController');
 
+    //系统余额管理
+    Route::resource('/balance','SysBalanceController');
+    Route::resource('/balRecord','SysBalanceRecordController');
+
     //系统设置
     Route::resource('/options',         'OptionController');//系统设置-缓存设置
     Route::post('/optionsUpdate',       'OptionController@update');//系统设置-缓存编辑
