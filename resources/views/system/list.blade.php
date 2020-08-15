@@ -3,6 +3,13 @@
     <div class="layui-inline">
         <button class="layui-btn layui-btn-small layui-btn-warm freshBtn"><i class="layui-icon">&#x1002;</i></button>
     </div>
+    <div class="layui-inline">
+       @if ($count["online"]==0)
+        <label class="layui-form-label">结算完成</label>
+       @else
+        <label class="layui-form-label">结算中...</label>
+       @endif
+    </div>
 @endsection
 @section('table')
     <form class="layui-form">

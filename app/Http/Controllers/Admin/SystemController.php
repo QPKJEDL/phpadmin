@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRequest;
 use App\Models\Sysset;
-
+use Illuminate\Support\Facades\Redis;
 /**
  * 系统开关
  * Class SystemController
@@ -18,9 +18,19 @@ class SystemController extends Controller
      */
     public function index()
     {
+        $date=date("Ymd",time());
+        $onlineK="HQ_Online_DayEndUser_Count".$date;
+        $offlineK="HQ_Online_DayEndUser_Count".$date;
+
+        $onlineCount=Redis::get($onlineK);
+        $offlineCount=Redis::get($offlineK);
+        $count=[
+            "online"=>$onlineCount,
+            "offline"=>$offlineCount,
+        ];
         $system = Sysset::where("id",1)->first();
         $drawOpen = Sysset::where("id",2)->first();
-        return view("system.list",['system'=>$system,'drawOpen'=>$drawOpen]);
+        return view("system.list",['system'=>$system,'count'=>$count,'drawOpen'=>$drawOpen]);
     }
 
     /**
